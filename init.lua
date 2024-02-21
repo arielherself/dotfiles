@@ -144,6 +144,13 @@ local plugins = {
 		    -- if you want to draw a tabline:
 		    vim.api.nvim_set_option("tabline", [[%{%v:lua.require("arshamiser.tabline").draw()%}]])
 	    end,
+    },
+    {
+        'numToStr/Comment.nvim',
+        opts = {
+            -- add any options here
+        },
+        lazy = false,
     }
 }
 local opts = {
@@ -332,3 +339,4 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+require('Comment').setup()
