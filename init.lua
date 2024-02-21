@@ -9,6 +9,7 @@ vim.cmd("set keymodel=startsel")
 vim.cmd("set number")
 vim.cmd("set cursorline")
 vim.cmd("set termguicolors")
+vim.cmd("set clipboard+=unnamedplus")
 vim.g.mapleader = " "
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -251,7 +252,12 @@ cmp.setup({
 
 -- Setup language servers.
 local lspconfig = require('lspconfig')
-lspconfig.clangd.setup {}
+lspconfig.clangd.setup {
+    cmd = {
+        "clangd",
+        "--header-insertion=never"
+    }
+}
 lspconfig.pyright.setup {}
 lspconfig.tsserver.setup {}
 lspconfig.rust_analyzer.setup {
@@ -307,7 +313,6 @@ vim.keymap.set('i', '<C-c>', '<ESC>yyi')
 vim.keymap.set('i', '<C-v>', '<ESC>PA')
 vim.keymap.set('i', '<C-x>', '<ESC>ddi')
 vim.keymap.set('i', '<C-a>', '<ESC>ggVG')
-vim.keymap.set('v', '<C-S-c>', '+y')
 vim.keymap.set('n', '<leader>`', ':split<CR>:terminal<CR>i')
 vim.keymap.set('n', '<leader>l', ':vsplit std.in<CR>:split std.out<CR>')
 vim.keymap.set('n', '<leader>n', ':tabnew')
