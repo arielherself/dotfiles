@@ -10,6 +10,13 @@ vim.cmd("set number")
 vim.cmd("set cursorline")
 vim.cmd("set termguicolors")
 vim.cmd("set clipboard+=unnamedplus")
+vim.cmd("set updatetime=700")
+vim.cmd("set whichwrap+=<,>,[,]")
+vim.diagnostic.config({
+    update_in_insert = true,
+    float = { border = "single" },
+})
+vim.cmd([[au CursorHold * lua vim.diagnostic.open_float(0,{scope = "cursor"})]])
 vim.g.mapleader = " "
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -151,6 +158,29 @@ local plugins = {
             -- add any options here
         },
         lazy = false,
+    },
+    { 'onsails/lspkind.nvim' },
+    {
+        'MunifTanjim/eslint.nvim',
+        dependencies = {
+            'jose-elias-alvarez/null-ls.nvim'
+        }
+    },
+    {
+        'MunifTanjim/prettier.nvim',
+        dependencies = {
+            'jose-elias-alvarez/null-ls.nvim'
+        }
+    },
+    { 'simrat39/symbols-outline.nvim' },
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        }
     }
 }
 local opts = {
@@ -211,7 +241,7 @@ vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
 
 local config = require("nvim-treesitter.configs")
 config.setup({
-    ensure_installed = {"lua", "cpp", "rust", "javascript", "python"},
+    ensure_installed = {"lua", "cpp", "rust", "javascript", "python", "typescript", "html", "css", "scss"},
     auto_install = true,
     highlight = { enable = true},
     indent = { enable = true},
@@ -244,7 +274,7 @@ cmp.setup({
     ["<C-b>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete(), -- show completion suggestions
-    ["<C-e>"] = cmp.mapping.abort(), -- close completion window
+    ["<ESC>"] = cmp.mapping.abort(), -- close completion window
     ["<tab>"] = cmp.mapping.confirm({ select = true }),
   }),
   -- sources for autocompletion
@@ -311,6 +341,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 require("lsp-inlayhints").setup()
+vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = "LspAttach_inlayhints",
+  callback = function(args)
+    if not (args.data and args.data.client_id) then
+      return
+    end
+
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    require("lsp-inlayhints").on_attach(client, bufnr)
+  end,
+})
 
 require("lsp_signature").setup({})
 
@@ -322,8 +365,15 @@ vim.keymap.set('i', '<C-x>', '<ESC>ddi')
 vim.keymap.set('i', '<C-a>', '<ESC>ggVG')
 vim.keymap.set('n', '<C-a>', 'ggVG')
 vim.keymap.set('n', '<leader>`', ':split<CR>:terminal<CR>i')
-vim.keymap.set('n', '<leader>l', ':vsplit std.in<CR>:split std.out<CR>')
+vim.keymap.set('n', '<leader>l', ':vsplit std.in<CR>')
 vim.keymap.set('n', '<leader>n', ':tabnew')
+vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {noremap=true})
+vim.keymap.set('n', '<leader>s', ':SymbolsOutline<CR>')
+vim.keymap.set("v", "<Tab>", ">gv")
+vim.keymap.set("v", "<S-Tab>", "<gv")
+vim.keymap.set('n', '<leader>t', ':TodoTelescope<CR>')
+vim.keymap.set('v', "<C-S-Down>", ":m'>+<CR>")
+vim.keymap.set('v', "<C-S-Up>", ":m-2<CR>")
 
 require("overseer").setup({
   templates = { "builtin", "user.cpp_cp" },
@@ -332,7 +382,7 @@ require("overseer").setup({
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "cpp",
     callback = function()
-        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", ":vsplit<CR>:te g++ -std=c++17 -Wall -Ofast -fsanitize=address % && ./a.out < std.in > std.out<CR>i", {
+        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", ":split<CR>:te g++ -std=c++17 -Wall -Ofast -fsanitize=address % && ./a.out < std.in<CR>i", {
             silent = true,
             noremap = true
         })
@@ -340,3 +390,86 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 require('Comment').setup()
+local str = require("cmp.utils.str")
+local types = require("cmp.types")
+local lspkind = require('lspkind')
+cmp.setup {
+    formatting = {
+        format = lspkind.cmp_format({
+            mode = 'symbol', -- show only symbol annotations
+            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                            -- can also be a function to dynamically calculate max width such as 
+                            -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+            ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+            show_labelDetails = true, -- show labelDetails in menu. Disabled by default
+
+            -- The function below will be called before any actual modifications from lspkind
+            -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+            before = function (entry, vim_item)
+                local word = entry:get_insert_text()
+                if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
+                    word = vim.lsp.util.parse_snippet(word)
+                end
+                word = str.oneline(word)
+                if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet and string.sub(vim_item.abbr, -1, -1) == "~" then
+                    word = word .. "~"
+                end
+                vim_item.abbr = word
+                return vim_item
+            end
+        })
+    }
+}
+
+local null_ls = require("null-ls")
+local eslint = require("eslint")
+
+local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+local event = "BufWritePre" -- or "BufWritePost"
+local async = event == "BufWritePost"
+
+null_ls.setup()
+
+eslint.setup({
+  bin = 'eslint', -- or `eslint_d`
+  code_actions = {
+    enable = true,
+    apply_on_save = {
+      enable = true,
+      types = { "directive", "problem", "suggestion", "layout" },
+    },
+    disable_rule_comment = {
+      enable = true,
+      location = "separate_line", -- or `same_line`
+    },
+  },
+  diagnostics = {
+    enable = true,
+    report_unused_disable_directives = false,
+    run_on = "type", -- or `save`
+  },
+})
+
+local prettier = require("prettier")
+
+prettier.setup({
+  bin = 'prettier', -- or `'prettierd'` (v0.23.3+)
+  filetypes = {
+    "css",
+    "graphql",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "less",
+    "markdown",
+    "scss",
+    "typescript",
+    "typescriptreact",
+    "yaml",
+  },
+})
+
+require("symbols-outline").setup()
+
+require("todo-comments").setup()
