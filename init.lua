@@ -363,6 +363,7 @@ vim.keymap.set('i', '<C-z>', '<ESC>:u<CR>i')
 vim.keymap.set('i', '<C-c>', '<ESC>yyi')
 vim.keymap.set('i', '<C-v>', '<ESC>PA')
 vim.keymap.set('i', '<C-x>', '<ESC>ddi')
+vim.keymap.set('i', '<Home>', '<ESC>^i')
 vim.keymap.set('i', '<C-a>', '<ESC>ggVG')
 vim.keymap.set('n', '<C-a>', 'ggVG')
 vim.keymap.set('n', '<leader>`', ':split<CR>:terminal<CR>i')
@@ -477,9 +478,14 @@ prettier.setup({
     "typescript",
     "typescriptreact",
     "yaml",
+    "vue",
   },
 })
 
 require("symbols-outline").setup()
 
 require("todo-comments").setup()
+
+lspconfig.volar.setup{
+  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+}
