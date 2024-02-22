@@ -358,6 +358,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 require("lsp_signature").setup({})
 
 vim.keymap.set('n', '<C-z>', ':u<CR>')
+vim.keymap.set('v', '<C-z>', ':u<CR>')
 vim.keymap.set('i', '<C-z>', '<ESC>:u<CR>i')
 vim.keymap.set('i', '<C-c>', '<ESC>yyi')
 vim.keymap.set('i', '<C-v>', '<ESC>PA')
@@ -372,8 +373,17 @@ vim.keymap.set('n', '<leader>s', ':SymbolsOutline<CR>')
 vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")
 vim.keymap.set('n', '<leader>t', ':TodoTelescope<CR>')
-vim.keymap.set('v', "<C-S-Down>", ":m'>+<CR>")
-vim.keymap.set('v', "<C-S-Up>", ":m-2<CR>")
+vim.keymap.set('v', "<C-S-Down>", "dpV`]")
+vim.keymap.set('v', "<C-S-Up>", "dkPV`]")
+require("nvim-treesitter.configs").setup {
+    incremental_selection = {
+        enable = true,
+        keymaps = {
+            node_incremental = "v",
+            node_decremental = "V",
+        },
+    },
+}
 
 require("overseer").setup({
   templates = { "builtin", "user.cpp_cp" },
