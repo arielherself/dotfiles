@@ -12,6 +12,7 @@ vim.cmd("set termguicolors")
 vim.cmd("set clipboard+=unnamedplus")
 vim.cmd("set updatetime=700")
 vim.cmd("set whichwrap+=<,>,[,]")
+vim.cmd("set relativenumber")
 vim.diagnostic.config({
     update_in_insert = true,
     float = { border = "single" },
@@ -181,7 +182,9 @@ local plugins = {
             -- or leave it empty to use the default settings
             -- refer to the configuration section below
         }
-    }
+    },
+    { 'nvim-treesitter/nvim-treesitter-context' },
+    { 'mg979/vim-visual-multi' }
 }
 local opts = {
 }
@@ -376,6 +379,8 @@ vim.keymap.set("v", "<S-Tab>", "<gv")
 vim.keymap.set('n', '<leader>t', ':TodoTelescope<CR>')
 vim.keymap.set('v', "<C-S-Down>", "dpV`]")
 vim.keymap.set('v', "<C-S-Up>", "dkPV`]")
+vim.keymap.set('n', '<leader>5', ':+5<CR>')
+vim.keymap.set('n', '<leader>4', ':-5<CR>')
 require("nvim-treesitter.configs").setup {
     incremental_selection = {
         enable = true,
@@ -393,7 +398,7 @@ require("overseer").setup({
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "cpp",
     callback = function()
-        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", ":split<CR>:te g++ -std=c++17 -Wall -Ofast -fsanitize=address % && ./a.out < std.in<CR>i", {
+        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", ":split<CR>:te g++ -std=c++17 -Wall -Ofast -g -fsanitize=address % && ./a.out < std.in<CR>i", {
             silent = true,
             noremap = true
         })
