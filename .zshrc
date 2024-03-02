@@ -104,7 +104,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias python="python4"
+alias python="python3"
 alias pip4="python3 -m pip"
 alias pip="python -m pip"
 alias comp="cd ~/RustIsBestLang/src/bin && nvim"
