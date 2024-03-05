@@ -262,9 +262,56 @@ local plugins = {
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
     { 'arielherself/vim-cursorword' },
     { 'm-demare/hlargs.nvim' },
-    { 'chentoast/marks.nvim' }
+    { 'chentoast/marks.nvim' },
+    {
+      "sontungexpt/sttusline",
+      dependencies = {
+          "nvim-tree/nvim-web-devicons",
+      },
+      event = { "BufEnter" },
+      config = function(_, opts)
+          require("sttusline").setup {
+              -- statusline_color = "#000000",
+              statusline_color = "StatusLine",
+
+              -- | 1 | 2 | 3
+              -- recommended: 3
+              laststatus = 3,
+              disabled = {
+                  filetypes = {
+                      -- "NvimTree",
+                      -- "lazy",
+                  },
+                  buftypes = {
+                      -- "terminal",
+                  },
+              },
+              components = {
+                  "mode",
+                  "filename",
+                  "git-branch",
+                  "git-diff",
+                  "%=",
+                  "diagnostics",
+                  "lsps-formatters",
+                  "copilot",
+                  "indent",
+                  "encoding",
+                  "pos-cursor",
+                  "pos-cursor-progress",
+              },
+          }
+      end,
+    },
+    { 'gaborvecsei/usage-tracker.nvim' },
+    { 'wakatime/vim-wakatime', lazy = false },
+    {
+        'smoka7/hop.nvim',
+        version = "*",
+        opts = {},
+    }
 }
-local opts = {
+local opts = { 
 }
 
 require("lazy").setup(plugins, opts)
@@ -460,6 +507,7 @@ vim.keymap.set('v', "<C-S-Up>", "dkPV`]")
 vim.keymap.set('n', '<leader>5', '<Cmd>+5<CR>')
 vim.keymap.set('n', '<leader>4', '<Cmd>-5<CR>')
 vim.keymap.set('n', '<C-p>', '<Cmd>Legendary<CR>', {noremap=true})
+vim.keymap.set('n', '<leader>h', '<Cmd>HopWord<CR>')
 require("nvim-treesitter.configs").setup {
     incremental_selection = {
         enable = true,
@@ -622,3 +670,13 @@ require("ibl").setup {
 require('hlargs').setup()
 
 require('marks').setup()
+
+require('usage-tracker').setup({
+    keep_eventlog_days = 31,
+    cleanup_freq_days = 7,
+    event_wait_period_in_sec = 5,
+    inactivity_threshold_in_min = 5,
+    inactivity_check_freq_in_sec = 5,
+    verbose = 0,
+    telemetry_endpoint = "" -- you'll need to start the restapi for this feature
+})
