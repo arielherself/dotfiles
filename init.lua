@@ -13,6 +13,7 @@ vim.cmd("set clipboard+=unnamedplus")
 vim.cmd("set updatetime=700")
 vim.cmd("set whichwrap+=<,>,[,]")
 vim.cmd("set relativenumber")
+vim.cmd("set iskeyword-=_")
 vim.diagnostic.config({
     update_in_insert = true,
     float = { border = "single" },
@@ -184,7 +185,71 @@ local plugins = {
         }
     },
     { 'nvim-treesitter/nvim-treesitter-context' },
-    { 'mg979/vim-visual-multi' }
+    { 'mg979/vim-visual-multi' },
+    { 'sindrets/diffview.nvim' },
+    { 'sitiom/nvim-numbertoggle' },
+    { 'mawkler/modicator.nvim' },
+    {
+      "ecthelionvi/NeoColumn.nvim",
+      opts = {}
+    },
+    {
+      "utilyre/barbecue.nvim",
+      name = "barbecue",
+      version = "*",
+      dependencies = {
+        "SmiteshP/nvim-navic",
+        "nvim-tree/nvim-web-devicons", -- optional dependency
+      },
+      opts = {
+        -- configurations go here
+      },
+    },
+    {'akinsho/git-conflict.nvim', version = "*", config = true },
+    {
+      'mrjones2014/legendary.nvim',
+      -- since legendary.nvim handles all your keymaps/commands,
+      -- its recommended to load legendary.nvim before other plugins
+      priority = 10000,
+      lazy = false,
+      -- sqlite is only needed if you want to use frecency sorting
+      -- dependencies = { 'kkharji/sqlite.lua' }
+    },
+    {
+      'stevearc/dressing.nvim',
+      opts = {},
+    },
+    {
+      "folke/twilight.nvim",
+      opts = {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    },
+    {
+      "luukvbaal/statuscol.nvim", config = function()
+        -- local builtin = require("statuscol.builtin")
+        require("statuscol").setup({
+          -- configuration goes here, for example:
+          -- relculright = true,
+          -- segments = {
+          --   { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
+          --   {
+          --     sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
+          --     click = "v:lua.ScSa"
+          --   },
+          --   { text = { builtin.lnumfunc }, click = "v:lua.ScLa", },
+          --   {
+          --     sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
+          --     click = "v:lua.ScSa"
+          --   },
+          -- }
+        })
+      end,
+    },
+    { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+    { 'itchyny/vim-cursorword' }
 }
 local opts = {
 }
@@ -239,7 +304,7 @@ require("monokai-pro").setup({
 vim.cmd([[colorscheme monokai-pro]])
 
 local builtin = require("telescope.builtin")
-vim.keymap.set('n', '<C-p>', builtin.find_files, {})
+vim.keymap.set('n', '<leader>p', builtin.find_files, {})
 vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
 
 local config = require("nvim-treesitter.configs")
@@ -360,27 +425,28 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 require("lsp_signature").setup({})
 
-vim.keymap.set('n', '<C-z>', ':u<CR>')
-vim.keymap.set('v', '<C-z>', ':u<CR>')
-vim.keymap.set('i', '<C-z>', '<ESC>:u<CR>i')
+vim.keymap.set('n', '<C-z>', '<Cmd>u<CR>')
+vim.keymap.set('v', '<C-z>', '<Cmd>u<CR>')
+vim.keymap.set('i', '<C-z>', '<ESC><Cmd>u<CR>i')
 vim.keymap.set('i', '<C-c>', '<ESC>yyi')
 vim.keymap.set('i', '<C-v>', '<ESC>PA')
 vim.keymap.set('i', '<C-x>', '<ESC>ddi')
 vim.keymap.set('i', '<Home>', '<ESC>^i')
 vim.keymap.set('i', '<C-a>', '<ESC>ggVG')
 vim.keymap.set('n', '<C-a>', 'ggVG')
-vim.keymap.set('n', '<leader>`', ':split<CR>:terminal<CR>i')
-vim.keymap.set('n', '<leader>l', ':vsplit std.in<CR>')
-vim.keymap.set('n', '<leader>n', ':tabnew')
+vim.keymap.set('n', '<leader>`', '<Cmd>split<CR><Cmd>terminal<CR>i')
+vim.keymap.set('n', '<leader>l', '<Cmd>vsplit std.in<CR>')
+vim.keymap.set('n', '<leader>n', '<Cmd>tabnew')
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {noremap=true})
-vim.keymap.set('n', '<leader>s', ':SymbolsOutline<CR>')
+vim.keymap.set('n', '<leader>s', '<Cmd>SymbolsOutline<CR>')
 vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")
-vim.keymap.set('n', '<leader>t', ':TodoTelescope<CR>')
+vim.keymap.set('n', '<leader>t', '<Cmd>TodoTelescope<CR>')
 vim.keymap.set('v', "<C-S-Down>", "dpV`]")
 vim.keymap.set('v', "<C-S-Up>", "dkPV`]")
-vim.keymap.set('n', '<leader>5', ':+5<CR>')
-vim.keymap.set('n', '<leader>4', ':-5<CR>')
+vim.keymap.set('n', '<leader>5', '<Cmd>+5<CR>')
+vim.keymap.set('n', '<leader>4', '<Cmd>-5<CR>')
+vim.keymap.set('n', '<C-p>', '<Cmd>Legendary<CR>', {noremap=true})
 require("nvim-treesitter.configs").setup {
     incremental_selection = {
         enable = true,
@@ -398,7 +464,7 @@ require("overseer").setup({
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "cpp",
     callback = function()
-        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", ":split<CR>:te g++ -std=c++17 -Wall -Ofast -g -fsanitize=address % && ./a.out < std.in<CR>i", {
+        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", ":split<CR>:te g++ -std=c++17 -Wall -Ofast -g -fsanitize=address -fsanitize=undefined % && ./a.out < std.in<CR>i", {
             silent = true,
             noremap = true
         })
@@ -493,4 +559,49 @@ require("todo-comments").setup()
 
 lspconfig.volar.setup{
   filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+}
+
+local map = vim.api.nvim_set_keymap
+local opts = { noremap = true, silent = true }
+
+-- Move to previous/next
+map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
+map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
+-- Re-order to previous/next
+map('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
+map('n', '<A->>', '<Cmd>BufferMoveNext<CR>', opts)
+map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts);
+map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts);
+
+require('diffview').setup()
+
+require('modicator').setup()
+
+require("barbecue.ui").toggle(true)
+
+local highlight = {
+    "RainbowRed",
+    "RainbowYellow",
+    "RainbowBlue",
+    "RainbowOrange",
+    "RainbowGreen",
+    "RainbowViolet",
+    "RainbowCyan",
+}
+local hooks = require "ibl.hooks"
+-- create the highlight groups in the highlight setup hook, so they are reset
+-- every time the colorscheme changes
+hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+    vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+    vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+    vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+    vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+end)
+
+require("ibl").setup {
+    indent = { highlight = highlight, char = "▏" },
+    scope = { enabled = true },
 }
