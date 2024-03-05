@@ -17,7 +17,7 @@ vim.cmd("set iskeyword-=_")
 vim.cmd("set list")
 vim.opt.listchars = {
     eol = "↵",
-    tab = "→\\ ",
+    tab = "→ ",
     trail = "␣",
     precedes = "«",
     extends = "»"
@@ -273,7 +273,7 @@ require("monokai-pro").setup({
   styles = {
     comment = { italic = true },
     keyword = { italic = true }, -- any other keyword
-    type = { italic = true }, -- (preferred) int, long, char, etc
+    type = { italic = false }, -- (preferred) int, long, char, etc
     storageclass = { italic = true }, -- static, register, volatile, etc
     structure = { italic = true }, -- struct, union, enum, etc
     parameter = { italic = true }, -- parameter pass in function
