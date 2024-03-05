@@ -16,7 +16,7 @@ vim.cmd("set relativenumber")
 vim.cmd("set iskeyword-=_")
 vim.cmd("set list")
 vim.opt.guicursor = {
-    "i:ver100-blinkon500-blinkoff500,a:ver100",
+    "i:ver25-blinkon500-blinkoff500,a:ver25-iCursor",
 }
 vim.opt.listchars = {
     eol = "↵",
@@ -448,7 +448,7 @@ vim.keymap.set('i', '<Home>', '<ESC>^i')
 vim.keymap.set('i', '<C-a>', '<ESC>ggVG')
 vim.keymap.set('n', '<C-a>', 'ggVG')
 vim.keymap.set('n', '<leader>`', '<Cmd>split<CR><Cmd>terminal<CR>i')
-vim.keymap.set('n', '<leader>l', '<Cmd>vsplit std.in<CR>')
+vim.keymap.set('n', '<leader>l', '<Cmd>40vs std.in<CR>')
 vim.keymap.set('n', '<leader>n', '<Cmd>tabnew')
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {noremap=true})
 vim.keymap.set('n', '<leader>s', '<Cmd>SymbolsOutline<CR>')
@@ -477,7 +477,7 @@ require("overseer").setup({
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "cpp",
     callback = function()
-        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", ":split<CR>:te g++ -std=c++17 -Wall -Ofast -g -fsanitize=address -fsanitize=undefined % && ./a.out < std.in<CR>i", {
+        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", ":10sp<CR>:te g++ -std=c++17 -Wall -Ofast -g -fsanitize=address -fsanitize=undefined % && ./a.out < std.in<CR>i", {
             silent = true,
             noremap = true
         })
