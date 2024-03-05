@@ -15,6 +15,9 @@ vim.cmd("set whichwrap+=<,>,[,]")
 vim.cmd("set relativenumber")
 vim.cmd("set iskeyword-=_")
 vim.cmd("set list")
+vim.opt.guicursor = {
+    "i:ver100-blinkon500-blinkoff500,a:ver100",
+}
 vim.opt.listchars = {
     eol = "↵",
     tab = "→ ",
@@ -257,7 +260,7 @@ local plugins = {
       end,
     },
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
-    { 'itchyny/vim-cursorword' },
+    { 'arielherself/vim-cursorword' },
     { 'm-demare/hlargs.nvim' },
     { 'chentoast/marks.nvim' }
 }
