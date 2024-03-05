@@ -14,6 +14,14 @@ vim.cmd("set updatetime=700")
 vim.cmd("set whichwrap+=<,>,[,]")
 vim.cmd("set relativenumber")
 vim.cmd("set iskeyword-=_")
+vim.cmd("set list")
+vim.opt.listchars = {
+    eol = "↵",
+    tab = "→\\ ",
+    trail = "␣",
+    precedes = "«",
+    extends = "»"
+}
 vim.diagnostic.config({
     update_in_insert = true,
     float = { border = "single" },
@@ -249,7 +257,9 @@ local plugins = {
       end,
     },
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
-    { 'itchyny/vim-cursorword' }
+    { 'itchyny/vim-cursorword' },
+    { 'm-demare/hlargs.nvim' },
+    { 'chentoast/marks.nvim' }
 }
 local opts = {
 }
@@ -605,3 +615,7 @@ require("ibl").setup {
     indent = { highlight = highlight, char = "▏" },
     scope = { enabled = true },
 }
+
+require('hlargs').setup()
+
+require('marks').setup()
