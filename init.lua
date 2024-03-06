@@ -130,10 +130,6 @@ local plugins = {
         }
     },
     {
-        'stevearc/overseer.nvim',
-        opts = {},
-    },
-    {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
         opts = {}
@@ -374,7 +370,7 @@ config.setup({
     highlight = { enable = true},
     indent = { enable = true},
 })
-vim.keymap.set('n', '<leader>f', ':Neotree . toggle left<CR>', {})
+vim.keymap.set('n', '<leader>f', '<Cmd>Neotree . toggle left<CR>', {})
 
 -- import nvim-cmp plugin safely
 local cmp_status, cmp = pcall(require, "cmp")
@@ -414,24 +410,32 @@ cmp.setup({
   }),
 })
 
-
 -- Setup language servers.
 local lspconfig = require('lspconfig')
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+lspconfig.svls.setup {
+    capabilities = capabilities
+}
 lspconfig.clangd.setup {
+    capabilities = capabilities,
     cmd = {
         "clangd",
         "--header-insertion=never"
     }
 }
-lspconfig.pyright.setup {}
-lspconfig.tsserver.setup {}
+lspconfig.pyright.setup {
+    capabilities = capabilities
+}
+lspconfig.tsserver.setup {
+    capabilities = capabilities
+}
 lspconfig.rust_analyzer.setup {
+    capabilities = capabilities,
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
     ['rust-analyzer'] = {},
   },
 }
-
 
 -- Global mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -485,10 +489,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
 require("lsp_signature").setup({})
 
-vim.keymap.set('n', '<C-z>', '<Cmd>u<CR>')
-vim.keymap.set('v', '<C-z>', '<Cmd>u<CR>')
-vim.keymap.set('i', '<C-z>', '<ESC><Cmd>u<CR>i')
-vim.keymap.set('i', '<C-c>', '<ESC>yyi')
+vim.keymap.set({'i', 'n', 'v', 'x'}, '<C-z>', '<Nop>', {noremap=true})
+vim.keymap.set({'i', 'n', 'v', 'x'}, '<C-c>', '<ESC>', {noremap=true})
 vim.keymap.set('i', '<C-v>', '<ESC>PA')
 vim.keymap.set('i', '<C-x>', '<ESC>ddi')
 vim.keymap.set('i', '<Home>', '<ESC>^i')
@@ -504,8 +506,6 @@ vim.keymap.set("v", "<S-Tab>", "<gv")
 vim.keymap.set('n', '<leader>t', '<Cmd>TodoTelescope<CR>')
 vim.keymap.set('v', "<C-S-Down>", "dpV`]")
 vim.keymap.set('v', "<C-S-Up>", "dkPV`]")
-vim.keymap.set('n', '<leader>5', '<Cmd>+5<CR>')
-vim.keymap.set('n', '<leader>4', '<Cmd>-5<CR>')
 vim.keymap.set('n', '<C-p>', '<Cmd>Legendary<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>h', '<Cmd>HopWord<CR>')
 require("nvim-treesitter.configs").setup {
@@ -518,14 +518,10 @@ require("nvim-treesitter.configs").setup {
     },
 }
 
-require("overseer").setup({
-  templates = { "builtin", "user.cpp_cp" },
-})
-
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "cpp",
     callback = function()
-        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", ":10sp<CR>:te g++ -std=c++17 -Wall -Ofast -g -fsanitize=address -fsanitize=undefined % && ./a.out < std.in<CR>i", {
+        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", "<Cmd>10sp<CR><Cmd>te g++ -std=c++17 -Wall -Ofast -g -fsanitize=address -fsanitize=undefined % && ./a.out < std.in<CR>i", {
             silent = true,
             noremap = true
         })
