@@ -13,8 +13,10 @@ vim.cmd("set clipboard+=unnamedplus")
 vim.cmd("set updatetime=700")
 vim.cmd("set whichwrap+=<,>,[,]")
 vim.cmd("set relativenumber")
-vim.cmd("set iskeyword-=_")
+vim.cmd("set signcolumn=yes")
+-- vim.cmd("set iskeyword-=_")
 vim.cmd("set list")
+vim.cmd("set noequalalways")
 vim.opt.guicursor = {
     "i:ver25-blinkon500-blinkoff500,a:ver25-iCursor",
 }
@@ -234,27 +236,6 @@ local plugins = {
         -- refer to the configuration section below
       }
     },
-    {
-      "luukvbaal/statuscol.nvim", config = function()
-        -- local builtin = require("statuscol.builtin")
-        require("statuscol").setup({
-          -- configuration goes here, for example:
-          -- relculright = true,
-          -- segments = {
-          --   { text = { builtin.foldfunc }, click = "v:lua.ScFa" },
-          --   {
-          --     sign = { name = { "Diagnostic" }, maxwidth = 2, auto = true },
-          --     click = "v:lua.ScSa"
-          --   },
-          --   { text = { builtin.lnumfunc }, click = "v:lua.ScLa", },
-          --   {
-          --     sign = { name = { ".*" }, maxwidth = 2, colwidth = 1, auto = true, wrap = true },
-          --     click = "v:lua.ScSa"
-          --   },
-          -- }
-        })
-      end,
-    },
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
     { 'arielherself/vim-cursorword' },
     { 'm-demare/hlargs.nvim' },
@@ -305,6 +286,16 @@ local plugins = {
         'smoka7/hop.nvim',
         version = "*",
         opts = {},
+    },
+    {
+        "kylechui/nvim-surround",
+        version = "*", -- Use for stability; omit to use `main` branch for the latest features
+        event = "VeryLazy",
+        config = function()
+            require("nvim-surround").setup({
+                -- Configuration here, or leave empty to use defaults
+            })
+        end
     }
 }
 local opts = { 
@@ -507,7 +498,7 @@ vim.keymap.set('n', '<leader>t', '<Cmd>TodoTelescope<CR>')
 vim.keymap.set('v', "<C-S-Down>", "dpV`]")
 vim.keymap.set('v', "<C-S-Up>", "dkPV`]")
 vim.keymap.set('n', '<C-p>', '<Cmd>Legendary<CR>', {noremap=true})
-vim.keymap.set('n', '<leader>h', '<Cmd>HopWord<CR>')
+vim.keymap.set({'n', 'v', 'x'}, '<leader>h', '<Cmd>HopWord<CR>')
 require("nvim-treesitter.configs").setup {
     incremental_selection = {
         enable = true,
