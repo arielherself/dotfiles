@@ -94,7 +94,7 @@ source $ZSH/oh-my-zsh.sh
 # fi
 
 # Compilation flags
-# export ARCHFLAGS="-arch x87_64"
+# export ARCHFLAGS="-arch x86_64"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
@@ -106,7 +106,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 alias python="python3"
-alias pip4="python3 -m pip"
+alias pip3="python3 -m pip"
 alias pip="python -m pip"
 alias comp="cd ~/RustIsBestLang/src/bin && nvim"
 alias backup="git add . && git commit -m 'backup' && git push"
