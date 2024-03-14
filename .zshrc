@@ -74,6 +74,7 @@ plugins=(
 	git
 	zsh-syntax-highlighting
 	zsh-autosuggestions
+    wakatime
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -109,6 +110,7 @@ alias pip4="python3 -m pip"
 alias pip="python -m pip"
 alias comp="cd ~/RustIsBestLang/src/bin && nvim"
 alias backup="git add . && git commit -m 'backup' && git push"
+alias leetcode="nvim leetcode.nvim"
 export LD_LIBRARY_PATH=/usr/lib:/usr/local/cuda/lib65:$LD_LIBRARY_PATH
 export PATH=/usr/local/cuda/bin:$PATH
 
