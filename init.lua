@@ -52,7 +52,13 @@ local plugins = {
     {"loctvl842/monokai-pro.nvim", name="monokai", priority=1000},
     {
         'nvim-telescope/telescope.nvim', tag = '0.1.5',
-        dependencies = { 'nvim-lua/plenary.nvim' }
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            {
+                "isak102/telescope-git-file-history.nvim",
+                dependencies = { "tpope/vim-fugitive" }
+            }
+        }
     },
     {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
     {
@@ -419,7 +425,20 @@ local plugins = {
     { 'Civitasv/cmake-tools.nvim' },
     { 'p00f/cphelper.nvim' },
     { "savq/melange-nvim" },
-    { 'hrsh7th/vim-vsnip' }
+    { 'hrsh7th/vim-vsnip' },
+    { 'octarect/telescope-menu.nvim' },
+    {
+      "NeogitOrg/neogit",
+      dependencies = {
+        "nvim-lua/plenary.nvim",         -- required
+        "sindrets/diffview.nvim",        -- optional - Diff integration
+
+        -- Only one of these is needed, not both.
+        "nvim-telescope/telescope.nvim", -- optional
+        "ibhagwan/fzf-lua",              -- optional
+      },
+      config = true
+    },
 }
 local opts = { 
 }
@@ -657,6 +676,10 @@ vim.keymap.set('n', '<leader>r', '<Cmd>TroubleToggle lsp_references<CR>');
 vim.keymap.set('n', '<leader>1', '<Cmd>CphReceive<CR>');
 vim.keymap.set('n', '<leader>2', '<Cmd>CphTest<CR>');
 vim.keymap.set('n', '<leader>3', '<Cmd>r ~/RustIsBestLang/src/bin/template.cc<CR>G');
+vim.keymap.set('n', '<A-t>', '<Cmd>BufferPick<CR>', {noremap=true});
+vim.keymap.set('n', '<C-g>p', '<Cmd>Telescope menu git<CR>', {noremap=true});
+vim.keymap.set('n', '<C-g>g', '<Cmd>Neogit kind=split_above<CR>', {noremap=true});
+
 require("nvim-treesitter.configs").setup {
     incremental_selection = {
         enable = true,
@@ -670,7 +693,7 @@ require("nvim-treesitter.configs").setup {
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "cpp",
     callback = function()
-        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", "<Cmd>10sp<CR><Cmd>te g++ -std=c++17 -Wall -Ofast -g -fsanitize=address -fsanitize=undefined % && ./a.out < std.in<CR>i", {
+        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", "<Cmd>10sp<CR><Cmd>te clang++ -std=c++17 -DONLINE_JUDGE -Wl,-z,stack-size=268435456 -Wall -Ofast -g -fsanitize=address -fsanitize=undefined % && ./a.out < std.in<CR>i", {
             silent = true,
             noremap = true
         })
@@ -1236,3 +1259,35 @@ require("cmake-tools").setup {
     refresh_rate_ms = 100, -- how often to iterate icons
   },
 }
+
+require('telescope').load_extension('git_file_history')
+
+require("telescope").setup {
+  extensions = {
+    menu = {
+      default = {
+        items = {
+          -- You can add an item of menu in the form of { "<display>", "<command>" }
+          { "Checkhealth", "checkhealth" },
+          { "Show LSP Info", "LspInfo" },
+          { "Files", "Telescope find_files" },
+
+          -- The above examples are syntax-sugars of the following;
+          { display = "Change colorscheme", value = "Telescope colorscheme" },
+        },
+      },
+      git = {
+        items = {
+          { "File History", "Telescope git_file_history" },
+          { "Branches", "Telescope git_branches" },
+          { "Commits", "Telescope git_commits" },
+          { "Stash", "Telescope git_stash" },
+          { "Status", "Telescope git_status" },
+          { "Files", "Telescope git_files" },
+        }
+      },
+    },
+  },
+}
+
+require("telescope").load_extension("menu")
