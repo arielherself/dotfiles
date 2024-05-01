@@ -1,3 +1,8 @@
+### Added by Codeium. These lines cannot be automatically removed if modified
+if command -v termium > /dev/null 2>&1; then
+  eval "$(termium shell-hook show pre)"
+fi
+### End of Codeium integration
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -136,10 +141,17 @@ emptytrash () {
 ghclone () {
     git clone "https://github.com/arielherself/$@"
 }
+# 
+
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/user/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 1 ]; then
+if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
     if [ -f "/home/user/miniconda3/etc/profile.d/conda.sh" ]; then
@@ -151,7 +163,12 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+### Added by Codeium. These lines cannot be automatically removed if modified
+if command -v termium > /dev/null 2>&1; then
+  eval "$(termium shell-hook show post)"
+fi
+### End of Codeium integration
+
+eval "$(oh-my-posh init zsh)"
+eval "$(oh-my-posh init zsh --config ~/omp-themes/atomic.omp.json)"
