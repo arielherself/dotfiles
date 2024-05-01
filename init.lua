@@ -34,6 +34,11 @@ vim.diagnostic.config({
 vim.cmd([[au CursorHold * lua vim.diagnostic.open_float(0,{scope = "cursor"})]])
 vim.g.mapleader = " ";
 vim.g['cph#dir'] = '/home/user/RustIsBestLang/';
+vim.filetype.add({
+    extension = {
+        ct = 'cpp',
+    },
+})
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -439,6 +444,8 @@ local plugins = {
       },
       config = true
     },
+    { 'Exafunction/codeium.vim' },
+    { "mistricky/codesnap.nvim", build = "make" },
 }
 local opts = { 
 }
@@ -540,6 +547,9 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.confirm({ select = true })
+      elseif vim.fn.exists('b:_codeium_completions') ~= 0 then
+        vim.fn['codeium#Accept']()
+        fallback()
       elseif luasnip_status and luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif has_words_before() then
@@ -580,7 +590,7 @@ lspconfig.clangd.setup {
     capabilities = capabilities,
     cmd = {
         "clangd",
-        "--header-insertion=never"
+        -- "--header-insertion=never"
     }
 }
 lspconfig.pyright.setup {
@@ -679,6 +689,8 @@ vim.keymap.set('n', '<leader>3', '<Cmd>r ~/RustIsBestLang/src/bin/template.cc<CR
 vim.keymap.set('n', '<A-t>', '<Cmd>BufferPick<CR>', {noremap=true});
 vim.keymap.set('n', '<C-g>p', '<Cmd>Telescope menu git<CR>', {noremap=true});
 vim.keymap.set('n', '<C-g>g', '<Cmd>Neogit kind=split_above<CR>', {noremap=true});
+vim.keymap.set('n', '<leader>y', '<Cmd>!ctext -i $(gcc -xc++ /dev/null -E -Wp,-v 2>&1 | sed -n "s,^ ,,p" | tr "\\n" ",") < % > ctext_out.cc<CR><Cmd>split ctext_out.cc<CR>:%%y+<CR><Cmd>q<CR>')
+vim.keymap.set({'v', 'x'}, '<leader>cc', '<Cmd>CodeSnap<CR>', {noremap=true});
 
 require("nvim-treesitter.configs").setup {
     incremental_selection = {
@@ -693,7 +705,7 @@ require("nvim-treesitter.configs").setup {
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "cpp",
     callback = function()
-        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", "<Cmd>10sp<CR><Cmd>te clang++ -std=c++17 -DONLINE_JUDGE -Wl,-z,stack-size=268435456 -Wall -Ofast -g -fsanitize=address -fsanitize=undefined % && ./a.out < std.in<CR>i", {
+        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", '<Cmd>10sp<CR><Cmd>te ctext -i $(gcc -xc++ /dev/null -E -Wp,-v 2>&1 | sed -n "s,^ ,,p" | tr "\\n" ",") < % > ctext_out.cc && clang++ -std=c++17 -DONLINE_JUDGE -Wl,-z,stack-size=268435456 -Wall -Ofast -g -fsanitize=address -fsanitize=undefined ctext_out.cc && ./a.out < std.in<CR>i', {
             silent = true,
             noremap = true
         })
@@ -1291,3 +1303,8 @@ require("telescope").setup {
 }
 
 require("telescope").load_extension("menu")
+
+require('codesnap').setup {
+    code_font_family = "Fira Code",
+    has_line_number = true,
+}
