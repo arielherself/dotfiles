@@ -1,4 +1,6 @@
-vim.cmd("set pumblend=15")
+vim.opt.exrc = true
+vim.cmd("set pumblend=40")
+vim.cmd("set winblend=40")
 vim.cmd("set expandtab")
 vim.cmd("set tabstop=4")
 vim.cmd("set softtabstop=4")
@@ -18,6 +20,10 @@ vim.cmd("set signcolumn=yes")
 -- vim.cmd("set iskeyword-=_")
 vim.cmd("set list")
 vim.cmd("set noequalalways")
+vim.cmd("set cmdheight=0")
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevelstart = 99
 vim.opt.guicursor = {
     "i:ver25-blinkon500-blinkoff500,a:ver25-iCursor",
 }
@@ -30,7 +36,10 @@ vim.opt.listchars = {
 }
 vim.diagnostic.config({
     update_in_insert = true,
-    float = { border = "single" },
+    float = {
+        border = "none",
+        focusable = false,
+    },
 })
 vim.cmd([[au CursorHold * lua vim.diagnostic.open_float(0,{scope = "cursor"})]])
 vim.g.mapleader = " ";
@@ -182,7 +191,7 @@ local plugins = {
 		    _G.custom_foldtext = require("arshamiser.folding").foldtext
 		    vim.opt.foldtext = "v:lua.custom_foldtext()"
 		    -- if you want to draw a tabline:
-		    vim.api.nvim_set_option("tabline", [[%{%v:lua.require("arshamiser.tabline").draw()%}]])
+		    -- vim.api.nvim_set_option("tabline", [[%{%v:lua.require("arshamiser.tabline").draw()%}]])
 	    end,
     },
     {
@@ -205,7 +214,7 @@ local plugins = {
             'jose-elias-alvarez/null-ls.nvim'
         }
     },
-    { 'simrat39/symbols-outline.nvim' },
+    { 'hedyhli/outline.nvim' },
     {
         "folke/todo-comments.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
@@ -262,46 +271,6 @@ local plugins = {
     { 'arielherself/vim-cursorword' },
     { 'm-demare/hlargs.nvim' },
     { 'chentoast/marks.nvim' },
-    {
-      "sontungexpt/sttusline",
-      dependencies = {
-          "nvim-tree/nvim-web-devicons",
-      },
-      event = { "BufEnter" },
-      config = function(_, opts)
-          require("sttusline").setup {
-              -- statusline_color = "#000000",
-              statusline_color = "StatusLine",
-
-              -- | 1 | 2 | 3
-              -- recommended: 3
-              laststatus = 3,
-              disabled = {
-                  filetypes = {
-                      -- "NvimTree",
-                      -- "lazy",
-                  },
-                  buftypes = {
-                      -- "terminal",
-                  },
-              },
-              components = {
-                  "mode",
-                  "filename",
-                  "git-branch",
-                  "git-diff",
-                  "%=",
-                  "diagnostics",
-                  "lsps-formatters",
-                  "copilot",
-                  "indent",
-                  "encoding",
-                  "pos-cursor",
-                  "pos-cursor-progress",
-              },
-          }
-      end,
-    },
     { 'gaborvecsei/usage-tracker.nvim' },
     { 'wakatime/vim-wakatime', lazy = false },
     {
@@ -441,7 +410,6 @@ local plugins = {
     { 'p00f/cphelper.nvim' },
     { "arielherself/melange-nvim"},
     { 'hrsh7th/vim-vsnip' },
-    { 'octarect/telescope-menu.nvim' },
     {
       "NeogitOrg/neogit",
       dependencies = {
@@ -457,6 +425,12 @@ local plugins = {
     -- { 'Exafunction/codeium.vim' },
     { "mistricky/codesnap.nvim", build = "make" },
     { 'rmagatti/goto-preview' },
+    {
+        "FabianWirth/search.nvim",
+        dependencies = { "nvim-telescope/telescope.nvim" }
+    },
+    { 'stevearc/dressing.nvim' },
+    { 'NvChad/nvim-colorizer.lua' },
 }
 local opts = { 
 }
@@ -512,8 +486,48 @@ require("monokai-pro").setup({
 vim.cmd([[colorscheme melange]])
 
 local builtin = require("telescope.builtin")
+require('search').setup {
+    append_tabs = {
+        {
+            'Commits',
+            builtin.git_commits,
+            available = function()
+                return vim.fn.isdirectory('.git') == 1
+            end
+        },
+        {
+            'File History',
+            builtin.git_file_history,
+            available = function()
+                return vim.fn.isdirectory('.git') == 1
+            end
+        },
+        {
+            'Branches',
+            builtin.git_branches,
+            available = function()
+                return vim.fn.isdirectory('.git') == 1
+            end
+        },
+        {
+            'Stash',
+            builtin.git_stash,
+            available = function()
+                return vim.fn.isdirectory('.git') == 1
+            end
+        },
+        {
+            'Status',
+            builtin.git_status,
+            available = function()
+                return vim.fn.isdirectory('.git') == 1
+            end
+        },
+    }
+}
 vim.keymap.set('n', '<leader>p', builtin.find_files, {})
-vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
+-- vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>g', '<Cmd>lua require("search").open({ tab_name = "Grep" })<CR>')
 
 local config = require("nvim-treesitter.configs")
 config.setup({
@@ -594,9 +608,9 @@ cmp.setup({
 -- Setup language servers.
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-lspconfig.svls.setup {
-    capabilities = capabilities
-}
+-- lspconfig.svls.setup {
+--     capabilities = capabilities
+-- }
 lspconfig.clangd.setup {
     capabilities = capabilities,
     cmd = {
@@ -619,6 +633,17 @@ lspconfig.rust_analyzer.setup {
 }
 lspconfig.lua_ls.setup {
     capabilities = capabilities
+}
+
+local lspconfutil = require 'lspconfig/util'
+local root_pattern = lspconfutil.root_pattern("veridian.yml", ".git")
+require('lspconfig').veridian.setup {
+    cmd = { 'veridian' },
+    root_dir = function(fname)
+        local filename = lspconfutil.path.is_absolute(fname) and fname
+        or lspconfutil.path.join(vim.loop.cwd(), fname)
+        return root_pattern(filename) or lspconfutil.path.dirname(filename)
+    end;
 }
 
 -- Global mappings.
@@ -680,13 +705,13 @@ vim.keymap.set('i', '<Home>', '<ESC>^i')
 vim.keymap.set('i', '<C-a>', '<ESC>ggVG')
 vim.keymap.set('n', '<C-a>', 'ggVG')
 vim.keymap.set('n', '<leader>`', '<Cmd>split<CR><Cmd>terminal<CR>i')
-vim.keymap.set('n', '<leader>l', '<Cmd>40vs std.in<CR>')
 vim.keymap.set('n', '<leader>n', '<Cmd>tabnew<CR>')
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {noremap=true})
-vim.keymap.set('n', '<leader>s', '<Cmd>SymbolsOutline<CR>')
+vim.keymap.set('n', '<leader>s', '<Cmd>Outline<CR>')
 vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")
 vim.keymap.set('n', '<leader>t', '<Cmd>TodoTelescope<CR>')
+vim.keymap.set('n', '<leader>m', '<Cmd>Tele marks<CR>')
 vim.keymap.set('v', "<C-S-Down>", "dpV`]")
 vim.keymap.set('v', "<C-S-Up>", "dkPV`]")
 vim.keymap.set('n', '<C-p>', '<Cmd>Legendary<CR>', {noremap=true})
@@ -696,13 +721,8 @@ vim.keymap.set('n', '<leader>dw', '<Cmd>TroubleToggle workspace_diagnostics<CR>'
 vim.keymap.set('n', '<leader>dq', '<Cmd>TroubleToggle quickfix<CR>');
 vim.keymap.set('n', '<leader>w', '<Cmd>TroubleToggle lsp_definitions<CR>');
 vim.keymap.set('n', '<leader>r', '<Cmd>TroubleToggle lsp_references<CR>');
-vim.keymap.set('n', '<leader>1', '<Cmd>CphReceive<CR>');
-vim.keymap.set('n', '<leader>2', '<Cmd>CphTest<CR>');
-vim.keymap.set('n', '<leader>3', '<Cmd>r ~/RustIsBestLang/src/bin/template.cc<CR>G');
 vim.keymap.set('n', '<A-t>', '<Cmd>BufferPick<CR>', {noremap=true});
-vim.keymap.set('n', '<C-g>p', '<Cmd>Telescope menu git<CR>', {noremap=true});
-vim.keymap.set('n', '<C-g>g', '<Cmd>Neogit kind=split_above<CR>', {noremap=true});
-vim.keymap.set('n', '<leader>y', '<Cmd>!ctext -i $(gcc -xc++ /dev/null -E -Wp,-v 2>&1 | sed -n "s,^ ,,p" | tr "\\n" ",") < % > ctext_out.cc<CR><Cmd>split ctext_out.cc<CR>:%%y+<CR><Cmd>q<CR>')
+vim.keymap.set('n', '<C-g>', '<Cmd>Neogit kind=split_above<CR>', {noremap=true});
 vim.keymap.set({'v', 'x'}, '<leader>cc', '<Cmd>CodeSnap<CR>', {noremap=true});
 
 require("nvim-treesitter.configs").setup {
@@ -715,27 +735,8 @@ require("nvim-treesitter.configs").setup {
     },
 }
 
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "cpp",
-    callback = function()
-        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", '<Cmd>10sp<CR><Cmd>te ctext -i $(gcc -xc++ /dev/null -E -Wp,-v 2>&1 | sed -n "s,^ ,,p" | tr "\\n" ",") < % > ctext_out.cc && clang++ -std=c++17 -DONLINE_JUDGE -Wl,-z,stack-size=268435456 -Wall -Ofast -g -fsanitize=address -fsanitize=undefined ctext_out.cc && ./a.out < std.in<CR>i', {
-            silent = true,
-            noremap = true
-        })
-    end,
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "python",
-    callback = function()
-        vim.api.nvim_buf_set_keymap(0, 'n', "<leader>b", "<Cmd>10sp<CR><Cmd>te python3 %<CR>i", {
-            silent = true,
-            noremap = true
-        })
-    end,
-})
-
 vim.api.nvim_create_user_command('Backup', '!git add . && git commit -S -m "backup" && git push', {})
+vim.cmd('cabbrev backup Backup')
 
 require('Comment').setup()
 local str = require("cmp.utils.str")
@@ -819,7 +820,7 @@ prettier.setup({
   },
 })
 
-require("symbols-outline").setup()
+require("outline").setup()
 
 require("todo-comments").setup()
 
@@ -1031,36 +1032,6 @@ require("cmake-tools").setup {
 
 require('telescope').load_extension('git_file_history')
 
-require("telescope").setup {
-  extensions = {
-    menu = {
-      default = {
-        items = {
-          -- You can add an item of menu in the form of { "<display>", "<command>" }
-          { "Checkhealth", "checkhealth" },
-          { "Show LSP Info", "LspInfo" },
-          { "Files", "Telescope find_files" },
-
-          -- The above examples are syntax-sugars of the following;
-          { display = "Change colorscheme", value = "Telescope colorscheme" },
-        },
-      },
-      git = {
-        items = {
-          { "File History", "Telescope git_file_history" },
-          { "Branches", "Telescope git_branches" },
-          { "Commits", "Telescope git_commits" },
-          { "Stash", "Telescope git_stash" },
-          { "Status", "Telescope git_status" },
-          { "Files", "Telescope git_files" },
-        }
-      },
-    },
-  },
-}
-
-require("telescope").load_extension("menu")
-
 require('codesnap').setup {
     code_font_family = "Fira Code",
     has_line_number = true,
@@ -1070,3 +1041,4 @@ require('goto-preview').setup {
     default_mappings = true;
 }
 
+require('colorizer').setup {}
