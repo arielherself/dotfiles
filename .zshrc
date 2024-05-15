@@ -1,11 +1,3 @@
-### Added by Codeium. These lines cannot be automatically removed if modified
-if command -v termium > /dev/null 2>&1; then
-  eval "$(termium shell-hook show pre)"
-fi
-### End of Codeium integration
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -79,7 +71,6 @@ plugins=(
 	git
 	zsh-syntax-highlighting
 	zsh-autosuggestions
-    wakatime
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -119,6 +110,10 @@ alias leetcode="nvim leetcode.nvim"
 export LD_LIBRARY_PATH=/usr/lib:/usr/local/cuda/lib65:$LD_LIBRARY_PATH
 export PATH=/usr/local/cuda/bin:$PATH
 
+me () {
+    md "$@" && cd "$@"
+}
+
 __move_to_trash () {
     mv "$@" ~/.trash
 }
@@ -143,32 +138,7 @@ ghclone () {
 }
 # 
 
-export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/user/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/user/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/user/miniconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/user/miniconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-
-
-### Added by Codeium. These lines cannot be automatically removed if modified
-if command -v termium > /dev/null 2>&1; then
-  eval "$(termium shell-hook show post)"
-fi
-### End of Codeium integration
 
 eval "$(oh-my-posh init zsh)"
 eval "$(oh-my-posh init zsh --config ~/omp-themes/atomic.omp.json)"
