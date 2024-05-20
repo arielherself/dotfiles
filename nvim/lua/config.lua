@@ -300,7 +300,7 @@ local plugins = {
     },
     { 'Civitasv/cmake-tools.nvim' },
     { 'p00f/cphelper.nvim' },
-    { "arielherself/melange-nvim"},
+    { "arielherself/melange-nvim", commit = "3d787ca" },
     { 'hrsh7th/vim-vsnip' },
     {
       "NeogitOrg/neogit",
@@ -936,3 +936,5 @@ require('goto-preview').setup {
 }
 
 require('colorizer').setup {}
+
+require('ibl').setup {}

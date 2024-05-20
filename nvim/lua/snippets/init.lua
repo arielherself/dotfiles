@@ -179,3 +179,63 @@ ls.add_snippets(nil, {
         })
     }
 })
+local edmonds_karp = require('snippets.edmonds-karp')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'edmonds_karp',
+            namr = 'edmonds_karp',
+            dscr = 'Max flow using Edmonds-Karp',
+        },{
+            text(lines(edmonds_karp))
+        })
+    }
+})
+local dinic = require('snippets.dinic')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'dinic',
+            namr = 'dinic',
+            dscr = 'Max flow using Dinic',
+        },{
+            text(lines(dinic))
+        })
+    }
+})
+local mcmf = require('snippets.mcmf')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'mcmf',
+            namr = 'mcmf',
+            dscr = 'Minimum cost max flow',
+        },{
+            text(lines(mcmf))
+        })
+    }
+})
+local bounded_mcmf = require('snippets.bounded-mcmf')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'bounded_mcmf',
+            namr = 'bounded_mcmf',
+            dscr = 'Minimum cost (max) flow with bounds',
+        },{
+            text(lines(bounded_mcmf))
+        })
+    }
+})
+local bounded_flow = require('snippets.bounded-flow')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'bounded_flow',
+            namr = 'bounded_flow',
+            dscr = 'Max/min-flow with bounds',
+        },{
+            text(lines(bounded_flow))
+        })
+    }
+})
