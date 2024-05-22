@@ -239,3 +239,39 @@ ls.add_snippets(nil, {
         })
     }
 })
+local soe = require('snippets.soe')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'soe',
+            namr = 'soe',
+            dscr = 'Sieve of Euler',
+        },{
+            text(lines(soe))
+        })
+    }
+})
+local get_phi = require('snippets.get-phi')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'get_phi',
+            namr = 'get_phi',
+            dscr = 'Sieve of Euler',
+        },{
+            text(lines(get_phi))
+        })
+    }
+})
+local hld = require('snippets.hld')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'hld',
+            namr = 'hld',
+            dscr = 'Heavy-light decomposition',
+        },{
+            text(lines(hld))
+        })
+    }
+})

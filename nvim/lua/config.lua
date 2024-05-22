@@ -618,6 +618,27 @@ vim.keymap.set('n', '<leader>r', '<Cmd>TroubleToggle lsp_references<CR>');
 vim.keymap.set('n', '<A-t>', '<Cmd>BufferPick<CR>', {noremap=true});
 vim.keymap.set('n', '<C-g>', '<Cmd>Neogit kind=split_above<CR>', {noremap=true});
 vim.keymap.set({'v', 'x'}, '<leader>cc', '<Cmd>CodeSnap<CR>', {noremap=true});
+vim.keymap.set('n', '<C-s>', '<Cmd>PopupSaveas<CR>', {noremap=true});
+
+vim.api.nvim_create_user_command('PopupSaveas', function()
+  vim.ui.input({ prompt = 'Save As: ' }, function(input)
+    if input ~= nil then
+      if vim.fn.filereadable(input) == 1 then
+        local choice = vim.fn.input('File exists. Overwrite? ([y]/n): ')
+        if choice ~= 'n' then
+          vim.cmd('saveas! ' .. input)
+          print('File overwritten: ' .. input)
+        else
+          print('Cancelled')
+        end
+      else
+        vim.cmd('saveas ' .. input)
+        print('File saved as: ' .. input)
+      end
+    else
+      print('Save As cancelled')
+    end
+  end)end, {})
 
 require("nvim-treesitter.configs").setup {
     incremental_selection = {
