@@ -100,7 +100,7 @@ local plugins = {
             'folke/neodev.nvim',
         },
         opts = {
-            -- inlay_hints = { enabled = true, },
+            inlay_hints = { enabled = true, },
             -- codelens = { enabled = true, },
         },
         config = function(_, servers)
@@ -136,7 +136,6 @@ local plugins = {
         },
         version = '^1.0.0', -- optional: only update when a new 1.x version is released
     },
-    { 'lvimuser/lsp-inlayhints.nvim' },
     {
         "ray-x/lsp_signature.nvim",
         event = "VeryLazy",
@@ -181,13 +180,16 @@ local plugins = {
 		    "famiu/feline.nvim",
 		    "rebelot/heirline.nvim",
 		    "kyazdani42/nvim-web-devicons",
+            "lewis6991/gitsigns.nvim",
 	    },
 	    config = function()
+            require('gitsigns').setup()
+
 		    -- ignore any parts you don't want to use
 		    vim.cmd.colorscheme("arshamiser_light")
-		    require("arshamiser.feliniser")
+		    -- require("arshamiser.feliniser")
 		    -- or:
-		    -- require("arshamiser.heirliniser")
+		    require("arshamiser.heirliniser")
 
 		    _G.custom_foldtext = require("arshamiser.folding").foldtext
 		    vim.opt.foldtext = "v:lua.custom_foldtext()"
@@ -323,6 +325,7 @@ local plugins = {
     },
     { 'stevearc/dressing.nvim' },
     { 'NvChad/nvim-colorizer.lua' },
+    { 'debugloop/telescope-undo.nvim' },
 }
 local opts = { 
 }
@@ -573,21 +576,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-require("lsp-inlayhints").setup()
-vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = "LspAttach_inlayhints",
-  callback = function(args)
-    if not (args.data and args.data.client_id) then
-      return
-    end
-
-    local bufnr = args.buf
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    require("lsp-inlayhints").on_attach(client, bufnr)
-  end,
-})
-
 require("lsp_signature").setup({
     handler_opts = { border = "none" },
 })
@@ -619,6 +607,7 @@ vim.keymap.set('n', '<A-t>', '<Cmd>BufferPick<CR>', {noremap=true});
 vim.keymap.set('n', '<C-g>', '<Cmd>Neogit kind=split_above<CR>', {noremap=true});
 vim.keymap.set({'v', 'x'}, '<leader>cc', '<Cmd>CodeSnap<CR>', {noremap=true});
 vim.keymap.set('n', '<C-s>', '<Cmd>PopupSaveas<CR>', {noremap=true});
+vim.keymap.set('n', '<S-U>', '<Cmd>Telescope undo<CR>', {noremap=true})
 
 vim.api.nvim_create_user_command('PopupSaveas', function()
   vim.ui.input({ prompt = 'Save As: ' }, function(input)
@@ -750,8 +739,8 @@ local opts = { noremap = true, silent = true }
 map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
 map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
 -- Re-order to previous/next
-map('n', '<A-<>', '<Cmd>BufferMovePrevious<CR>', opts)
-map('n', '<A->>', '<Cmd>BufferMoveNext<CR>', opts)
+map('n', '<M-S-,>', '<Cmd>BufferMovePrevious<CR>', opts)  -- Configuration for kitty
+map('n', '<M-S-.>', '<Cmd>BufferMoveNext<CR>', opts)
 map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts);
 map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts);
 
@@ -946,6 +935,7 @@ require("cmake-tools").setup {
 }
 
 require('telescope').load_extension('git_file_history')
+require('telescope').load_extension('undo')
 
 require('codesnap').setup {
     code_font_family = "Fira Code",
@@ -959,3 +949,5 @@ require('goto-preview').setup {
 require('colorizer').setup {}
 
 require('ibl').setup {}
+
+vim.lsp.inlay_hint.enable(nil)
