@@ -174,7 +174,7 @@ local plugins = {
         },
     },
     {
-    	"arsham/arshamiser.nvim",
+    	"arielherself/arshamiser.nvim",
 	    dependencies = {
 		    "arsham/arshlib.nvim",
 		    "famiu/feline.nvim",
@@ -661,7 +661,8 @@ cmp.setup {
             before = function (entry, vim_item)
                 local word = entry:get_insert_text()
                 if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-                    word = vim.lsp.util.parse_snippet(word)
+                    word = word
+                    -- word = vim.lsp.util.parse_snippet(word)
                 end
                 word = str.oneline(word)
                 if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet and string.sub(vim_item.abbr, -1, -1) == "~" then
