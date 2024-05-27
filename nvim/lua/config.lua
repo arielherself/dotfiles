@@ -1,4 +1,5 @@
-vim.opt.exrc = true
+vim.cmd("set encoding=utf-8")
+vim.cmd("set exrc")
 vim.cmd("set pumblend=40")
 vim.cmd("set winblend=40")
 vim.cmd("set expandtab")
@@ -21,20 +22,13 @@ vim.cmd("set signcolumn=yes")
 vim.cmd("set list")
 vim.cmd("set noequalalways")
 vim.cmd("set cmdheight=0")
-vim.opt.scrolloff = 10
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
-vim.opt.foldlevelstart = 99
-vim.opt.guicursor = {
-    "i:ver25-blinkon500-blinkoff500,a:ver25-iCursor",
-}
-vim.opt.listchars = {
-    eol = "↵",
-    tab = "→ ",
-    trail = "␣",
-    precedes = "«",
-    extends = "»"
-}
+vim.cmd("set scrolloff=10")
+vim.cmd("set foldmethod=expr")
+vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
+vim.cmd("set foldlevelstart=99")
+vim.cmd("set guicursor=i:ver25-blinkon500-blinkoff500,a:ver25-iCursor")
+vim.cmd("set list")
+vim.cmd('set listchars="eol:↵,tab:→\\ ,trail=␣,precedes=«,extends=»"')
 vim.diagnostic.config({
     update_in_insert = true,
     float = {
@@ -175,12 +169,15 @@ local plugins = {
     },
     {
     	"arielherself/arshamiser.nvim",
+        branch = "dev",
 	    dependencies = {
 		    "arsham/arshlib.nvim",
 		    "famiu/feline.nvim",
 		    "rebelot/heirline.nvim",
 		    "kyazdani42/nvim-web-devicons",
             "lewis6991/gitsigns.nvim",
+            "nanotee/sqls.nvim",
+            "arsham/listish.nvim",
 	    },
 	    config = function()
             require('gitsigns').setup()
@@ -326,8 +323,9 @@ local plugins = {
     { 'stevearc/dressing.nvim' },
     { 'NvChad/nvim-colorizer.lua' },
     { 'debugloop/telescope-undo.nvim' },
+    { "arielherself/neodev.nvim", opts = {} },
 }
-local opts = { 
+local opts = {
 }
 
 require("lazy").setup(plugins, opts)
@@ -586,7 +584,7 @@ vim.keymap.set('i', '<C-x>', '<ESC>ddi')
 vim.keymap.set('i', '<Home>', '<ESC>^i')
 vim.keymap.set('i', '<C-a>', '<ESC>ggVG')
 vim.keymap.set('n', '<C-a>', 'ggVG')
-vim.keymap.set('n', '<leader>`', '<Cmd>split<CR><Cmd>terminal<CR>i')
+vim.keymap.set('n', '<leader>`', '<Cmd>split<CR><Cmd>terminal zsh<CR>i')
 vim.keymap.set('n', '<leader>n', '<Cmd>tabnew<CR>')
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {noremap=true})
 vim.keymap.set('n', '<leader>s', '<Cmd>Outline<CR>')
@@ -608,6 +606,9 @@ vim.keymap.set('n', '<C-g>', '<Cmd>Neogit kind=split_above<CR>', {noremap=true})
 vim.keymap.set({'v', 'x'}, '<leader>cc', '<Cmd>CodeSnap<CR>', {noremap=true});
 vim.keymap.set('n', '<C-s>', '<Cmd>PopupSaveas<CR>', {noremap=true});
 vim.keymap.set('n', '<S-U>', '<Cmd>Telescope undo<CR>', {noremap=true})
+vim.keymap.set('n', '<C-CR>', 'i{<ESC>A}<ESC>%li<CR><ESC>$i<CR><ESC>k^', {noremap=true})
+vim.keymap.set('n', '<C-BS>', 'd0i<BS><ESC>l', {noremap=true})
+vim.keymap.set('i', '<C-BS>', '<C-u><BS>', {noremap=true})
 
 vim.api.nvim_create_user_command('PopupSaveas', function()
   vim.ui.input({ prompt = 'Save As: ' }, function(input)
@@ -951,4 +952,8 @@ require('colorizer').setup {}
 
 require('ibl').setup {}
 
-vim.lsp.inlay_hint.enable(nil)
+vim.api.nvim_create_autocmd("LspAttach",  {
+    callback = function(ev)
+        vim.lsp.inlay_hint.enable(true)
+    end,
+})
