@@ -102,19 +102,6 @@ ls.add_snippets(nil, {
     }
 })
 
-local hash_deque = require('snippets.hash-deque')
-ls.add_snippets(nil, {
-    cpp = {
-        snip({
-            trig = 'hash_deque',
-            namr = 'hash_deque',
-            dscr = 'Hashable Deque',
-        },{
-            text(lines(hash_deque))
-        })
-    }
-})
-
 local hash_vec = require('snippets.hash-vec')
 ls.add_snippets(nil, {
     cpp = {

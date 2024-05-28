@@ -29,6 +29,7 @@ vim.cmd("set foldlevelstart=99")
 vim.cmd("set guicursor=i:ver25-blinkon500-blinkoff500,a:ver25-iCursor")
 vim.cmd("set list")
 vim.cmd('set listchars="eol:↵,tab:→\\ ,trail=␣,precedes=«,extends=»"')
+vim.cmd("set noshowmode")
 vim.diagnostic.config({
     update_in_insert = true,
     float = {
@@ -113,6 +114,8 @@ local plugins = {
             "L3MON4D3/LuaSnip",
             "saadparwaiz1/cmp_luasnip",
             "hrsh7th/cmp-emoji",
+            "chrisgrieser/cmp-nerdfont",
+            "hrsh7th/cmp-calc",
         },
     },
     {
@@ -150,7 +153,7 @@ local plugins = {
         }
     },
     { 'jdhao/better-escape.vim' },
-    { 
+    {
         'Pocco81/auto-save.nvim',
         opts = {
             enabled = true,
@@ -495,6 +498,9 @@ cmp.setup({
     { name = "luasnip" }, -- snippets
     { name = "buffer" }, -- text within the current buffer
     { name = "path" }, -- file system paths
+    { name = "emoji" },
+    { name = "nerdfont" },
+    { name = "calc" },
   }),
 })
 
@@ -592,8 +598,8 @@ vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")
 vim.keymap.set('n', '<leader>t', '<Cmd>TodoTelescope<CR>')
 vim.keymap.set('n', '<leader>m', '<Cmd>Tele marks<CR>')
-vim.keymap.set('v', "<C-S-Down>", "dpV`]")
-vim.keymap.set('v', "<C-S-Up>", "dkPV`]")
+vim.keymap.set('v', "<C-S-j>", "dpV`]")
+vim.keymap.set('v', "<C-S-k>", "dkPV`]")
 vim.keymap.set('n', '<C-p>', '<Cmd>Legendary<CR>', {noremap=true})
 vim.keymap.set({'n', 'v', 'x'}, '<leader>h', '<Cmd>HopWord<CR>')
 vim.keymap.set('n', '<leader>dd', '<Cmd>TroubleToggle document_diagnostics<CR>');
@@ -609,6 +615,7 @@ vim.keymap.set('n', '<S-U>', '<Cmd>Telescope undo<CR>', {noremap=true})
 vim.keymap.set('n', '<C-CR>', 'i{<ESC>A}<ESC>%li<CR><ESC>$i<CR><ESC>k^', {noremap=true})
 vim.keymap.set('n', '<C-BS>', 'd0i<BS><ESC>l', {noremap=true})
 vim.keymap.set('i', '<C-BS>', '<C-u><BS>', {noremap=true})
+vim.keymap.set('n', '<leader><leader>', '<Cmd>Telescope help_tags<CR>', {noremap=true})
 
 vim.api.nvim_create_user_command('PopupSaveas', function()
   vim.ui.input({ prompt = 'Save As: ' }, function(input)
@@ -641,7 +648,7 @@ require("nvim-treesitter.configs").setup {
 }
 
 vim.api.nvim_create_user_command('Backup', '!git add . && git commit -S -m "backup" && git push', {})
-vim.cmd('cabbrev backup Backup')
+vim.api.nvim_create_user_command('Config', 'Explore ~/.config/nvim', {})
 
 require('Comment').setup()
 local str = require("cmp.utils.str")
@@ -957,3 +964,4 @@ vim.api.nvim_create_autocmd("LspAttach",  {
         vim.lsp.inlay_hint.enable(true)
     end,
 })
+
