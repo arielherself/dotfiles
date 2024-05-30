@@ -28,7 +28,7 @@ private:
         if (s != t) push(p, m - s + 1, t - m);
         if (x <= m) set(s, m, p * 2, x, c);
         else set(m + 1, t, p * 2 + 1, x, c);
-        d[p] = d[p * 2] + d[p * 2 + 1];
+        pull(p);
     }
     
     void range_apply(size_type s, size_type t, size_type p, size_type l, size_type r, const tag_type& c) {

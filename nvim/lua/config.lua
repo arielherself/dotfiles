@@ -60,11 +60,12 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
+    { 'nvim-lua/plenary.nvim' },
+    { 'rcarriga/nvim-notify' },
     {"loctvl842/monokai-pro.nvim", name="monokai", priority=1000},
     {
         'nvim-telescope/telescope.nvim', tag = '0.1.5',
         dependencies = {
-            'nvim-lua/plenary.nvim',
             {
                 "isak102/telescope-git-file-history.nvim",
                 dependencies = { "tpope/vim-fugitive" }
@@ -76,7 +77,6 @@ local plugins = {
     	"nvim-neo-tree/neo-tree.nvim",
     	branch = "v3.x",
     	dependencies = {
-      	    "nvim-lua/plenary.nvim",
             "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
             "MunifTanjim/nui.nvim",
             "3rd/image.nvim"
@@ -127,7 +127,7 @@ local plugins = {
         init = function() vim.g.barbar_auto_setup = false end,
         opts = {
         -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-        -- animation = true,
+        animation = false,
         -- insert_at_start = true,
         -- …etc.
         },
@@ -178,9 +178,9 @@ local plugins = {
 		    "famiu/feline.nvim",
 		    "rebelot/heirline.nvim",
 		    "kyazdani42/nvim-web-devicons",
-            "lewis6991/gitsigns.nvim",
-            "nanotee/sqls.nvim",
-            "arsham/listish.nvim",
+        "lewis6991/gitsigns.nvim",
+        "nanotee/sqls.nvim",
+        "arsham/listish.nvim",
 	    },
 	    config = function()
             require('gitsigns').setup()
@@ -220,7 +220,6 @@ local plugins = {
     { 'hedyhli/outline.nvim' },
     {
         "folke/todo-comments.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
         opts = {
             -- your configuration comes here
             -- or leave it empty to use the default settings
@@ -258,10 +257,10 @@ local plugins = {
       -- sqlite is only needed if you want to use frecency sorting
       -- dependencies = { 'kkharji/sqlite.lua' }
     },
-    {
-      'stevearc/dressing.nvim',
-      opts = {},
-    },
+    -- {
+    --   'stevearc/dressing.nvim',
+    --   opts = {},
+    -- },
     {
       "folke/twilight.nvim",
       opts = {
@@ -302,12 +301,12 @@ local plugins = {
     },
     { 'Civitasv/cmake-tools.nvim' },
     { 'p00f/cphelper.nvim' },
-    { "arielherself/melange-nvim", commit = "3d787ca" },
+    -- { dir = '/home/user/Documents/melange-nvim' },
+    { "arielherself/melange-nvim" },
     { 'hrsh7th/vim-vsnip' },
     {
       "NeogitOrg/neogit",
       dependencies = {
-        "nvim-lua/plenary.nvim",         -- required
         "sindrets/diffview.nvim",        -- optional - Diff integration
 
         -- Only one of these is needed, not both.
@@ -323,15 +322,16 @@ local plugins = {
         "FabianWirth/search.nvim",
         dependencies = { "nvim-telescope/telescope.nvim" }
     },
-    { 'stevearc/dressing.nvim' },
     { 'NvChad/nvim-colorizer.lua' },
     { 'debugloop/telescope-undo.nvim' },
     { "arielherself/neodev.nvim", opts = {} },
+    {
+      "AckslD/nvim-neoclip.lua",
+    },
 }
-local opts = {
-}
+require("lazy").setup(plugins, {})
 
-require("lazy").setup(plugins, opts)
+vim.notify = require("notify")
 
 require("monokai-pro").setup({
   transparent_background = true,
@@ -339,13 +339,13 @@ require("monokai-pro").setup({
   devicons = true, -- highlight the icons of `nvim-web-devicons`
   styles = {
     comment = { italic = true },
-    keyword = { italic = true }, -- any other keyword
+    keyword = { italic = false }, -- any other keyword
     type = { italic = false }, -- (preferred) int, long, char, etc
-    storageclass = { italic = true }, -- static, register, volatile, etc
-    structure = { italic = true }, -- struct, union, enum, etc
-    parameter = { italic = true }, -- parameter pass in function
-    annotation = { italic = true },
-    tag_attribute = { italic = true }, -- attribute of tag in reactjs
+    storageclass = { italic = false }, -- static, register, volatile, etc
+    structure = { italic = false }, -- struct, union, enum, etc
+    parameter = { italic = false }, -- parameter pass in function
+    annotation = { italic = false },
+    tag_attribute = { italic = false }, -- attribute of tag in reactjs
   },
   filter = "spectrum", -- classic | octagon | pro | machine | ristretto | spectrum
   -- Enable this will disable filter option
@@ -421,9 +421,9 @@ require('search').setup {
         },
     }
 }
-vim.keymap.set('n', '<leader>p', builtin.find_files, {})
+vim.keymap.set('n', '<leader>gp', builtin.find_files, {})
 -- vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>g', '<Cmd>lua require("search").open({ tab_name = "Grep" })<CR>')
+vim.keymap.set('n', '<leader>gg', '<Cmd>lua require("search").open({ tab_name = "Grep" })<CR>')
 
 local config = require("nvim-treesitter.configs")
 config.setup({
@@ -616,6 +616,7 @@ vim.keymap.set('n', '<C-CR>', 'i{<ESC>A}<ESC>%li<CR><ESC>$i<CR><ESC>k^', {norema
 vim.keymap.set('n', '<C-BS>', 'd0i<BS><ESC>l', {noremap=true})
 vim.keymap.set('i', '<C-BS>', '<C-u><BS>', {noremap=true})
 vim.keymap.set('n', '<leader><leader>', '<Cmd>Telescope help_tags<CR>', {noremap=true})
+vim.keymap.set('n', '<leader>p', '<Cmd>Telescope neoclip a extra=plus,unnamedplus<CR>', {noremap=true})
 
 vim.api.nvim_create_user_command('PopupSaveas', function()
   vim.ui.input({ prompt = 'Save As: ' }, function(input)
@@ -965,3 +966,4 @@ vim.api.nvim_create_autocmd("LspAttach",  {
     end,
 })
 
+require('neoclip').setup {}

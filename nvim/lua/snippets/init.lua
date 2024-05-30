@@ -262,3 +262,16 @@ ls.add_snippets(nil, {
         })
     }
 })
+local factcount = require('snippets.factcount')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'factcount',
+            namr = 'factcount',
+            dscr = 'Get primes and the count of factors of each number',
+        },{
+            text(lines(factcount))
+        })
+    }
+})
+
