@@ -19,16 +19,13 @@ vim.cmd("set whichwrap+=<,>,[,]")
 vim.cmd("set relativenumber")
 vim.cmd("set signcolumn=yes")
 -- vim.cmd("set iskeyword-=_")
-vim.cmd("set list")
 vim.cmd("set noequalalways")
 vim.cmd("set cmdheight=0")
 vim.cmd("set scrolloff=10")
 vim.cmd("set foldmethod=expr")
 vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
 vim.cmd("set foldlevelstart=99")
-vim.cmd("set guicursor=i:ver25-blinkon500-blinkoff500,a:ver25-iCursor")
-vim.cmd("set list")
-vim.cmd('set listchars="eol:↵,tab:→\\ ,trail=␣,precedes=«,extends=»"')
+-- vim.cmd("set guicursor=i:ver25-blinkon500-blinkoff500,a:ver25-iCursor")
 vim.cmd("set noshowmode")
 vim.diagnostic.config({
     update_in_insert = true,
@@ -170,6 +167,9 @@ local plugins = {
             "tpope/vim-obsession",
         },
     },
+    -- {
+    --   "EdenEast/nightfox.nvim",
+    -- },
     {
     	"arielherself/arshamiser.nvim",
         branch = "dev",
@@ -186,7 +186,7 @@ local plugins = {
             require('gitsigns').setup()
 
 		    -- ignore any parts you don't want to use
-		    vim.cmd.colorscheme("arshamiser_light")
+		    vim.cmd.colorscheme("arshamiser_dark")
 		    -- require("arshamiser.feliniser")
 		    -- or:
 		    require("arshamiser.heirliniser")
@@ -257,10 +257,10 @@ local plugins = {
       -- sqlite is only needed if you want to use frecency sorting
       -- dependencies = { 'kkharji/sqlite.lua' }
     },
-    -- {
-    --   'stevearc/dressing.nvim',
-    --   opts = {},
-    -- },
+    {
+      'stevearc/dressing.nvim',
+      opts = {},
+    },
     {
       "folke/twilight.nvim",
       opts = {
@@ -328,6 +328,20 @@ local plugins = {
     {
       "AckslD/nvim-neoclip.lua",
     },
+    {
+      "danielfalk/smart-open.nvim",
+      branch = "0.2.x",
+      config = function()
+        require("telescope").load_extension("smart_open")
+      end,
+      dependencies = {
+        "kkharji/sqlite.lua",
+        -- Only required if using match_algorithm fzf
+        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+        -- Optional.  If installed, native fzy will be used when match_algorithm is fzy
+        { "nvim-telescope/telescope-fzy-native.nvim" },
+      },
+    },
 }
 require("lazy").setup(plugins, {})
 
@@ -380,6 +394,7 @@ require("monokai-pro").setup({
 
 -- vim.cmd([[colorscheme monokai-pro]])
 vim.cmd([[colorscheme melange]])
+-- vim.cmd.colorscheme("duskfox")
 
 local builtin = require("telescope.builtin")
 require('search').setup {
@@ -421,9 +436,9 @@ require('search').setup {
         },
     }
 }
-vim.keymap.set('n', '<leader>gp', builtin.find_files, {})
+vim.keymap.set('n', '<leader>o', require("telescope").extensions.smart_open.smart_open, {})
 -- vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
-vim.keymap.set('n', '<leader>gg', '<Cmd>lua require("search").open({ tab_name = "Grep" })<CR>')
+vim.keymap.set('n', '<leader>g', '<Cmd>lua require("search").open({ tab_name = "Grep" })<CR>')
 
 local config = require("nvim-treesitter.configs")
 config.setup({
@@ -967,3 +982,4 @@ vim.api.nvim_create_autocmd("LspAttach",  {
 })
 
 require('neoclip').setup {}
+
