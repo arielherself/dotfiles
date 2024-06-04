@@ -59,7 +59,6 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
     { 'nvim-lua/plenary.nvim' },
     { 'rcarriga/nvim-notify' },
-    {"loctvl842/monokai-pro.nvim", name="monokai", priority=1000},
     {
         'nvim-telescope/telescope.nvim', tag = '0.1.5',
         dependencies = {
@@ -76,7 +75,7 @@ local plugins = {
     	dependencies = {
             "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
             "MunifTanjim/nui.nvim",
-            "3rd/image.nvim"
+            "3rd/image.nvim",
         }
     },
     {
@@ -89,7 +88,7 @@ local plugins = {
             -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
             { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
             -- Additional lua configuration, makes nvim stuff amazing!
-            'folke/neodev.nvim',
+            -- 'folke/neodev.nvim',
         },
         opts = {
             inlay_hints = { enabled = true, },
@@ -131,7 +130,7 @@ local plugins = {
         version = '^1.0.0', -- optional: only update when a new 1.x version is released
     },
     {
-        "ray-x/lsp_signature.nvim",
+        "ray-x/lsp_signature.nvim",  -- Show signature on `K` stroke
         event = "VeryLazy",
         opts = {},
         config = function(_, opts) require'lsp_signature'.setup(opts) end
@@ -149,7 +148,9 @@ local plugins = {
             -- refer to the configuration section below
         }
     },
-    { 'jdhao/better-escape.vim' },
+    { 
+        'jdhao/better-escape.vim'  -- `jk` without causing `j` to have delay
+    },
     {
         'Pocco81/auto-save.nvim',
         opts = {
@@ -162,16 +163,13 @@ local plugins = {
         opts = {}
     },
     {
-        "dhruvasagar/vim-prosession",
+        "dhruvasagar/vim-prosession",  -- save sessions
         dependencies = {
             "tpope/vim-obsession",
         },
     },
-    -- {
-    --   "EdenEast/nightfox.nvim",
-    -- },
     {
-    	"arielherself/arshamiser.nvim",
+    	"arielherself/arshamiser.nvim",  -- status bar
         branch = "dev",
 	    dependencies = {
 		    "arsham/arshlib.nvim",
@@ -198,13 +196,15 @@ local plugins = {
 	    end,
     },
     {
-        'numToStr/Comment.nvim',
+        'numToStr/Comment.nvim',  -- `gc` for commenting
         opts = {
             -- add any options here
         },
         lazy = false,
     },
-    { 'onsails/lspkind.nvim' },
+    {
+        'onsails/lspkind.nvim' -- icon in completion menu
+    },
     {
         'MunifTanjim/eslint.nvim',
         dependencies = {
@@ -217,7 +217,9 @@ local plugins = {
             'jose-elias-alvarez/null-ls.nvim'
         }
     },
-    { 'hedyhli/outline.nvim' },
+    {
+        'hedyhli/outline.nvim'  -- Show symbol outline on `<leader>s`
+    },
     {
         "folke/todo-comments.nvim",
         opts = {
@@ -227,16 +229,22 @@ local plugins = {
         }
     },
     { 'nvim-treesitter/nvim-treesitter-context' },
+    { 'nvim-treesitter/nvim-treesitter-refactor' },
+    { 'nvim-treesitter/nvim-treesitter-textobjects' },
     { 'mg979/vim-visual-multi' },
     { 'sindrets/diffview.nvim' },
-    { 'sitiom/nvim-numbertoggle' },
-    { 'mawkler/modicator.nvim' },
     {
-      "ecthelionvi/NeoColumn.nvim",
+        'sitiom/nvim-numbertoggle'  -- Automatically switch between relative and absolute line number
+    },
+    {
+        'mawkler/modicator.nvim'  -- highlight current line number
+    },
+    {
+      "ecthelionvi/NeoColumn.nvim",  -- highlight overflow columns?
       opts = {}
     },
     {
-      "utilyre/barbecue.nvim",
+      "utilyre/barbecue.nvim",  -- LSP winbar
       name = "barbecue",
       version = "*",
       dependencies = {
@@ -247,7 +255,11 @@ local plugins = {
         -- configurations go here
       },
     },
-    {'akinsho/git-conflict.nvim', version = "*", config = true },
+    {
+        'akinsho/git-conflict.nvim',  -- `GitConflictChooseOurs`
+        version = "*",
+        config = true,
+    },
     {
       'mrjones2014/legendary.nvim',
       -- since legendary.nvim handles all your keymaps/commands,
@@ -258,11 +270,11 @@ local plugins = {
       -- dependencies = { 'kkharji/sqlite.lua' }
     },
     {
-      'stevearc/dressing.nvim',
+      'stevearc/dressing.nvim',  -- better UI
       opts = {},
     },
     {
-      "folke/twilight.nvim",
+      "folke/twilight.nvim",  -- Focus on parts that's being edited
       opts = {
         -- your configuration comes here
         -- or leave it empty to use the default settings
@@ -272,8 +284,9 @@ local plugins = {
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
     { 'arielherself/vim-cursorword' },
     { 'm-demare/hlargs.nvim' },
-    { 'chentoast/marks.nvim' },
-    { 'gaborvecsei/usage-tracker.nvim' },
+    {
+        'chentoast/marks.nvim'  -- Visualize marks
+    },
     { 'wakatime/vim-wakatime', lazy = false },
     {
         'smoka7/hop.nvim',
@@ -281,7 +294,7 @@ local plugins = {
         opts = {},
     },
     {
-        "kylechui/nvim-surround",
+        "kylechui/nvim-surround",  -- `ysiw)`
         version = "*", -- Use for stability; omit to use `main` branch for the latest features
         event = "VeryLazy",
         config = function()
@@ -291,7 +304,7 @@ local plugins = {
         end
     },
     {
-     "folke/trouble.nvim",
+     "folke/trouble.nvim",  -- TroubleToggle
      dependencies = { "nvim-tree/nvim-web-devicons" },
      opts = {
       -- your configuration comes here
@@ -300,12 +313,10 @@ local plugins = {
      },
     },
     { 'Civitasv/cmake-tools.nvim' },
-    { 'p00f/cphelper.nvim' },
-    -- { dir = '/home/user/Documents/melange-nvim' },
     { "arielherself/melange-nvim" },
     { 'hrsh7th/vim-vsnip' },
     {
-      "NeogitOrg/neogit",
+      "NeogitOrg/neogit",  -- <C-g>
       dependencies = {
         "sindrets/diffview.nvim",        -- optional - Diff integration
 
@@ -316,20 +327,37 @@ local plugins = {
       config = true
     },
     -- { 'Exafunction/codeium.vim' },
-    { "mistricky/codesnap.nvim", build = "make" },
+    {
+        "mistricky/codesnap.nvim",  -- code snapshot
+        build = "make"
+    },
     { 'rmagatti/goto-preview' },
     {
-        "FabianWirth/search.nvim",
+        "FabianWirth/search.nvim",  -- Add tabs to Telescope search
         dependencies = { "nvim-telescope/telescope.nvim" }
     },
-    { 'NvChad/nvim-colorizer.lua' },
-    { 'debugloop/telescope-undo.nvim' },
-    { "arielherself/neodev.nvim", opts = {} },
     {
-      "AckslD/nvim-neoclip.lua",
+        'NvChad/nvim-colorizer.lua'  -- Color green
+    },
+    { 'debugloop/telescope-undo.nvim' },
+    {
+      "folke/lazydev.nvim",  -- Autocompletion when editing Neovim configs or developing plugins
+      ft = "lua", -- only load on lua files
+      opts = {
+        library = {
+          -- vim.env.LAZY .. "/luvit-meta/library", -- see below
+          -- You can also add plugins you always want to have loaded.
+          -- Useful if the plugin has globals or types you want to use
+          -- vim.env.LAZY .. "/LazyVim", -- see below
+        },
+      },
+    },
+    { "Bilal2453/luvit-meta", lazy = true },
+    {
+      "AckslD/nvim-neoclip.lua",  -- `<leader>p`
     },
     {
-      "danielfalk/smart-open.nvim",
+      "danielfalk/smart-open.nvim",  -- sort file search results by frequency
       branch = "0.2.x",
       config = function()
         require("telescope").load_extension("smart_open")
@@ -342,59 +370,39 @@ local plugins = {
         { "nvim-telescope/telescope-fzy-native.nvim" },
       },
     },
+    {
+        "chrisgrieser/nvim-origami",  -- Fold keymap
+        event = "BufReadPost", -- later or on keypress would prevent saving folds
+        opts = true, -- needed even when using default config
+    },
+    {
+        'altermo/ultimate-autopair.nvim',
+        event={'InsertEnter','CmdlineEnter'},
+        branch='v0.6', --recommended as each new version will have breaking changes
+        opts={
+            --Config goes here
+            bs = {
+                single_delete = true,
+            },
+            cr = {
+                autoclose = true,
+            },
+            close = {
+                enable = false,
+            },
+            tabout = {
+                enable = true,
+                map = '<M-Tab>',
+                hopout = true,
+            }
+        },
+    },
 }
 require("lazy").setup(plugins, {})
 
 vim.notify = require("notify")
 
-require("monokai-pro").setup({
-  transparent_background = true,
-  terminal_colors = true,
-  devicons = true, -- highlight the icons of `nvim-web-devicons`
-  styles = {
-    comment = { italic = true },
-    keyword = { italic = false }, -- any other keyword
-    type = { italic = false }, -- (preferred) int, long, char, etc
-    storageclass = { italic = false }, -- static, register, volatile, etc
-    structure = { italic = false }, -- struct, union, enum, etc
-    parameter = { italic = false }, -- parameter pass in function
-    annotation = { italic = false },
-    tag_attribute = { italic = false }, -- attribute of tag in reactjs
-  },
-  filter = "spectrum", -- classic | octagon | pro | machine | ristretto | spectrum
-  -- Enable this will disable filter option
-  day_night = {
-    enable = false, -- turn off by default
-    day_filter = "pro", -- classic | octagon | pro | machine | ristretto | spectrum
-    night_filter = "spectrum", -- classic | octagon | pro | machine | ristretto | spectrum
-  },
-  inc_search = "background", -- underline | background
-  background_clear = {
-    -- "float_win",
-    "toggleterm",
-    -- "telescope",
-    -- "which-key",
-    "renamer",
-    "notify",
-    -- "nvim-tree",
-    -- "neo-tree",
-    -- "bufferline", -- better used if background of `neo-tree` or `nvim-tree` is cleared
-  },-- "float_win", "toggleterm", "telescope", "which-key", "renamer", "neo-tree", "nvim-tree", "bufferline"
-  plugins = {
-    bufferline = {
-      underline_selected = false,
-      underline_visible = false,
-    },
-    indent_blankline = {
-      context_highlight = "default", -- default | pro
-      context_start_underline = false,
-    },
-  },
-})
-
--- vim.cmd([[colorscheme monokai-pro]])
 vim.cmd([[colorscheme melange]])
--- vim.cmd.colorscheme("duskfox")
 
 local builtin = require("telescope.builtin")
 require('search').setup {
@@ -548,6 +556,7 @@ lspconfig.rust_analyzer.setup {
 lspconfig.lua_ls.setup {
     capabilities = capabilities
 }
+lspconfig.marksman.setup {}
 
 local lspconfutil = require 'lspconfig/util'
 local root_pattern = lspconfutil.root_pattern("veridian.yml", ".git")
@@ -632,6 +641,16 @@ vim.keymap.set('n', '<C-BS>', 'd0i<BS><ESC>l', {noremap=true})
 vim.keymap.set('i', '<C-BS>', '<C-u><BS>', {noremap=true})
 vim.keymap.set('n', '<leader><leader>', '<Cmd>Telescope help_tags<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>p', '<Cmd>Telescope neoclip a extra=plus,unnamedplus<CR>', {noremap=true})
+-- vim.keymap.set('n', )
+
+vim.api.nvim_create_user_command('SearchInCurrentFile', function()
+    vim.ui.input({ prompt = 'Grep > '}, function(input)
+        if input ~= nil then
+            vim.cmd('vimgrep /' .. input .. '/j %')
+            vim.cmd('horizontal copen')
+        end
+    end)
+end, {})
 
 vim.api.nvim_create_user_command('PopupSaveas', function()
   vim.ui.input({ prompt = 'Save As: ' }, function(input)
@@ -651,7 +670,8 @@ vim.api.nvim_create_user_command('PopupSaveas', function()
     else
       print('Save As cancelled')
     end
-  end)end, {})
+  end)
+end, {})
 
 require("nvim-treesitter.configs").setup {
     incremental_selection = {
@@ -661,7 +681,117 @@ require("nvim-treesitter.configs").setup {
             node_decremental = "V",
         },
     },
+    refactor = {
+        smart_rename = {
+            enable = true,
+            keymaps = { smart_rename = "grr" },
+        },
+    },
+    textobjects = {
+        select = {
+          enable = true,
+          lookahead = false,
+          keymaps = {
+            -- You can use the capture groups defined in textobjects.scm
+            ["af"] = "@function.outer",
+            ["if"] = "@function.inner",
+            ["ac"] = "@class.outer",
+            -- You can optionally set descriptions to the mappings (used in the desc parameter of
+            -- nvim_buf_set_keymap) which plugins like which-key display
+            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+            -- You can also use captures from other query groups like `locals.scm`
+            ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+          },
+          -- You can choose the select mode (default is charwise 'v')
+          --
+          -- Can also be a function which gets passed a table with the keys
+          -- * query_string: eg '@function.inner'
+          -- * method: eg 'v' or 'o'
+          -- and should return the mode ('v', 'V', or '<c-v>') or a table
+          -- mapping query_strings to modes.
+          selection_modes = {
+            ['@parameter.outer'] = 'v', -- charwise
+            ['@function.outer'] = 'V', -- linewise
+            ['@class.outer'] = '<c-v>', -- blockwise
+          },
+          -- If you set this to `true` (default is `false`) then any textobject is
+          -- extended to include preceding or succeeding whitespace. Succeeding
+          -- whitespace has priority in order to act similarly to eg the built-in
+          -- `ap`.
+          --
+          -- Can also be a function which gets passed a table with the keys
+          -- * query_string: eg '@function.inner'
+          -- * selection_mode: eg 'v'
+          -- and should return true or false
+          include_surrounding_whitespace = false,  
+        },
+        swap = {
+          enable = true,
+          swap_next = {
+            ["]]"] = "@parameter.inner",
+          },
+          swap_previous = {
+            ["[["] = "@parameter.inner",
+          },
+        },
+        move = {
+          enable = true,
+          set_jumps = true, -- whether to set jumps in the jumplist
+          goto_next_start = {
+            ["]m"] = "@function.outer",
+            ["]c"] = { query = "@class.outer", desc = "Next class start" },
+            --
+            -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
+            ["]o"] = "@loop.*",
+            -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+            --
+            -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+            -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+            ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+            ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+          },
+          goto_next_end = {
+            ["]M"] = "@function.outer",
+            ["]C"] = "@class.outer",
+          },
+          goto_previous_start = {
+            ["[m"] = "@function.outer",
+            ["[c"] = "@class.outer",
+          },
+          goto_previous_end = {
+            ["[M"] = "@function.outer",
+            ["[C"] = "@class.outer",
+          },
+          -- Below will go to either the start or the end, whichever is closer.
+          -- Use if you want more granular movements
+          -- Make it even more gradual by adding multiple queries and regex.
+          goto_next = {
+            ["]d"] = "@conditional.outer",
+          },
+          goto_previous = {
+            ["[d"] = "@conditional.outer",
+          }
+        },
+    }
 }
+
+local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+
+-- Repeat movement with ; and ,
+-- ensure ; goes forward and , goes backward regardless of the last direction
+vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move_next)
+vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_previous)
+
+-- vim way: ; goes to the direction you were moving.
+-- vim.keymap.set({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+-- vim.keymap.set({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+
+-- Optionally, make builtin f, F, t, T also repeatable with ; and ,
+vim.keymap.set({ "n", "x", "o" }, "f", ts_repeat_move.builtin_f_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "F", ts_repeat_move.builtin_F_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "t", ts_repeat_move.builtin_t_expr, { expr = true })
+vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = true })
+
 
 vim.api.nvim_create_user_command('Backup', '!git add . && git commit -S -m "backup" && git push', {})
 vim.api.nvim_create_user_command('Config', 'Explore ~/.config/nvim', {})
@@ -806,17 +936,6 @@ require('hlargs').setup()
 
 require('marks').setup()
 
-require('usage-tracker').setup({
-    keep_eventlog_days = 31,
-    cleanup_freq_days = 7,
-    event_wait_period_in_sec = 5,
-    inactivity_threshold_in_min = 5,
-    inactivity_check_freq_in_sec = 5,
-    verbose = 0,
-    telemetry_endpoint = "" -- you'll need to start the restapi for this feature
-})
-
-
 -- my snippets
 require('snippets')
 
@@ -824,8 +943,8 @@ require('neo-tree').setup {
     filesystem = {
         filtered_items = {
           visible = true, -- This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
-          hide_dotfiles = false,
-          hide_gitignored = false,
+          hide_dotfiles = true,
+          hide_gitignored = true,
         },
     }
 }
@@ -982,4 +1101,3 @@ vim.api.nvim_create_autocmd("LspAttach",  {
 })
 
 require('neoclip').setup {}
-
