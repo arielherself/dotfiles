@@ -376,7 +376,8 @@ local plugins = {
         opts = true, -- needed even when using default config
     },
     {
-        'altermo/ultimate-autopair.nvim',
+        dir = '/home/user/Documents/ultimate-autopair.nvim',
+        -- 'altermo/ultimate-autopair.nvim',
         event={'InsertEnter','CmdlineEnter'},
         branch='v0.6', --recommended as each new version will have breaking changes
         opts={
@@ -396,6 +397,9 @@ local plugins = {
                 hopout = true,
             }
         },
+    },
+    { 
+        'RRethy/nvim-treesitter-endwise'  -- lua `end`
     },
 }
 require("lazy").setup(plugins, {})
@@ -772,7 +776,8 @@ require("nvim-treesitter.configs").setup {
             ["[d"] = "@conditional.outer",
           }
         },
-    }
+    },
+    endwise = { enable = true, },
 }
 
 local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
