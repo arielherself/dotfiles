@@ -275,3 +275,16 @@ ls.add_snippets(nil, {
     }
 })
 
+local binary_trie = require('snippets.binary-trie')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'binary_trie',
+            namr = 'binary_trie',
+            dscr = '01-Trie',
+        },{
+            text(lines(binary_trie))
+        })
+    }
+})
+
