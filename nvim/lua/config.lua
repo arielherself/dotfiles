@@ -397,8 +397,19 @@ local plugins = {
             }
         },
     },
-    { 
+    {
         'RRethy/nvim-treesitter-endwise'  -- lua `end`
+    },
+    {
+        'rachartier/tiny-devicons-auto-colors.nvim',
+        dependencies = "nvim-tree/nvim-web-devicons",
+        event = "VeryLazy",
+        config = function()
+            require('tiny-devicons-auto-colors').setup {}
+        end,
+    },
+    {
+        'lewis6991/spaceless.nvim',  -- Automatically remove trailing space
     },
 }
 require("lazy").setup(plugins, {})
