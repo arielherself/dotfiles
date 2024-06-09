@@ -411,6 +411,9 @@ local plugins = {
     {
         'lewis6991/spaceless.nvim',  -- Automatically remove trailing space
     },
+    {
+        'augustocdias/gatekeeper.nvim',  -- Set buffer to RO when editing external files
+    },
 }
 require("lazy").setup(plugins, {})
 
@@ -567,6 +570,7 @@ lspconfig.rust_analyzer.setup {
     ['rust-analyzer'] = {},
   },
 }
+lspconfig.hls.setup {}
 lspconfig.lua_ls.setup {
     capabilities = capabilities
 }
@@ -641,11 +645,10 @@ vim.keymap.set('v', "<C-S-j>", "dpV`]")
 vim.keymap.set('v', "<C-S-k>", "dkPV`]")
 vim.keymap.set('n', '<C-p>', '<Cmd>Legendary<CR>', {noremap=true})
 vim.keymap.set({'n', 'v', 'x'}, '<leader>h', '<Cmd>HopWord<CR>')
-vim.keymap.set('n', '<leader>dd', '<Cmd>TroubleToggle document_diagnostics<CR>');
-vim.keymap.set('n', '<leader>dw', '<Cmd>TroubleToggle workspace_diagnostics<CR>');
-vim.keymap.set('n', '<leader>dq', '<Cmd>TroubleToggle quickfix<CR>');
-vim.keymap.set('n', '<leader>w', '<Cmd>TroubleToggle lsp_definitions<CR>');
-vim.keymap.set('n', '<leader>r', '<Cmd>TroubleToggle lsp_references<CR>');
+vim.keymap.set('n', '<leader>dd', '<Cmd>Trouble diagnostics toggle focus=true filter.buf=0<CR>');
+vim.keymap.set('n', '<leader>dw', '<Cmd>Trouble diagnostics toggle focus=true<CR>');
+vim.keymap.set('n', '<leader>dq', '<Cmd>Trouble qflist toggle focus=true<CR>');
+vim.keymap.set('n', '<leader>w', '<Cmd>Trouble lsp toggle focus=true<CR>');
 vim.keymap.set('n', '<A-t>', '<Cmd>BufferPick<CR>', {noremap=true});
 vim.keymap.set('n', '<C-g>', '<Cmd>Neogit kind=split_above<CR>', {noremap=true});
 vim.keymap.set({'v', 'x'}, '<leader>cc', '<Cmd>CodeSnap<CR>', {noremap=true});
@@ -656,10 +659,11 @@ vim.keymap.set('n', '<C-BS>', 'd0i<BS><ESC>l', {noremap=true})
 vim.keymap.set('i', '<C-BS>', '<C-u><BS>', {noremap=true})
 vim.keymap.set('n', '<leader><leader>', '<Cmd>Telescope help_tags<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>p', '<Cmd>Telescope neoclip a extra=plus,unnamedplus<CR>', {noremap=true})
+vim.keymap.set('n', '<leader>k', '<Cmd>SearchInCurrentFile<CR>')
 -- vim.keymap.set('n', )
 
 vim.api.nvim_create_user_command('SearchInCurrentFile', function()
-    vim.ui.input({ prompt = 'Grep > '}, function(input)
+    vim.ui.input({ prompt = 'Grep ...'}, function(input)
         if input ~= nil then
             vim.cmd('vimgrep /' .. input .. '/j %')
             vim.cmd('horizontal copen')
@@ -988,3 +992,12 @@ vim.api.nvim_create_autocmd("LspAttach",  {
 })
 
 require('neoclip').setup {}
+
+require('gatekeeper').setup({
+-- default values
+    exclude = {
+        vim.fn.expand('~/.config/nvim'),
+    },
+    exclude_regex = {},
+    debug = false, -- will call vim.notify with info when it is being evaluated
+})
