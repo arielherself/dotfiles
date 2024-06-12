@@ -69,15 +69,15 @@ local plugins = {
         }
     },
     {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
-    {
-    	"nvim-neo-tree/neo-tree.nvim",
-    	branch = "v3.x",
-    	dependencies = {
-            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-            "MunifTanjim/nui.nvim",
-            "3rd/image.nvim",
-        }
-    },
+    -- {
+    -- 	"nvim-neo-tree/neo-tree.nvim",
+    -- 	branch = "v3.x",
+    -- 	dependencies = {
+    --         "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+    --         "MunifTanjim/nui.nvim",
+    --         "3rd/image.nvim",
+    --     }
+    -- },
     {
         'neovim/nvim-lspconfig',
         dependencies = {
@@ -148,7 +148,7 @@ local plugins = {
             -- refer to the configuration section below
         }
     },
-    { 
+    {
         'jdhao/better-escape.vim'  -- `jk` without causing `j` to have delay
     },
     {
@@ -414,6 +414,18 @@ local plugins = {
     {
         'augustocdias/gatekeeper.nvim',  -- Set buffer to RO when editing external files
     },
+    {
+      'stevearc/oil.nvim',
+      opts = {},
+      -- Optional dependencies
+      dependencies = { "nvim-tree/nvim-web-devicons" },
+    },
+    {
+      "aznhe21/actions-preview.nvim",
+      config = function()
+        vim.keymap.set({ "v", "n" }, "<leader>a", require("actions-preview").code_actions)
+      end,
+    },
 }
 require("lazy").setup(plugins, {})
 
@@ -472,7 +484,7 @@ config.setup({
     highlight = { enable = true},
     indent = { enable = true},
 })
-vim.keymap.set('n', '<leader>f', '<Cmd>Neotree . toggle left<CR>', {})
+vim.keymap.set('n', '<leader>f', '<Cmd>lua require("oil").save()<CR>', {})
 
 -- import nvim-cmp plugin safely
 local cmp_status, cmp = pcall(require, "cmp")
@@ -742,7 +754,7 @@ require("nvim-treesitter.configs").setup {
           -- * query_string: eg '@function.inner'
           -- * selection_mode: eg 'v'
           -- and should return true or false
-          include_surrounding_whitespace = false,  
+          include_surrounding_whitespace = false,
         },
         swap = {
           enable = true,
@@ -814,7 +826,7 @@ vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = t
 
 
 vim.api.nvim_create_user_command('Backup', '!git add . && git commit -S -m "backup" && git push', {})
-vim.api.nvim_create_user_command('Config', 'Explore ~/.config/nvim', {})
+vim.api.nvim_create_user_command('Config', 'e ~/.config/nvim', {})
 
 require('Comment').setup()
 local str = require("cmp.utils.str")
@@ -825,7 +837,7 @@ cmp.setup {
         format = lspkind.cmp_format({
             mode = 'symbol', -- show only symbol annotations
             maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-                            -- can also be a function to dynamically calculate max width such as 
+                            -- can also be a function to dynamically calculate max width such as
                             -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
             ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
             show_labelDetails = true, -- show labelDetails in menu. Disabled by default
@@ -959,15 +971,15 @@ require('marks').setup()
 -- my snippets
 require('snippets')
 
-require('neo-tree').setup {
-    filesystem = {
-        filtered_items = {
-          visible = true, -- This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
-          hide_dotfiles = true,
-          hide_gitignored = true,
-        },
-    }
-}
+-- require('neo-tree').setup {
+--     filesystem = {
+--         filtered_items = {
+--           visible = true, -- This is what you want: If you set this to `true`, all "hide" just mean "dimmed out"
+--           hide_dotfiles = true,
+--           hide_gitignored = true,
+--         },
+--     }
+-- }
 
 require('telescope').load_extension('git_file_history')
 require('telescope').load_extension('undo')
@@ -1001,3 +1013,12 @@ require('gatekeeper').setup({
     exclude_regex = {},
     debug = false, -- will call vim.notify with info when it is being evaluated
 })
+
+require("oil").setup{
+  columns = {
+    "icon",
+    "permissions",
+    "size",
+    "mtime",
+  },
+}
