@@ -92,7 +92,7 @@ local plugins = {
         },
         opts = {
             inlay_hints = { enabled = true, },
-            -- codelens = { enabled = true, },
+            codelens = { enabled = true, },
         },
         config = function(_, servers)
           for server, opts in pairs(servers) do
@@ -412,9 +412,6 @@ local plugins = {
         'lewis6991/spaceless.nvim',  -- Automatically remove trailing space
     },
     {
-        'augustocdias/gatekeeper.nvim',  -- Set buffer to RO when editing external files
-    },
-    {
       'stevearc/oil.nvim',
       opts = {},
       -- Optional dependencies
@@ -425,6 +422,21 @@ local plugins = {
       config = function()
         vim.keymap.set({ "v", "n" }, "<leader>a", require("actions-preview").code_actions)
       end,
+    },
+    { "neovimhaskell/haskell-vim" },
+    {
+      "hedyhli/markdown-toc.nvim",
+      ft = "markdown",  -- Lazy load on markdown filetype
+      cmd = { "Mtoc" }, -- Or, lazy load on "Mtoc" command
+      opts = {
+        -- Your configuration here (optional)
+      },
+    },
+    {
+        "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        ft = { "markdown" },
+        build = function() vim.fn["mkdp#util#install"]() end,
     },
 }
 require("lazy").setup(plugins, {})
@@ -484,7 +496,6 @@ config.setup({
     highlight = { enable = true},
     indent = { enable = true},
 })
-vim.keymap.set('n', '<leader>f', '<Cmd>lua require("oil").save()<CR>', {})
 
 -- import nvim-cmp plugin safely
 local cmp_status, cmp = pcall(require, "cmp")
@@ -546,7 +557,12 @@ cmp.setup({
   },
   -- sources for autocompletion
   sources = cmp.config.sources({
-    { name = "nvim_lsp" }, -- LSP
+    {
+      name = "nvim_lsp",
+      option = {
+        markdown_oxide = { keyword_pattern = [[\(\k\| \|\/\|#\)\+]] }
+      }
+    }, -- LSP
     { name = "luasnip" }, -- snippets
     { name = "buffer" }, -- text within the current buffer
     { name = "path" }, -- file system paths
@@ -559,6 +575,7 @@ cmp.setup({
 -- Setup language servers.
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- local extended_caps = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities)
 -- lspconfig.svls.setup {
 --     capabilities = capabilities
 -- }
@@ -586,8 +603,16 @@ lspconfig.hls.setup {}
 lspconfig.lua_ls.setup {
     capabilities = capabilities
 }
-lspconfig.marksman.setup {}
 lspconfig.cmake.setup {}
+
+capabilities.workspace = {
+    didChangeWatchedFiles = {
+      dynamicRegistration = true,
+    },
+}
+require("lspconfig").markdown_oxide.setup({
+    capabilities = capabilities, -- again, ensure that capabilities.workspace.didChangeWatchedFiles.dynamicRegistration = true
+})
 
 local lspconfutil = require 'lspconfig/util'
 local root_pattern = lspconfutil.root_pattern("veridian.yml", ".git")
@@ -637,6 +662,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 require("lsp_signature").setup({
     handler_opts = { border = "none" },
+    hint_prefix = "🌸",
 })
 
 vim.keymap.set({'i', 'n', 'v', 'x'}, '<C-z>', '<Nop>', {noremap=true})
@@ -923,13 +949,13 @@ local map = vim.api.nvim_set_keymap
 local opts = { noremap = true, silent = true }
 
 -- Move to previous/next
-map('n', '<A-,>', '<Cmd>BufferPrevious<CR>', opts)
-map('n', '<A-.>', '<Cmd>BufferNext<CR>', opts)
+map('n', '<M-,>', '<Cmd>BufferPrevious<CR>', opts)
+map('n', '<M-.>', '<Cmd>BufferNext<CR>', opts)
 -- Re-order to previous/next
 map('n', '<M-S-,>', '<Cmd>BufferMovePrevious<CR>', opts)  -- Configuration for kitty
 map('n', '<M-S-.>', '<Cmd>BufferMoveNext<CR>', opts)
-map('n', '<A-p>', '<Cmd>BufferPin<CR>', opts);
-map('n', '<A-c>', '<Cmd>BufferClose<CR>', opts);
+map('n', '<M-p>', '<Cmd>BufferPin<CR>', opts);
+map('n', '<M-c>', '<Cmd>BufferClose<CR>', opts)
 
 require('diffview').setup()
 
@@ -1005,15 +1031,6 @@ vim.api.nvim_create_autocmd("LspAttach",  {
 
 require('neoclip').setup {}
 
-require('gatekeeper').setup({
--- default values
-    exclude = {
-        vim.fn.expand('~/.config/nvim'),
-    },
-    exclude_regex = {},
-    debug = false, -- will call vim.notify with info when it is being evaluated
-})
-
 require("oil").setup{
   columns = {
     "icon",
@@ -1022,3 +1039,12 @@ require("oil").setup{
     "mtime",
   },
 }
+
+-- refresh codelens on TextChanged and InsertLeave as well
+vim.api.nvim_create_autocmd({ 'TextChanged', 'InsertLeave', 'CursorHold', 'LspAttach' }, {
+    pattern = { "*.md" },
+    callback = vim.lsp.codelens.refresh,
+})
+
+-- trigger codelens refresh
+vim.api.nvim_exec_autocmds('User', { pattern = 'LspAttached' })
