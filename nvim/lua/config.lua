@@ -66,7 +66,7 @@ local plugins = {
                 "isak102/telescope-git-file-history.nvim",
                 dependencies = { "tpope/vim-fugitive" }
             }
-        }
+        },
     },
     {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
     -- {
@@ -175,7 +175,7 @@ local plugins = {
 		    "arsham/arshlib.nvim",
 		    "famiu/feline.nvim",
 		    "rebelot/heirline.nvim",
-		    "kyazdani42/nvim-web-devicons",
+		    "nvim-tree/nvim-web-devicons",
         "lewis6991/gitsigns.nvim",
         "nanotee/sqls.nvim",
         "arsham/listish.nvim",
@@ -604,6 +604,9 @@ lspconfig.lua_ls.setup {
     capabilities = capabilities
 }
 lspconfig.cmake.setup {}
+lspconfig.asm_lsp.setup {
+    capabilities = capabilities
+}
 
 capabilities.workspace = {
     didChangeWatchedFiles = {
@@ -1048,3 +1051,14 @@ vim.api.nvim_create_autocmd({ 'TextChanged', 'InsertLeave', 'CursorHold', 'LspAt
 
 -- trigger codelens refresh
 vim.api.nvim_exec_autocmds('User', { pattern = 'LspAttached' })
+
+require("telescope").setup {
+    defaults = {
+        mappings = {
+            i = {
+                ["<C-j>"] = require("telescope.actions").move_selection_next,
+                ["<C-k>"] = require("telescope.actions").move_selection_previous,
+            },
+        },
+    },
+}
