@@ -446,8 +446,13 @@ vim.notify = require("notify")
 vim.cmd([[colorscheme melange]])
 
 local builtin = require("telescope.builtin")
+local ext = require("telescope").extensions
 require('search').setup {
     append_tabs = {
+        {
+            'Symbols',
+            builtin.lsp_workspace_symbols,
+        },
         {
             'Commits',
             builtin.git_commits,
@@ -483,10 +488,18 @@ require('search').setup {
                 return vim.fn.isdirectory('.git') == 1
             end
         },
+        {
+            'Smart Open',
+            ext.smart_open.smart_open,
+        },
+        {
+            'Buffers',
+            builtin.buffers,
+        },
     }
 }
-vim.keymap.set('n', '<leader>o', require("telescope").extensions.smart_open.smart_open, {})
--- vim.keymap.set('n', '<leader>g', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>o', '<Cmd>lua require("search").open({ tab_name = "Smart Open" })<CR>')
+vim.keymap.set('n', '<leader>f', '<Cmd>lua require("search").open({ tab_name = "Symbols" })<CR>')
 vim.keymap.set('n', '<leader>g', '<Cmd>lua require("search").open({ tab_name = "Grep" })<CR>')
 
 local config = require("nvim-treesitter.configs")
@@ -893,9 +906,9 @@ cmp.setup {
 local null_ls = require("null-ls")
 local eslint = require("eslint")
 
-local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
-local event = "BufWritePre" -- or "BufWritePost"
-local async = event == "BufWritePost"
+-- local group = vim.api.nvim_create_augroup("lsp_format_on_save", { clear = false })
+-- local event = "BufWritePre" -- or "BufWritePost"
+-- local async = event == "BufWritePost"
 
 null_ls.setup()
 
@@ -1027,7 +1040,7 @@ require('colorizer').setup {}
 require('ibl').setup {}
 
 vim.api.nvim_create_autocmd("LspAttach",  {
-    callback = function(ev)
+    callback = function()
         vim.lsp.inlay_hint.enable(true)
     end,
 })
@@ -1040,6 +1053,9 @@ require("oil").setup{
     "permissions",
     "size",
     "mtime",
+  },
+  view_options = {
+    show_hidden = true,
   },
 }
 
