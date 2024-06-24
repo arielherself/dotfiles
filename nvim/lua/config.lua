@@ -438,6 +438,13 @@ local plugins = {
         ft = { "markdown" },
         build = function() vim.fn["mkdp#util#install"]() end,
     },
+    {
+        'preservim/vim-markdown',
+        dependencies = { 'godlygeek/tabular' },
+    },
+    {
+        'sourcegraph/sg.nvim',
+    },
 }
 require("lazy").setup(plugins, {})
 
@@ -544,9 +551,6 @@ cmp.setup({
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.confirm({ select = true })
-      elseif vim.fn.exists('b:_codeium_completions') ~= 0 then
-        vim.fn['codeium#Accept']()
-        fallback()
       elseif luasnip_status and luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
       elseif has_words_before() then
@@ -570,6 +574,7 @@ cmp.setup({
   },
   -- sources for autocompletion
   sources = cmp.config.sources({
+    { name = "cody" },
     {
       name = "nvim_lsp",
       option = {
@@ -714,6 +719,8 @@ vim.keymap.set('i', '<C-BS>', '<C-u><BS>', {noremap=true})
 vim.keymap.set('n', '<leader><leader>', '<Cmd>Telescope help_tags<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>p', '<Cmd>Telescope neoclip a extra=plus,unnamedplus<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>k', '<Cmd>SearchInCurrentFile<CR>')
+vim.keymap.set('c', '<C-j>', '<Down>')
+vim.keymap.set('c', '<C-k>', '<Up>')
 -- vim.keymap.set('n', )
 
 vim.api.nvim_create_user_command('SearchInCurrentFile', function()
@@ -1054,8 +1061,17 @@ require("oil").setup{
     "size",
     "mtime",
   },
+  win_options = {
+    signcolumn = "yes",
+  },
   view_options = {
     show_hidden = true,
+  },
+  constrain_cursor = "editable",
+  keymaps = {
+    ["<C-v>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
+    ["<C-x>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
+    ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
   },
 }
 
@@ -1078,3 +1094,8 @@ require("telescope").setup {
         },
     },
 }
+
+vim.env.SRC_ENDPOINT = 'https://sourcegraph.com/'
+vim.env.SRC_ACCESS_TOKEN = ''  -- TODO: fill in the token before using it
+
+require('sg').setup {}
