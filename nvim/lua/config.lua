@@ -36,7 +36,6 @@ vim.diagnostic.config({
 })
 vim.cmd([[au CursorHold * lua vim.diagnostic.open_float(0,{scope = "cursor"})]])
 vim.g.mapleader = " ";
-vim.g['cph#dir'] = '/home/user/RustIsBestLang/';
 vim.filetype.add({
     extension = {
         ct = 'cpp',
@@ -44,7 +43,7 @@ vim.filetype.add({
 })
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system({
     "git",
     "clone",
@@ -203,7 +202,8 @@ local plugins = {
         lazy = false,
     },
     {
-        'onsails/lspkind.nvim' -- icon in completion menu
+        -- dir = "/home/user/lspkind.nvim/",
+        'arielherself/lspkind.nvim' -- icon in completion menu
     },
     {
         'MunifTanjim/eslint.nvim',
@@ -344,7 +344,7 @@ local plugins = {
       ft = "lua", -- only load on lua files
       opts = {
         library = {
-          -- vim.env.LAZY .. "/luvit-meta/library", -- see below
+          -- lazypath .. "/luvit-meta/library", -- see below
           -- You can also add plugins you always want to have loaded.
           -- Useful if the plugin has globals or types you want to use
           -- vim.env.LAZY .. "/LazyVim", -- see below
@@ -458,7 +458,7 @@ require('search').setup {
     append_tabs = {
         {
             'Symbols',
-            builtin.lsp_workspace_symbols,
+            builtin.lsp_dynamic_workspace_symbols,
         },
         {
             'Commits',
@@ -541,54 +541,58 @@ local feedkey = function(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
-cmp.setup({
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = {
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.confirm({ select = true })
-      elseif luasnip_status and luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback()
-      end
-    end, { "i", "s" }),
+local ELLIPSIS_CHAR = '…'
+local MAX_LABEL_WIDTH = 20
+local MIN_LABEL_WIDTH = 20
 
-    ["<S-Tab>"] = cmp.mapping(function()
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-        feedkey("<Plug>(vsnip-jump-prev)", "")
-      end
-    end, { "i", "s" }),
+cmp.setup {
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end,
+    },
+    mapping = {
+        ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+                cmp.confirm({ select = true })
+            elseif luasnip_status and luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            elseif has_words_before() then
+                cmp.complete()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
 
-    ['<C-k>'] = cmp.mapping.select_prev_item(),
-    ['<C-j>'] = cmp.mapping.select_next_item(),
-    ['<ESC>'] = cmp.mapping.abort(),
-  },
-  -- sources for autocompletion
-  sources = cmp.config.sources({
-    { name = "cody" },
-    {
-      name = "nvim_lsp",
-      option = {
-        markdown_oxide = { keyword_pattern = [[\(\k\| \|\/\|#\)\+]] }
-      }
-    }, -- LSP
-    { name = "luasnip" }, -- snippets
-    { name = "buffer" }, -- text within the current buffer
-    { name = "path" }, -- file system paths
-    { name = "emoji" },
-    { name = "nerdfont" },
-    { name = "calc" },
-  }),
-})
+        ["<S-Tab>"] = cmp.mapping(function()
+            if cmp.visible() then
+                cmp.select_prev_item()
+            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+                feedkey("<Plug>(vsnip-jump-prev)", "")
+            end
+        end, { "i", "s" }),
+
+        ['<C-k>'] = cmp.mapping.select_prev_item(),
+        ['<C-j>'] = cmp.mapping.select_next_item(),
+        ['<ESC>'] = cmp.mapping.abort(),
+    },
+    -- sources for autocompletion
+    sources = cmp.config.sources({
+        { name = "cody" },
+        {
+            name = "nvim_lsp",
+            option = {
+                markdown_oxide = { keyword_pattern = [[\(\k\| \|\/\|#\)\+]] }
+            }
+        }, -- LSP
+        { name = "luasnip" }, -- snippets
+        { name = "buffer" }, -- text within the current buffer
+        { name = "path" }, -- file system paths
+        { name = "emoji" },
+        { name = "nerdfont" },
+        { name = "calc" },
+    }),
+}
 
 -- Setup language servers.
 local lspconfig = require('lspconfig')
@@ -883,27 +887,28 @@ local types = require("cmp.types")
 local lspkind = require('lspkind')
 cmp.setup {
     formatting = {
+        fields = { cmp.ItemField.Abbr, cmp.ItemField.Kind, cmp.ItemField.Menu },
         format = lspkind.cmp_format({
-            mode = 'symbol', -- show only symbol annotations
-            maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+            mode = 'symbol_text', -- show only symbol annotations
+            maxwidth = 30, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
                             -- can also be a function to dynamically calculate max width such as
                             -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
-            ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+            ellipsis_char = '…', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
             show_labelDetails = true, -- show labelDetails in menu. Disabled by default
 
             -- The function below will be called before any actual modifications from lspkind
             -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
             before = function (entry, vim_item)
-                local word = entry:get_insert_text()
-                if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
-                    word = word
-                    -- word = vim.lsp.util.parse_snippet(word)
-                end
-                word = str.oneline(word)
-                if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet and string.sub(vim_item.abbr, -1, -1) == "~" then
-                    word = word .. "~"
-                end
-                vim_item.abbr = word
+                -- local word = entry:get_insert_text()
+                -- if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet then
+                --     word = word
+                --     -- word = vim.lsp.util.parse_snippet(word)
+                -- end
+                -- word = str.oneline(word)
+                -- if entry.completion_item.insertTextFormat == types.lsp.InsertTextFormat.Snippet and string.sub(vim_item.abbr, -1, -1) == "~" then
+                --     word = word .. "~"
+                -- end
+                -- vim_item.abbr = word
                 return vim_item
             end
         })
@@ -1099,3 +1104,5 @@ vim.env.SRC_ENDPOINT = 'https://sourcegraph.com/'
 vim.env.SRC_ACCESS_TOKEN = ''  -- TODO: fill in the token before using it
 
 require('sg').setup {}
+
+-- vim.diagnostic.config({ virtual_text = false })
