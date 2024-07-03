@@ -629,6 +629,9 @@ lspconfig.cmake.setup {}
 lspconfig.asm_lsp.setup {
     capabilities = capabilities
 }
+lspconfig.nil_ls.setup {
+    capabilities = capabilities
+}
 
 capabilities.workspace = {
     didChangeWatchedFiles = {
@@ -698,6 +701,7 @@ vim.keymap.set('i', '<C-a>', '<ESC>ggVG')
 vim.keymap.set('n', '<C-a>', 'ggVG')
 vim.keymap.set('n', '<leader>`', '<Cmd>split<CR><Cmd>terminal zsh<CR>i')
 vim.keymap.set('n', '<leader>n', '<Cmd>tabnew<CR>')
+vim.keymap.set('n', '<leader><tab>', '<Cmd>tabnext<CR>')
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {noremap=true})
 vim.keymap.set('n', '<leader>s', '<Cmd>Outline<CR>')
 vim.keymap.set("v", "<Tab>", ">gv")
@@ -1039,7 +1043,7 @@ require('telescope').load_extension('git_file_history')
 require('telescope').load_extension('undo')
 
 require('codesnap').setup {
-    code_font_family = "Fira Code",
+    code_font_family = "JetBrainsMono Nerd Font",
     has_line_number = true,
 }
 
