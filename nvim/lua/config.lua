@@ -25,6 +25,8 @@ vim.cmd("set scrolloff=10")
 vim.cmd("set foldmethod=expr")
 vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
 vim.cmd("set foldlevelstart=99")
+vim.cmd("set list")
+vim.cmd("set listchars=trail:▓")
 -- vim.cmd("set guicursor=i:ver25-blinkon500-blinkoff500,a:ver25-iCursor")
 vim.cmd("set noshowmode")
 vim.diagnostic.config({
@@ -332,7 +334,8 @@ local plugins = {
     },
     { 'rmagatti/goto-preview' },
     {
-        "FabianWirth/search.nvim",  -- Add tabs to Telescope search
+        -- dir = '/home/user/Documents/search.nvim',
+        "arielherself/search.nvim",  -- Add tabs to Telescope search
         dependencies = { "nvim-telescope/telescope.nvim" }
     },
     {
@@ -407,9 +410,6 @@ local plugins = {
         config = function()
             require('tiny-devicons-auto-colors').setup {}
         end,
-    },
-    {
-        'lewis6991/spaceless.nvim',  -- Automatically remove trailing space
     },
     {
       'stevearc/oil.nvim',
@@ -1095,6 +1095,10 @@ vim.api.nvim_exec_autocmds('User', { pattern = 'LspAttached' })
 
 require("telescope").setup {
     defaults = {
+        layout_config = {
+            prompt_position = 'top',
+        },
+        sorting_strategy = 'ascending',
         mappings = {
             i = {
                 ["<C-j>"] = require("telescope.actions").move_selection_next,
