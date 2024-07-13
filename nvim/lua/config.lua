@@ -26,7 +26,7 @@ vim.cmd("set foldmethod=expr")
 vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
 vim.cmd("set foldlevelstart=99")
 vim.cmd("set list")
-vim.cmd("set listchars=trail:▓")
+vim.cmd("set listchars=trail:█")
 -- vim.cmd("set guicursor=i:ver25-blinkon500-blinkoff500,a:ver25-iCursor")
 vim.cmd("set noshowmode")
 vim.diagnostic.config({
@@ -210,13 +210,13 @@ local plugins = {
     {
         'MunifTanjim/eslint.nvim',
         dependencies = {
-            'jose-elias-alvarez/null-ls.nvim'
+            'nvimtools/none-ls.nvim'
         }
     },
     {
         'MunifTanjim/prettier.nvim',
         dependencies = {
-            'jose-elias-alvarez/null-ls.nvim'
+            'nvimtools/none-ls.nvim'
         }
     },
     {
@@ -445,6 +445,23 @@ local plugins = {
     {
         'sourcegraph/sg.nvim',
     },
+    {
+        "kawre/leetcode.nvim",
+        build = ":TSUpdate html",
+        dependencies = {
+            "nvim-telescope/telescope.nvim",
+            "nvim-lua/plenary.nvim", -- required by telescope
+            "MunifTanjim/nui.nvim",
+
+            -- optional
+            "nvim-treesitter/nvim-treesitter",
+            "rcarriga/nvim-notify",
+            "nvim-tree/nvim-web-devicons",
+        },
+        opts = {
+            -- configuration goes here
+        },
+    },
 }
 require("lazy").setup(plugins, {})
 
@@ -618,7 +635,11 @@ lspconfig.rust_analyzer.setup {
     capabilities = capabilities,
   -- Server-specific settings. See `:help lspconfig-setup`
   settings = {
-    ['rust-analyzer'] = {},
+    ['rust-analyzer'] = {
+      checkOnSave = {
+        command = 'clippy',
+      }
+    },
   },
 }
 lspconfig.hls.setup {}
@@ -632,6 +653,7 @@ lspconfig.asm_lsp.setup {
 lspconfig.nil_ls.setup {
     capabilities = capabilities
 }
+lspconfig.mojo.setup {}
 
 capabilities.workspace = {
     didChangeWatchedFiles = {
@@ -690,10 +712,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 require("lsp_signature").setup({
     handler_opts = { border = "none" },
-    hint_prefix = "🌸",
+    hint_prefix = "󰁔 ",
 })
 
-vim.keymap.set({'i', 'n', 'v', 'x'}, '<C-z>', '<Nop>', {noremap=true})
 vim.keymap.set({'i', 'n', 'v', 'x'}, '<C-c>', '<ESC>', {noremap=true})
 vim.keymap.set('i', '<C-x>', '<ESC>ddi')
 vim.keymap.set('i', '<Home>', '<ESC>^i')
@@ -729,6 +750,8 @@ vim.keymap.set('n', '<leader>p', '<Cmd>Telescope neoclip a extra=plus,unnamedplu
 vim.keymap.set('n', '<leader>k', '<Cmd>SearchInCurrentFile<CR>')
 vim.keymap.set('c', '<C-j>', '<Down>')
 vim.keymap.set('c', '<C-k>', '<Up>')
+vim.keymap.set('n', '<leader>x', [[:%s/\s\+$//e<cr>]], {noremap=true})
+vim.keymap.set('n', '<Del>', vim.notify.dismiss, {noremap=true})
 -- vim.keymap.set('n', )
 
 vim.api.nvim_create_user_command('SearchInCurrentFile', function()
@@ -1043,7 +1066,7 @@ require('telescope').load_extension('git_file_history')
 require('telescope').load_extension('undo')
 
 require('codesnap').setup {
-    code_font_family = "JetBrainsMono Nerd Font",
+    code_font_family = "BerkeleyMono Nerd Font",
     has_line_number = true,
 }
 

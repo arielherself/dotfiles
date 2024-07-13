@@ -7,15 +7,16 @@ program = "/home/linuxbrew/.linuxbrew/bin/tmux"
 opacity = 0.9
 [font]
 size = 13.0
-offset.x = -1
+# offset.x = -1
 [font.normal]
-family = "FiraCode Nerd Font"
+# family = "FiraCode Nerd Font"
+family = "Berkeley Mono"
 [font.bold]
-family = "FiraCode Nerd Font"
+family = "Berkeley Mono"
 [font.italic]
-family = "FiraCode Nerd Font"
+family = "Berkeley Mono"
 [font.bold_italic]
-family = "FiraCode Nerd Font"
+family = "Berkeley Mono"
 [cursor.style]
 shape = "Beam"
 blinking = "Never"

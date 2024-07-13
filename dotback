@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Neovim
+cp $HOME/.vimrc .
+cp $HOME/.config/nvim . -r
+
+# Hyprland
+cp $HOME/.config/hypr . -r
+cp $HOME/.config/waybar . -r
+cp $HOME/.config/wlogout . -r
+
+# Terminal Emulators
+cp $HOME/.config/kitty/kitty.conf .
+cp $HOME/.config/alacritty/alacritty.toml .
+cp $HOME/.var/app/org.contourterminal.Contour/config/contour/contour.yml .
+
+# Tmux
+cp $HOME/.tmux.conf .
+cp $HOME/.config/tmux-powerline . -r
