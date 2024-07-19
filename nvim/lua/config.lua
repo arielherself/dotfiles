@@ -27,7 +27,7 @@ vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
 vim.cmd("set foldlevelstart=99")
 vim.cmd("set list")
 vim.cmd("set listchars=trail:█")
--- vim.cmd("set guicursor=i:ver25-blinkon500-blinkoff500,a:ver25-iCursor")
+vim.cmd("set guicursor=n-v-c:block,i:ver25,a:blinkon0")
 vim.cmd("set noshowmode")
 vim.diagnostic.config({
     update_in_insert = true,
@@ -90,10 +90,6 @@ local plugins = {
             { 'j-hui/fidget.nvim', tag = 'legacy', opts = {} },
             -- Additional lua configuration, makes nvim stuff amazing!
             -- 'folke/neodev.nvim',
-        },
-        opts = {
-            inlay_hints = { enabled = true, },
-            codelens = { enabled = true, },
         },
         config = function(_, servers)
           for server, opts in pairs(servers) do
@@ -729,8 +725,8 @@ vim.keymap.set("v", "<Tab>", ">gv")
 vim.keymap.set("v", "<S-Tab>", "<gv")
 vim.keymap.set('n', '<leader>t', '<Cmd>TodoTelescope<CR>')
 vim.keymap.set('n', '<leader>m', '<Cmd>Tele marks<CR>')
-vim.keymap.set('v', "<C-S-j>", "dpV`]")
-vim.keymap.set('v', "<C-S-k>", "dkPV`]")
+vim.keymap.set('v', "<C-j>", "dpV`]", {noremap=true})
+vim.keymap.set('v', "<C-k>", "dkPV`]", {noremap=true})
 vim.keymap.set('n', '<C-p>', '<Cmd>Legendary<CR>', {noremap=true})
 vim.keymap.set({'n', 'v', 'x'}, '<leader>h', '<Cmd>HopWord<CR>')
 vim.keymap.set('n', '<leader>dd', '<Cmd>Trouble diagnostics toggle focus=true filter.buf=0<CR>');
@@ -742,7 +738,7 @@ vim.keymap.set('n', '<C-g>', '<Cmd>Neogit kind=split_above<CR>', {noremap=true})
 vim.keymap.set({'v', 'x'}, '<leader>cc', '<Cmd>CodeSnap<CR>', {noremap=true});
 vim.keymap.set('n', '<C-s>', '<Cmd>PopupSaveas<CR>', {noremap=true});
 vim.keymap.set('n', '<S-U>', '<Cmd>Telescope undo<CR>', {noremap=true})
-vim.keymap.set('n', '<C-CR>', 'i{<ESC>A}<ESC>%li<CR><ESC>$i<CR><ESC>k^', {noremap=true})
+vim.keymap.set('i', '<C-E>', '{<ESC>A}<ESC>%li<CR><ESC>$i<CR><ESC>k^i', {noremap=true})
 vim.keymap.set('n', '<C-BS>', 'd0i<BS><ESC>l', {noremap=true})
 vim.keymap.set('i', '<C-BS>', '<C-u><BS>', {noremap=true})
 vim.keymap.set('n', '<leader><leader>', '<Cmd>Telescope help_tags<CR>', {noremap=true})

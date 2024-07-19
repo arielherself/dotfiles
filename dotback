@@ -17,3 +17,6 @@ cp $HOME/.var/app/org.contourterminal.Contour/config/contour/contour.yml .
 # Tmux
 cp $HOME/.tmux.conf .
 cp $HOME/.config/tmux-powerline . -r
+
+# Nix
+cp $HOME/.config/home-manager . -r
