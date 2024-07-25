@@ -523,7 +523,7 @@ profiles:
             normal: dotted
             hover: underline
     my_profile:
-        shell: "/home/linuxbrew/.linuxbrew/bin/zsh"
+        shell: "zsh"
         escape_sandbox: true
 
         # Advanced value that is useful when CopyPreviousMarkRange is used

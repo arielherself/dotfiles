@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -62,6 +69,9 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
+ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOCONNECT=false
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -69,6 +79,7 @@ zstyle ':omz:update' mode auto      # update automatically without asking
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
 	git
+  tmux
 	zsh-syntax-highlighting
 	zsh-autosuggestions
 )
@@ -106,9 +117,9 @@ alias pip3="python3 -m pip"
 alias pip="python -m pip"
 alias comp="cd ~/RustIsBestLang/src/bin && nvim"
 alias backup="git add . && git commit -S -m 'backup' && git push"
-alias leetcode="nvim leetcode.nvim"
-export LD_LIBRARY_PATH=/usr/lib:/usr/local/cuda/lib65:$LD_LIBRARY_PATH
-export PATH=/usr/local/cuda/bin:$PATH
+# export LD_LIBRARY_PATH=/usr/lib:/usr/local/cuda/lib65:$LD_LIBRARY_PATH
+export PATH=/home/user/.cabal/bin:/home/user/.ghcup/bin:/home/linuxbrew/.linuxbrew/bin:/home/user/.cargo/bin:/home/user/.local/bin:/usr/local/cuda/bin:$PATH
+export PAGER=less
 
 me () {
     md "$@" && cd "$@"
@@ -136,9 +147,9 @@ emptytrash () {
 ghclone () {
     git clone "https://github.com/arielherself/$@"
 }
-# 
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
 
-eval "$(oh-my-posh init zsh)"
-eval "$(oh-my-posh init zsh --config ~/omp-themes/atomic.omp.json)"
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

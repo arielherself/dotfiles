@@ -21,6 +21,13 @@
     pkgs.mtr
     pkgs.neovim
     pkgs.htop
+    pkgs.python3
+    pkgs.pyright
+    pkgs.nodejs_22
+    pkgs.pipx
+    pkgs.fx
+    pkgs.gdb
+    pkgs.lua-language-server
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
