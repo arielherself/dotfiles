@@ -1,3 +1,5 @@
+# vim: set expandtab tabstop=2 softtabstop=2 shiftwidth=2:
+
 { config, pkgs, ... }:
 
 {
@@ -5,6 +7,9 @@
   # manage.
   home.username = "user";
   home.homeDirectory = "/home/user";
+
+  targets.genericLinux.enable = true;
+  xdg.mime.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -21,13 +26,16 @@
     pkgs.mtr
     pkgs.neovim
     pkgs.htop
-    pkgs.python3
+    pkgs.python312
     pkgs.pyright
     pkgs.nodejs_22
     pkgs.pipx
     pkgs.fx
     pkgs.gdb
     pkgs.lua-language-server
+    pkgs.waybar
+    pkgs.waybar-mpris
+    pkgs.zed-editor
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

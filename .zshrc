@@ -117,8 +117,8 @@ alias pip3="python3 -m pip"
 alias pip="python -m pip"
 alias comp="cd ~/RustIsBestLang/src/bin && nvim"
 alias backup="git add . && git commit -S -m 'backup' && git push"
-# export LD_LIBRARY_PATH=/usr/lib:/usr/local/cuda/lib65:$LD_LIBRARY_PATH
-export PATH=/home/user/.cabal/bin:/home/user/.ghcup/bin:/home/linuxbrew/.linuxbrew/bin:/home/user/.cargo/bin:/home/user/.local/bin:/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/home/user/.local/lib/mojo:$LD_LIBRARY_PATH
+export PATH=/home/user/.modular/pkg/packages.modular.com_mojo/bin/:/home/user/.npm-packages/bin:/home/user/.cabal/bin:/home/user/.ghcup/bin:/home/linuxbrew/.linuxbrew/bin:/home/user/.cargo/bin:/home/user/.local/bin:/usr/local/cuda/bin:$PATH
 export PAGER=less
 
 me () {

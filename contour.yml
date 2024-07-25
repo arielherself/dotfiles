@@ -540,7 +540,7 @@ profiles:
 
         # When this profile is *activated*, this flag decides
         # whether or not the title bar will be shown
-        show_title_bar: false
+        show_title_bar: true
 
         # When this profile is *activated*, this flag decides
         # whether or not the size indicator on resize will be shown.
