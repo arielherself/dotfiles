@@ -1,0 +1,22 @@
+# Profile Template for Clash Verge
+
+mixed-port:  7890
+allow-lan: false
+
+proxies:
+  - name: US-DMIT
+    type: http
+    server: 127.0.0.1
+    port: 35018
+  - name: Tor
+    type: socks5
+    server: 127.0.0.1
+    port: 9050
+
+proxy-groups: []
+rules: 
+  - IP-CIDR,154.17.27.90/32,DIRECT
+  - DOMAIN-SUFFIX,pincong.rocks,Tor
+  - GEOSITE,geolocation-cn,Tor
+  - GEOIP,cn,Tor
+  - MATCH,US-DMIT
