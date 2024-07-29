@@ -26,6 +26,9 @@
     # Install contour through Flatpak instead.
     # pkgs.contour
 
+    # Networking
+    pkgs.clash-verge-rev
+
     # Editor
     pkgs.neovim
     pkgs.lua-language-server
