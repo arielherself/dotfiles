@@ -27,3 +27,6 @@ cp $HOME/.config/home-manager . -r
 
 # NPM
 cp $HOME/.npmrc .
+
+# LF
+cp $HOME/.config/lf . -r

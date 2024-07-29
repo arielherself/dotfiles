@@ -288,3 +288,15 @@ ls.add_snippets(nil, {
     }
 })
 
+local lca = require('snippets.lca')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'lca',
+            namr = 'lca',
+            dscr = 'LCA',
+        },{
+            text(lines(lca))
+        })
+    }
+})

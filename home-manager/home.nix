@@ -23,19 +23,41 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    pkgs.mtr
+    # Install contour through Flatpak instead.
+    # pkgs.contour
+
+    # Editor
     pkgs.neovim
-    pkgs.htop
-    pkgs.python312
-    pkgs.pyright
-    pkgs.nodejs_22
-    pkgs.pipx
-    pkgs.fx
-    pkgs.gdb
     pkgs.lua-language-server
+    pkgs.cmake-language-server
+    pkgs.helix
+    pkgs.zed-editor
+
+    # Tools
+    pkgs.btop
+    pkgs.fx
+    pkgs.mtr
+    pkgs.htop
+    pkgs.gdb
+
+    # Python
+    (pkgs.python312.withPackages (ps: with ps; [
+    ]))
+    pkgs.pyright
+    pkgs.pipx
+
+    # Node
+    pkgs.nodejs_22
+
+    # Waybar
     pkgs.waybar
     pkgs.waybar-mpris
-    pkgs.zed-editor
+
+    # Misc
+    pkgs.lf        # Terminal file manager
+    # pkgs.smassh    # Typing test
+    pkgs.you-get   # YouTube video downloader
+    pkgs.asciinema # Record terminal sessions
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -88,12 +110,4 @@
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
-
-  programs.helix = {
-    enable = true;
-  };
-
-  programs.btop = {
-    enable = true;
-  };
 }

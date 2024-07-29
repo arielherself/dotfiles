@@ -187,7 +187,7 @@
     },
     "custom/waybar-mpris": {
         "return-type": "json",
-        "exec": "waybar-mpris --position --autofocus --order 'SYMBOL:TITLE:ARTIST:POSITION'",
+        "exec": "waybar-mpris --position --autofocus --order 'SYMBOL:POSITION:TITLE:ARTIST'",
         "on-click": "waybar-mpris --send toggle",
         // This option will switch between players on right click.
         "on-click-right": "waybar-mpris --send player-next",
@@ -198,6 +198,7 @@
         // "on-scroll-up": "waybar-mpris --send next",
         // "on-scroll-down": "waybar-mpris --send prev",
         "escape": true,
+        "max-length": 50,
     },
     "custom/clock": {
         "exec": "LC_TIME=en_US.UTF8 date +'%-m-%-d[%a] %H:%M'",

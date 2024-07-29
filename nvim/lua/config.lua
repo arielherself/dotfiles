@@ -46,14 +46,14 @@ vim.filetype.add({
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -92,9 +92,9 @@ local plugins = {
             -- 'folke/neodev.nvim',
         },
         config = function(_, servers)
-          for server, opts in pairs(servers) do
-            require('lspconfig')[server].setup(opts)
-          end
+            for server, opts in pairs(servers) do
+                require('lspconfig')[server].setup(opts)
+            end
         end,
     },
     {
@@ -119,10 +119,10 @@ local plugins = {
         },
         init = function() vim.g.barbar_auto_setup = false end,
         opts = {
-        -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-        animation = false,
-        -- insert_at_start = true,
-        -- …etc.
+            -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+            animation = false,
+            -- insert_at_start = true,
+            -- …etc.
         },
         version = '^1.0.0', -- optional: only update when a new 1.x version is released
     },
@@ -166,31 +166,31 @@ local plugins = {
         },
     },
     {
-    	"arielherself/arshamiser.nvim",  -- status bar
+        "arielherself/arshamiser.nvim",  -- status bar
         branch = "dev",
-	    dependencies = {
-		    "arsham/arshlib.nvim",
-		    "famiu/feline.nvim",
-		    "rebelot/heirline.nvim",
-		    "nvim-tree/nvim-web-devicons",
-        "lewis6991/gitsigns.nvim",
-        "nanotee/sqls.nvim",
-        "arsham/listish.nvim",
-	    },
-	    config = function()
+        dependencies = {
+            "arsham/arshlib.nvim",
+            "famiu/feline.nvim",
+            "rebelot/heirline.nvim",
+            "nvim-tree/nvim-web-devicons",
+            "lewis6991/gitsigns.nvim",
+            "nanotee/sqls.nvim",
+            "arsham/listish.nvim",
+        },
+        config = function()
             require('gitsigns').setup()
 
-		    -- ignore any parts you don't want to use
-		    vim.cmd.colorscheme("arshamiser_dark")
-		    -- require("arshamiser.feliniser")
-		    -- or:
-		    require("arshamiser.heirliniser")
+            -- ignore any parts you don't want to use
+            vim.cmd.colorscheme("arshamiser_dark")
+            -- require("arshamiser.feliniser")
+            -- or:
+            require("arshamiser.heirliniser")
 
-		    _G.custom_foldtext = require("arshamiser.folding").foldtext
-		    vim.opt.foldtext = "v:lua.custom_foldtext()"
-		    -- if you want to draw a tabline:
-		    -- vim.api.nvim_set_option("tabline", [[%{%v:lua.require("arshamiser.tabline").draw()%}]])
-	    end,
+            _G.custom_foldtext = require("arshamiser.folding").foldtext
+            vim.opt.foldtext = "v:lua.custom_foldtext()"
+            -- if you want to draw a tabline:
+            -- vim.api.nvim_set_option("tabline", [[%{%v:lua.require("arshamiser.tabline").draw()%}]])
+        end,
     },
     {
         'numToStr/Comment.nvim',  -- `gc` for commenting
@@ -238,20 +238,20 @@ local plugins = {
         'mawkler/modicator.nvim'  -- highlight current line number
     },
     {
-      "ecthelionvi/NeoColumn.nvim",  -- highlight overflow columns?
-      opts = {}
+        "ecthelionvi/NeoColumn.nvim",  -- highlight overflow columns?
+        opts = {}
     },
     {
-      "utilyre/barbecue.nvim",  -- LSP winbar
-      name = "barbecue",
-      version = "*",
-      dependencies = {
-        "SmiteshP/nvim-navic",
-        "nvim-tree/nvim-web-devicons", -- optional dependency
-      },
-      opts = {
-        -- configurations go here
-      },
+        "utilyre/barbecue.nvim",  -- LSP winbar
+        name = "barbecue",
+        version = "*",
+        dependencies = {
+            "SmiteshP/nvim-navic",
+            "nvim-tree/nvim-web-devicons", -- optional dependency
+        },
+        opts = {
+            -- configurations go here
+        },
     },
     {
         'akinsho/git-conflict.nvim',  -- `GitConflictChooseOurs`
@@ -259,25 +259,25 @@ local plugins = {
         config = true,
     },
     {
-      'mrjones2014/legendary.nvim',
-      -- since legendary.nvim handles all your keymaps/commands,
-      -- its recommended to load legendary.nvim before other plugins
-      priority = 10000,
-      lazy = false,
-      -- sqlite is only needed if you want to use frecency sorting
-      -- dependencies = { 'kkharji/sqlite.lua' }
+        'mrjones2014/legendary.nvim',
+        -- since legendary.nvim handles all your keymaps/commands,
+        -- its recommended to load legendary.nvim before other plugins
+        priority = 10000,
+        lazy = false,
+        -- sqlite is only needed if you want to use frecency sorting
+        -- dependencies = { 'kkharji/sqlite.lua' }
     },
     {
-      'stevearc/dressing.nvim',  -- better UI
-      opts = {},
+        'stevearc/dressing.nvim',  -- better UI
+        opts = {},
     },
     {
-      "folke/twilight.nvim",  -- Focus on parts that's being edited
-      opts = {
-        -- your configuration comes here
-        -- or leave it empty to use the default settings
-        -- refer to the configuration section below
-      }
+        "folke/twilight.nvim",  -- Focus on parts that's being edited
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        }
     },
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
     { 'arielherself/vim-cursorword' },
@@ -302,26 +302,26 @@ local plugins = {
         end
     },
     {
-     "folke/trouble.nvim",  -- TroubleToggle
-     dependencies = { "nvim-tree/nvim-web-devicons" },
-     opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-     },
+        "folke/trouble.nvim",  -- TroubleToggle
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        },
     },
     { "arielherself/melange-nvim" },
     { 'hrsh7th/vim-vsnip' },
     {
-      "NeogitOrg/neogit",  -- <C-g>
-      dependencies = {
-        "sindrets/diffview.nvim",        -- optional - Diff integration
+        "NeogitOrg/neogit",  -- <C-g>
+        dependencies = {
+            "sindrets/diffview.nvim",        -- optional - Diff integration
 
-        -- Only one of these is needed, not both.
-        "nvim-telescope/telescope.nvim", -- optional
-        "ibhagwan/fzf-lua",              -- optional
-      },
-      config = true
+            -- Only one of these is needed, not both.
+            "nvim-telescope/telescope.nvim", -- optional
+            "ibhagwan/fzf-lua",              -- optional
+        },
+        config = true
     },
     -- { 'Exafunction/codeium.vim' },
     {
@@ -339,34 +339,34 @@ local plugins = {
     },
     { 'debugloop/telescope-undo.nvim' },
     {
-      "folke/lazydev.nvim",  -- Autocompletion when editing Neovim configs or developing plugins
-      ft = "lua", -- only load on lua files
-      opts = {
-        library = {
-          -- lazypath .. "/luvit-meta/library", -- see below
-          -- You can also add plugins you always want to have loaded.
-          -- Useful if the plugin has globals or types you want to use
-          -- vim.env.LAZY .. "/LazyVim", -- see below
+        "folke/lazydev.nvim",  -- Autocompletion when editing Neovim configs or developing plugins
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- lazypath .. "/luvit-meta/library", -- see below
+                -- You can also add plugins you always want to have loaded.
+                -- Useful if the plugin has globals or types you want to use
+                -- vim.env.LAZY .. "/LazyVim", -- see below
+            },
         },
-      },
     },
     { "Bilal2453/luvit-meta", lazy = true },
     {
-      "AckslD/nvim-neoclip.lua",  -- `<leader>p`
+        "AckslD/nvim-neoclip.lua",  -- `<leader>p`
     },
     {
-      "danielfalk/smart-open.nvim",  -- sort file search results by frequency
-      branch = "0.2.x",
-      config = function()
-        require("telescope").load_extension("smart_open")
-      end,
-      dependencies = {
-        "kkharji/sqlite.lua",
-        -- Only required if using match_algorithm fzf
-        { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-        -- Optional.  If installed, native fzy will be used when match_algorithm is fzy
-        { "nvim-telescope/telescope-fzy-native.nvim" },
-      },
+        "danielfalk/smart-open.nvim",  -- sort file search results by frequency
+        branch = "0.2.x",
+        config = function()
+            require("telescope").load_extension("smart_open")
+        end,
+        dependencies = {
+            "kkharji/sqlite.lua",
+            -- Only required if using match_algorithm fzf
+            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+            -- Optional.  If installed, native fzy will be used when match_algorithm is fzy
+            { "nvim-telescope/telescope-fzy-native.nvim" },
+        },
     },
     {
         "chrisgrieser/nvim-origami",  -- Fold keymap
@@ -408,25 +408,25 @@ local plugins = {
         end,
     },
     {
-      'stevearc/oil.nvim',
-      opts = {},
-      -- Optional dependencies
-      dependencies = { "nvim-tree/nvim-web-devicons" },
+        'stevearc/oil.nvim',
+        opts = {},
+        -- Optional dependencies
+        dependencies = { "nvim-tree/nvim-web-devicons" },
     },
     {
-      "aznhe21/actions-preview.nvim",
-      config = function()
-        vim.keymap.set({ "v", "n" }, "<leader>a", require("actions-preview").code_actions)
-      end,
+        "aznhe21/actions-preview.nvim",
+        config = function()
+            vim.keymap.set({ "v", "n" }, "<leader>a", require("actions-preview").code_actions)
+        end,
     },
     { "neovimhaskell/haskell-vim" },
     {
-      "hedyhli/markdown-toc.nvim",
-      ft = "markdown",  -- Lazy load on markdown filetype
-      cmd = { "Mtoc" }, -- Or, lazy load on "Mtoc" command
-      opts = {
-        -- Your configuration here (optional)
-      },
+        "hedyhli/markdown-toc.nvim",
+        ft = "markdown",  -- Lazy load on markdown filetype
+        cmd = { "Mtoc" }, -- Or, lazy load on "Mtoc" command
+        opts = {
+            -- Your configuration here (optional)
+        },
     },
     {
         "iamcco/markdown-preview.nvim",
@@ -540,30 +540,32 @@ config.setup({
 -- import nvim-cmp plugin safely
 local cmp_status, cmp = pcall(require, "cmp")
 if not cmp_status then
-  return
+    return
 end
 
 -- import luasnip plugin safely
 local luasnip_status, luasnip = pcall(require, "luasnip")
 if not luasnip_status then
-  return
+    return
 end
 
 vim.opt.completeopt = "menu,menuone,noselect"
 
 local has_words_before = function()
-  unpack = unpack or table.unpack
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+    unpack = unpack or table.unpack
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local is_empty_line = function()
+    unpack = unpack or table.unpack
+    local line, _ = unpack(vim.api.nvim_win_get_cursor(0))
+    return vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:match("%S") == nil
 end
 
 local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
-
-local ELLIPSIS_CHAR = '…'
-local MAX_LABEL_WIDTH = 20
-local MIN_LABEL_WIDTH = 20
 
 cmp.setup {
     snippet = {
@@ -574,7 +576,11 @@ cmp.setup {
     mapping = {
         ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
-                cmp.confirm({ select = true })
+                if not is_empty_line() then
+                    cmp.confirm({ select = true })
+                else
+                    fallback()
+                end
             elseif luasnip_status and luasnip.expand_or_jumpable() then
                 luasnip.expand_or_jump()
             elseif has_words_before() then
@@ -636,14 +642,14 @@ lspconfig.tsserver.setup {
 }
 lspconfig.rust_analyzer.setup {
     capabilities = capabilities,
-  -- Server-specific settings. See `:help lspconfig-setup`
-  settings = {
-    ['rust-analyzer'] = {
-      checkOnSave = {
-        command = 'clippy',
-      }
+    -- Server-specific settings. See `:help lspconfig-setup`
+    settings = {
+        ['rust-analyzer'] = {
+            checkOnSave = {
+                command = 'clippy',
+            }
+        },
     },
-  },
 }
 lspconfig.hls.setup {}
 lspconfig.lua_ls.setup {
@@ -660,7 +666,7 @@ lspconfig.mojo.setup {}
 
 capabilities.workspace = {
     didChangeWatchedFiles = {
-      dynamicRegistration = true,
+        dynamicRegistration = true,
     },
 }
 require("lspconfig").markdown_oxide.setup({
@@ -688,29 +694,29 @@ vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
 -- Use LspAttach autocommand to only map the following keys
 -- after the language server attaches to the current buffer
 vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-  callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+        -- Enable completion triggered by <c-x><c-o>
+        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-  end,
+        -- Buffer local mappings.
+        -- See `:help vim.lsp.*` for documentation on any of the below functions
+        local opts = { buffer = ev.buf }
+        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+        vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+        vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+        vim.keymap.set('n', '<space>wl', function()
+            print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+        end, opts)
+        vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+        vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+        vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    end,
 })
 
 require("lsp_signature").setup({
@@ -767,24 +773,24 @@ vim.api.nvim_create_user_command('SearchInCurrentFile', function()
 end, {})
 
 vim.api.nvim_create_user_command('PopupSaveas', function()
-  vim.ui.input({ prompt = 'Save As: ' }, function(input)
-    if input ~= nil then
-      if vim.fn.filereadable(input) == 1 then
-        local choice = vim.fn.input('File exists. Overwrite? ([y]/n): ')
-        if choice ~= 'n' then
-          vim.cmd('saveas! ' .. input)
-          print('File overwritten: ' .. input)
+    vim.ui.input({ prompt = 'Save As: ' }, function(input)
+        if input ~= nil then
+            if vim.fn.filereadable(input) == 1 then
+                local choice = vim.fn.input('File exists. Overwrite? ([y]/n): ')
+                if choice ~= 'n' then
+                    vim.cmd('saveas! ' .. input)
+                    print('File overwritten: ' .. input)
+                else
+                    print('Cancelled')
+                end
+            else
+                vim.cmd('saveas ' .. input)
+                print('File saved as: ' .. input)
+            end
         else
-          print('Cancelled')
+            print('Save As cancelled')
         end
-      else
-        vim.cmd('saveas ' .. input)
-        print('File saved as: ' .. input)
-      end
-    else
-      print('Save As cancelled')
-    end
-  end)
+    end)
 end, {})
 
 require("nvim-treesitter.configs").setup {
@@ -803,88 +809,88 @@ require("nvim-treesitter.configs").setup {
     },
     textobjects = {
         select = {
-          enable = true,
-          lookahead = false,
-          keymaps = {
-            -- You can use the capture groups defined in textobjects.scm
-            ["af"] = "@function.outer",
-            ["if"] = "@function.inner",
-            ["ac"] = "@class.outer",
-            -- You can optionally set descriptions to the mappings (used in the desc parameter of
-            -- nvim_buf_set_keymap) which plugins like which-key display
-            ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
-            -- You can also use captures from other query groups like `locals.scm`
-            ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
-          },
-          -- You can choose the select mode (default is charwise 'v')
-          --
-          -- Can also be a function which gets passed a table with the keys
-          -- * query_string: eg '@function.inner'
-          -- * method: eg 'v' or 'o'
-          -- and should return the mode ('v', 'V', or '<c-v>') or a table
-          -- mapping query_strings to modes.
-          selection_modes = {
-            ['@parameter.outer'] = 'v', -- charwise
-            ['@function.outer'] = 'V', -- linewise
-            ['@class.outer'] = '<c-v>', -- blockwise
-          },
-          -- If you set this to `true` (default is `false`) then any textobject is
-          -- extended to include preceding or succeeding whitespace. Succeeding
-          -- whitespace has priority in order to act similarly to eg the built-in
-          -- `ap`.
-          --
-          -- Can also be a function which gets passed a table with the keys
-          -- * query_string: eg '@function.inner'
-          -- * selection_mode: eg 'v'
-          -- and should return true or false
-          include_surrounding_whitespace = false,
+            enable = true,
+            lookahead = false,
+            keymaps = {
+                -- You can use the capture groups defined in textobjects.scm
+                ["af"] = "@function.outer",
+                ["if"] = "@function.inner",
+                ["ac"] = "@class.outer",
+                -- You can optionally set descriptions to the mappings (used in the desc parameter of
+                -- nvim_buf_set_keymap) which plugins like which-key display
+                ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+                -- You can also use captures from other query groups like `locals.scm`
+                ["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+            },
+            -- You can choose the select mode (default is charwise 'v')
+            --
+            -- Can also be a function which gets passed a table with the keys
+            -- * query_string: eg '@function.inner'
+            -- * method: eg 'v' or 'o'
+            -- and should return the mode ('v', 'V', or '<c-v>') or a table
+            -- mapping query_strings to modes.
+            selection_modes = {
+                ['@parameter.outer'] = 'v', -- charwise
+                ['@function.outer'] = 'V', -- linewise
+                ['@class.outer'] = '<c-v>', -- blockwise
+            },
+            -- If you set this to `true` (default is `false`) then any textobject is
+            -- extended to include preceding or succeeding whitespace. Succeeding
+            -- whitespace has priority in order to act similarly to eg the built-in
+            -- `ap`.
+            --
+            -- Can also be a function which gets passed a table with the keys
+            -- * query_string: eg '@function.inner'
+            -- * selection_mode: eg 'v'
+            -- and should return true or false
+            include_surrounding_whitespace = false,
         },
         swap = {
-          enable = true,
-          swap_next = {
-            ["]]"] = "@parameter.inner",
-          },
-          swap_previous = {
-            ["[["] = "@parameter.inner",
-          },
+            enable = true,
+            swap_next = {
+                ["]]"] = "@parameter.inner",
+            },
+            swap_previous = {
+                ["[["] = "@parameter.inner",
+            },
         },
         move = {
-          enable = true,
-          set_jumps = true, -- whether to set jumps in the jumplist
-          goto_next_start = {
-            ["]m"] = "@function.outer",
-            ["]c"] = { query = "@class.outer", desc = "Next class start" },
-            --
-            -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
-            ["]o"] = "@loop.*",
-            -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
-            --
-            -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
-            -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
-            ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
-            ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
-          },
-          goto_next_end = {
-            ["]M"] = "@function.outer",
-            ["]C"] = "@class.outer",
-          },
-          goto_previous_start = {
-            ["[m"] = "@function.outer",
-            ["[c"] = "@class.outer",
-          },
-          goto_previous_end = {
-            ["[M"] = "@function.outer",
-            ["[C"] = "@class.outer",
-          },
-          -- Below will go to either the start or the end, whichever is closer.
-          -- Use if you want more granular movements
-          -- Make it even more gradual by adding multiple queries and regex.
-          goto_next = {
-            ["]d"] = "@conditional.outer",
-          },
-          goto_previous = {
-            ["[d"] = "@conditional.outer",
-          }
+            enable = true,
+            set_jumps = true, -- whether to set jumps in the jumplist
+            goto_next_start = {
+                ["]m"] = "@function.outer",
+                ["]c"] = { query = "@class.outer", desc = "Next class start" },
+                --
+                -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
+                ["]o"] = "@loop.*",
+                -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+                --
+                -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+                -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+                ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+                ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+            },
+            goto_next_end = {
+                ["]M"] = "@function.outer",
+                ["]C"] = "@class.outer",
+            },
+            goto_previous_start = {
+                ["[m"] = "@function.outer",
+                ["[c"] = "@class.outer",
+            },
+            goto_previous_end = {
+                ["[M"] = "@function.outer",
+                ["[C"] = "@class.outer",
+            },
+            -- Below will go to either the start or the end, whichever is closer.
+            -- Use if you want more granular movements
+            -- Make it even more gradual by adding multiple queries and regex.
+            goto_next = {
+                ["]d"] = "@conditional.outer",
+            },
+            goto_previous = {
+                ["[d"] = "@conditional.outer",
+            }
         },
     },
     endwise = { enable = true, },
@@ -921,8 +927,8 @@ cmp.setup {
         format = lspkind.cmp_format({
             mode = 'symbol_text', -- show only symbol annotations
             maxwidth = 30, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-                            -- can also be a function to dynamically calculate max width such as
-                            -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
+            -- can also be a function to dynamically calculate max width such as
+            -- maxwidth = function() return math.floor(0.45 * vim.o.columns) end,
             ellipsis_char = '…', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
             show_labelDetails = true, -- show labelDetails in menu. Disabled by default
 
@@ -955,44 +961,44 @@ local eslint = require("eslint")
 null_ls.setup()
 
 eslint.setup({
-  bin = 'eslint', -- or `eslint_d`
-  code_actions = {
-    enable = true,
-    apply_on_save = {
-      enable = true,
-      types = { "directive", "problem", "suggestion", "layout" },
+    bin = 'eslint', -- or `eslint_d`
+    code_actions = {
+        enable = true,
+        apply_on_save = {
+            enable = true,
+            types = { "directive", "problem", "suggestion", "layout" },
+        },
+        disable_rule_comment = {
+            enable = true,
+            location = "separate_line", -- or `same_line`
+        },
     },
-    disable_rule_comment = {
-      enable = true,
-      location = "separate_line", -- or `same_line`
+    diagnostics = {
+        enable = true,
+        report_unused_disable_directives = false,
+        run_on = "type", -- or `save`
     },
-  },
-  diagnostics = {
-    enable = true,
-    report_unused_disable_directives = false,
-    run_on = "type", -- or `save`
-  },
 })
 
 local prettier = require("prettier")
 
 prettier.setup({
-  bin = 'prettier', -- or `'prettierd'` (v0.23.3+)
-  filetypes = {
-    "css",
-    "graphql",
-    "html",
-    "javascript",
-    "javascriptreact",
-    "json",
-    "less",
-    "markdown",
-    "scss",
-    "typescript",
-    "typescriptreact",
-    "yaml",
-    "vue",
-  },
+    bin = 'prettier', -- or `'prettierd'` (v0.23.3+)
+    filetypes = {
+        "css",
+        "graphql",
+        "html",
+        "javascript",
+        "javascriptreact",
+        "json",
+        "less",
+        "markdown",
+        "scss",
+        "typescript",
+        "typescriptreact",
+        "yaml",
+        "vue",
+    },
 })
 
 require("outline").setup()
@@ -1000,7 +1006,7 @@ require("outline").setup()
 require("todo-comments").setup()
 
 lspconfig.volar.setup{
-  filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
+    filetypes = {'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json'}
 }
 
 local map = vim.api.nvim_set_keymap
@@ -1090,24 +1096,24 @@ vim.api.nvim_create_autocmd("LspAttach",  {
 require('neoclip').setup {}
 
 require("oil").setup{
-  columns = {
-    "icon",
-    "permissions",
-    "size",
-    "mtime",
-  },
-  win_options = {
-    signcolumn = "yes",
-  },
-  view_options = {
-    show_hidden = true,
-  },
-  constrain_cursor = "editable",
-  keymaps = {
-    ["<C-v>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
-    ["<C-x>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
-    ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
-  },
+    columns = {
+        "icon",
+        "permissions",
+        "size",
+        "mtime",
+    },
+    win_options = {
+        signcolumn = "yes",
+    },
+    view_options = {
+        show_hidden = true,
+    },
+    constrain_cursor = "editable",
+    keymaps = {
+        ["<C-v>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
+        ["<C-x>"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
+        ["<C-t>"] = { "actions.select", opts = { tab = true }, desc = "Open the entry in new tab" },
+    },
 }
 
 -- refresh codelens on TextChanged and InsertLeave as well
