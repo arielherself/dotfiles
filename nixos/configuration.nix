@@ -38,8 +38,8 @@ in {
     "8.8.8.8"
     "1.1.1.1"
   ];
-  networking.proxy.default = "http://127.0.0.1:7897/";
-  networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # networking.proxy.default = "http://127.0.0.1:7897/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
   # i18n.defaultLocale = "en_US.UTF-8";
@@ -176,7 +176,7 @@ in {
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     sqlite
-    clash-verge-rev
+    # clash-verge-rev
     bind
     pciutils
   ];
@@ -187,6 +187,13 @@ in {
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
+  };
+
+  # Clash
+  programs.clash-verge = {
+    enable = true;
+    autoStart = true;
+    tunMode = true;
   };
 
   # List services that you want to enable:

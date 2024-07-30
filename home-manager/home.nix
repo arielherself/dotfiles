@@ -124,11 +124,11 @@ in {
     pkgs.adwaita-qt
     pkgs.adwaita-qt6
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    # My version of BerkeleyMono NF is incomplete. Should add some fallback fonts.
+    (pkgs.nerdfonts.override { fonts = [
+      "JetBrainsMono"
+      "FiraCode"
+    ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -205,6 +205,7 @@ in {
     extraConfig = {
       commit.gpgsign = true;
       gpg.format = "ssh";
+      # This may not apply. Also try `git config --global gpg.ssh.program "/home/user/.nix-profile/bin/op-ssh-sign"`
       gpg."ssh".program = "${unstable._1password-gui}/bin/op-ssh-sign";
       push.autoSetupRemote = true;
       core.editor = "nvim";
