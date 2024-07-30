@@ -354,28 +354,28 @@ local plugins = {
     {
         "AckslD/nvim-neoclip.lua",  -- `<leader>p`
     },
-    {
-        "danielfalk/smart-open.nvim",  -- sort file search results by frequency
-        branch = "0.2.x",
-        config = function()
-            require("telescope").load_extension("smart_open")
-        end,
-        dependencies = {
-            "kkharji/sqlite.lua",
-            -- Only required if using match_algorithm fzf
-            { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-            -- Optional.  If installed, native fzy will be used when match_algorithm is fzy
-            { "nvim-telescope/telescope-fzy-native.nvim" },
-        },
-    },
+    -- {
+    --     "danielfalk/smart-open.nvim",  -- sort file search results by frequency
+    --     branch = "0.2.x",
+    --     config = function()
+    --         require("telescope").load_extension("smart_open")
+    --     end,
+    --     dependencies = {
+    --         "kkharji/sqlite.lua",
+    --         -- Only required if using match_algorithm fzf
+    --         { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+    --         -- Optional.  If installed, native fzy will be used when match_algorithm is fzy
+    --         { "nvim-telescope/telescope-fzy-native.nvim" },
+    --     },
+    -- },
     {
         "chrisgrieser/nvim-origami",  -- Fold keymap
         event = "BufReadPost", -- later or on keypress would prevent saving folds
         opts = true, -- needed even when using default config
     },
     {
-        dir = '/home/user/Documents/ultimate-autopair.nvim',
-        -- 'altermo/ultimate-autopair.nvim',
+        -- dir = '/home/user/Documents/ultimate-autopair.nvim',
+        'altermo/ultimate-autopair.nvim',
         event={'InsertEnter','CmdlineEnter'},
         branch='v0.6', --recommended as each new version will have breaking changes
         opts={
@@ -515,10 +515,10 @@ require('search').setup {
                 return vim.fn.isdirectory('.git') == 1
             end
         },
-        {
-            'Smart Open',
-            ext.smart_open.smart_open,
-        },
+        -- {
+        --     'Smart Open',
+        --     ext.smart_open.smart_open,
+        -- },
         {
             'Buffers',
             builtin.buffers,
@@ -1140,9 +1140,10 @@ require("telescope").setup {
     },
 }
 
-vim.env.SRC_ENDPOINT = 'https://sourcegraph.com/'
-vim.env.SRC_ACCESS_TOKEN = ''  -- TODO: fill in the token before using it
-
-require('sg').setup {}
+-- NixOS cannot run this lsp
+-- vim.env.SRC_ENDPOINT = 'https://sourcegraph.com/'
+-- vim.env.SRC_ACCESS_TOKEN = ''  -- TODO: fill in the token before using it
+--
+-- require('sg').setup {}
 
 -- vim.diagnostic.config({ virtual_text = false })

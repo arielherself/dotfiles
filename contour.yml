@@ -554,7 +554,7 @@ profiles:
 
         # When this profile is *activated*, this flag decides
         # whether or not to put the window into maximized mode.
-        maximized: false
+        maximized: true
 
         bell:
             sound: "default"
@@ -644,7 +644,7 @@ profiles:
         # Font related configuration (font face, styles, size, rendering mode).
         font:
             # Initial font size in pixels.
-            size: 9
+            size: 18
 
             # Font Locator API
             # Selects an engine to use for locating font files on the system.

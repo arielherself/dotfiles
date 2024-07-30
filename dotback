@@ -1,32 +1,40 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Neovim
-cp $HOME/.vimrc .
+# cp $HOME/.vimrc .
 cp $HOME/.config/nvim . -r
 
 # Hyprland
-cp $HOME/.config/hypr . -r
-cp $HOME/.config/waybar . -r
-cp $HOME/.config/wlogout . -r
+# cp $HOME/.config/hypr . -r
+# cp $HOME/.config/waybar . -r
+# cp $HOME/.config/wlogout . -r
+
+# AwesomeWM
+cp $HOME/.config/awesome/rc.lua ./awesome.rc.lua
 
 # Terminal Emulators
-cp $HOME/.config/kitty/kitty.conf .
-cp $HOME/.config/alacritty/alacritty.toml .
-cp $HOME/.var/app/org.contourterminal.Contour/config/contour/contour.yml .
+# cp $HOME/.config/kitty/kitty.conf .
+# cp $HOME/.config/alacritty/alacritty.toml .
+# Flatpak version
+# cp $HOME/.var/app/org.contourterminal.Contour/config/contour/contour.yml .
+cp $HOME/.config/contour/contour.yml .
 
 # Zsh
-cp $HOME/.zshrc .
-cp $HOME/.p10k.zsh .
+# cp $HOME/.zshrc .
+# cp $HOME/.p10k.zsh .
 
 # Tmux
+# Tmux currently does not run well under home-manager.
+# Please place the configuration files manually.
 cp $HOME/.tmux.conf .
 cp $HOME/.config/tmux-powerline . -r
 
 # Nix
 cp $HOME/.config/home-manager . -r
+cp /etc/nixos . -r
 
 # NPM
-cp $HOME/.npmrc .
+# cp $HOME/.npmrc .
 
 # LF
 cp $HOME/.config/lf . -r
