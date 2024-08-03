@@ -84,6 +84,7 @@ in {
       ];
     };
   };
+  services.logind.extraConfig = "IdleAction=ignore";
   services.displayManager = {
     sddm.enable = true;
     defaultSession = "none+awesome";
@@ -160,7 +161,7 @@ in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.user = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "wireshark" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       home-manager
       contour
@@ -179,6 +180,7 @@ in {
     # clash-verge-rev
     bind
     pciutils
+    iptables
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -195,6 +197,9 @@ in {
     autoStart = true;
     tunMode = true;
   };
+
+  # Wireshark
+  programs.wireshark.enable = true;
 
   # List services that you want to enable:
 

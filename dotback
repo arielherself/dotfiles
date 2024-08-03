@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Environment variables
+cp $HOME/.profile .
+
 # Neovim
 # cp $HOME/.vimrc .
 cp $HOME/.config/nvim . -r

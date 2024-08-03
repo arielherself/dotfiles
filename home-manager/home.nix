@@ -24,6 +24,13 @@ in {
       terminal = false;
       categories = [ "AudioVideo" "Audio" ];
     };
+    thorium = {
+      name = "Thorium";
+      genericName = "Web Browser";
+      type = "Application";
+      exec = "${pkgs.appimage-run}/bin/appimage-run ${config.home.homeDirectory}/Dropbox/arch/thorium/Thorium.AppImage";
+      terminal = false;
+    };
   };
 
   # This value determines the Home Manager release that your configuration is
@@ -45,21 +52,29 @@ in {
     pkgs.alacritty
 
     # Networking
+    pkgs.wireshark
     # pkgs.clash-verge-rev
 
     # Editor
     unstable.neovim
+    pkgs.fzf
+    pkgs.ripgrep
+    pkgs.clang-tools
     pkgs.lua-language-server
     pkgs.cmake-language-server
     pkgs.nil  # Nix language server
     pkgs.nodePackages.prettier
+    unstable.markdown-oxide
     pkgs.helix
     pkgs.zed-editor
 
     # Tools
+    pkgs.zip
+    pkgs.unzip
     pkgs.pkg-config
     pkgs.appimage-run
     pkgs.gnumake
+    pkgs.go
     pkgs.gcc
     pkgs.autoconf
     pkgs.automake
@@ -81,7 +96,7 @@ in {
     (pkgs.python312.withPackages (ps: with ps; [
     ]))
     pkgs.pyright
-    pkgs.pipx
+    # pkgs.pipx
 
     # Node
     pkgs.nodejs_22
@@ -96,10 +111,15 @@ in {
     pkgs.i3lock
     pkgs.flameshot
 
+    # Note
+    pkgs.obsidian
+    pkgs.xournalpp
+
     # Multimedia
     pkgs.kdePackages.gwenview
     pkgs.vlc
     pkgs.playerctl
+    pkgs.ffmpeg
 
     # Streaming
     pkgs.obs-studio
@@ -123,6 +143,8 @@ in {
     unstable.adwaita-icon-theme
     pkgs.adwaita-qt
     pkgs.adwaita-qt6
+    pkgs.firefox-devedition
+    pkgs.sioyek
 
     # My version of BerkeleyMono NF is incomplete. Should add some fallback fonts.
     (pkgs.nerdfonts.override { fonts = [
