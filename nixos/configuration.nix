@@ -163,7 +163,7 @@ in {
     isNormalUser = true;
     extraGroups = [ "wheel" "wireshark" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
-      home-manager
+      # home-manager
       contour
       vivaldi
   #     firefox
@@ -205,6 +205,10 @@ in {
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  services.openvpn.servers = {
+    htb  = { config = '' config /home/user/Downloads/starting_point_bzw.ovpn ''; };
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

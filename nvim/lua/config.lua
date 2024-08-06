@@ -310,7 +310,9 @@ local plugins = {
             -- refer to the configuration section below
         },
     },
-    { "arielherself/melange-nvim" },
+    {
+        "arielherself/melange-nvim",
+    },
     { 'hrsh7th/vim-vsnip' },
     {
         "NeogitOrg/neogit",  -- <C-g>
@@ -465,6 +467,7 @@ local plugins = {
         name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
     },
+    { 'echasnovski/mini.trailspace', version = '*' },
 }
 require("lazy").setup(plugins, {})
 
@@ -759,7 +762,7 @@ vim.keymap.set('n', '<leader>p', '<Cmd>Telescope neoclip a extra=plus,unnamedplu
 vim.keymap.set('n', '<leader>k', '<Cmd>SearchInCurrentFile<CR>')
 vim.keymap.set('c', '<C-j>', '<Down>')
 vim.keymap.set('c', '<C-k>', '<Up>')
-vim.keymap.set('n', '<leader>x', [[:%s/\s\+$//e<cr>]], {noremap=true})
+vim.keymap.set('n', '<leader>x', require("mini.trailspace").trim, {noremap=true})
 vim.keymap.set('n', '<Del>', vim.notify.dismiss, {noremap=true})
 -- vim.keymap.set('n', )
 
@@ -1147,3 +1150,5 @@ require("telescope").setup {
 -- require('sg').setup {}
 
 -- vim.diagnostic.config({ virtual_text = false })
+
+require('mini.trailspace').setup {}

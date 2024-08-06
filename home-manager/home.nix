@@ -91,6 +91,9 @@ in {
     pkgs.lshw
     unstable._1password
     unstable._1password-gui
+    pkgs.nmap
+    pkgs.inetutils
+    pkgs.nix-index
 
     # Python
     (pkgs.python312.withPackages (ps: with ps; [
@@ -197,6 +200,7 @@ in {
 
   programs.zsh = {
     enable = true;
+    dotDir = "${config.home.homeDirectory}/.config/zsh";
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
@@ -217,7 +221,10 @@ in {
       ZSH_TMUX_AUTOSTART=true
       ZSH_TMUX_AUTOCONNECT=false
     '';
-    initExtra = "source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    initExtra = ''
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+      source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+    '';
   };
 
   programs.git = {
