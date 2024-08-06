@@ -294,13 +294,15 @@ in {
     sensibleOnTop = false;
     shell = "${pkgs.zsh}/bin/zsh";
     extraConfig = ''
+      set -ga terminal-overrides ",xterm-256color:Tc"
+      set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
       set-option -g default-shell "${pkgs.zsh}/bin/zsh"
       set -g default-command "${pkgs.zsh}/bin/zsh"
       setw -g mode-keys vi
       set -g @plugin 'tmux-plugins/tpm'
       set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'erikw/tmux-powerline'
-      run '~/.tmux/plugins/tpm/tpm'
+      run '${config.xdg.configHome}/plugins/tpm/tpm'
     '';
   };
 
