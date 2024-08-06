@@ -40,9 +40,11 @@ in {
     };
     "contour/contour.yml" = {
       source = ../contour.yml;
+      recursive = true;
     };
     "awesome/rc.lua" = {
       source = ../awesome.rc.lua;
+      recursive = true;
     };
     "lf" = {
       source = ../lf;
@@ -54,6 +56,11 @@ in {
     };
     "nvim" = {
       source = ../nvim;
+      recursive = true;
+    };
+    "p10k/p10k.zsh" = {
+      source = ../p10k.zsh;
+      recursive = true;
     };
   };
 
@@ -246,6 +253,10 @@ in {
     # dotDir = "${config.home.homeDirectory}/.config/zsh";
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    shellAliases = {
+      upgrade = "nix-channel --update && nixos-rebuild switch && home-manager switch";
+      commit = "git commit -S -m";
+    };
     oh-my-zsh = {
       enable = true;
       plugins = [
@@ -253,20 +264,22 @@ in {
         "tmux"
       ];
     };
-    plugins = [
-      {
-        name = "p10k-config";
-        src = "${config.home.homeDirectory}/.config/p10k";
-        file = "p10k.zsh";
-      }
-    ];
+    # plugins = [
+    #   {
+    #     name = "p10k-config";
+    #     src = "${config.xdg.configHome}/p10k";
+    #     file = "p10k.zsh";
+    #   }
+    # ];
     initExtraFirst = ''
       ZSH_TMUX_AUTOSTART=true
       ZSH_TMUX_AUTOCONNECT=false
     '';
     initExtra = ''
+      me() { mkdir -p "$1" && cd "$1" }
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
+      source ${config.xdg.configHome}/p10k/p10k.zsh
     '';
   };
 
