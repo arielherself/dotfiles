@@ -254,7 +254,7 @@ in {
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
-      upgrade = "nix-channel --update && nixos-rebuild switch && home-manager switch";
+      upgrade = "nix-channel --update && sudo nixos-rebuild switch && home-manager switch";
       commit = "git commit -S -m";
     };
     oh-my-zsh = {
