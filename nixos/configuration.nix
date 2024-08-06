@@ -163,7 +163,7 @@ in {
     isNormalUser = true;
     extraGroups = [ "wheel" "wireshark" ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
-      # home-manager
+      home-manager
       contour
       vivaldi
   #     firefox
