@@ -143,9 +143,12 @@ in {
     pkgs.lshw
     unstable._1password
     unstable._1password-gui
+    pkgs.nix-index
+
+    # Pwn
     pkgs.nmap
     pkgs.inetutils
-    pkgs.nix-index
+    pkgs.samba
 
     # Python
     (pkgs.python312.withPackages (ps: with ps; [
@@ -179,8 +182,9 @@ in {
     # Streaming
     pkgs.obs-studio
 
-    # Telegram
+    # IM
     pkgs.telegram-desktop
+    pkgs.discord
 
     # Misc
     pkgs.fastfetch
@@ -307,6 +311,10 @@ in {
       set -g @plugin 'erikw/tmux-powerline'
       run '${config.xdg.configHome}/plugins/tpm/tpm'
     '';
+  };
+
+  programs.nushell = {
+    enable = true;
   };
 
   services.mpris-proxy.enable = true;

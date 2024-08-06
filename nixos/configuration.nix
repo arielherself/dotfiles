@@ -1,3 +1,5 @@
+# vim: set expandtab tabstop=2 softtabstop=2 shiftwidth=2:
+
 # Edit this configuration file to define what should be installed on
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
@@ -5,14 +7,14 @@
 { config, lib, pkgs, ... }:
 
 let berkeley-mono = pkgs.stdenv.mkDerivation {
-    name = "berkeley-mono";
-    version = "1.007";
-    src = /home/user/Dropbox/berkeley-fonts;
+  name = "berkeley-mono";
+  version = "1.007";
+  src = /home/user/Dropbox/berkeley-fonts;
 
-    installPhase = ''
-        mkdir -p $out/share/fonts/truetype/berkeley-mono
-        cp -r $src/* $out/share/fonts/truetype/berkeley-mono
-    '';
+  installPhase = ''
+    mkdir -p $out/share/fonts/truetype/berkeley-mono
+    cp -r $src/* $out/share/fonts/truetype/berkeley-mono
+  '';
 };
 
 in {
@@ -174,6 +176,7 @@ in {
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    file
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     sqlite
