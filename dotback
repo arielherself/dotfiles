@@ -33,7 +33,8 @@ cp $HOME/.tmux.conf .
 cp $HOME/.config/tmux-powerline . -r
 
 # Nix
-cp $HOME/.config/home-manager . -r
+# Use a symlink for home-maanger.
+# cp $HOME/.config/home-manager . -r
 cp /etc/nixos . -r
 
 # NPM

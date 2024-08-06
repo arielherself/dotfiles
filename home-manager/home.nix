@@ -10,9 +10,52 @@ in {
   # manage.
   home.username = "user";
   home.homeDirectory = "/home/user";
+  xdg.enable = true;
 
   targets.genericLinux.enable = true;
   xdg.mime.enable = true;
+
+  home.file = {
+    ".profile" = {
+      source = ../.profile;
+    };
+    ".gitconfig" = {
+      text = ''
+        [user]
+          email = arielherself@duck.com
+          name = arielherself
+        [gpg "ssh"]
+          program = ${pkgs._1password-gui}/bin/op-ssh-sign
+      '';
+    };
+  };
+
+  xdg.configFile = {
+    "tmux/plugins/tpm" = {
+      source = builtins.fetchGit {
+        url = "https://github.com/tmux-plugins/tpm.git";
+        ref = "master";
+      };
+      recursive = true;
+    };
+    "contour/contour.yml" = {
+      source = ../contour.yml;
+    };
+    "awesome/rc.lua" = {
+      source = ../awesome.rc.lua;
+    };
+    "lf" = {
+      source = ../lf;
+      recursive = true;
+    };
+    "xournalpp" = {
+      source = ../xournalpp;
+      recursive = true;
+    };
+    "nvim" = {
+      source = ../nvim;
+    };
+  };
 
   xdg.desktopEntries = {
     # Don't forget to change its permissions.
@@ -47,7 +90,7 @@ in {
   home.packages = [
     # Terminal
     # pkgs.contour
-    pkgs.tmux
+    # pkgs.tmux
     pkgs.kitty
     pkgs.alacritty
 
@@ -200,7 +243,7 @@ in {
 
   programs.zsh = {
     enable = true;
-    dotDir = "${config.home.homeDirectory}/.config/zsh";
+    # dotDir = "${config.home.homeDirectory}/.config/zsh";
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
@@ -246,20 +289,20 @@ in {
     theme.name = "Adwaita-dark";
   };
 
-  # programs.tmux = {
-  #   enable = true;
-  #   sensibleOnTop = false;
-  #   shell = "${pkgs.zsh}/bin/zsh";
-  #   extraConfig = ''
-  #     # set-option -g default-shell "${pkgs.zsh}/bin/zsh"
-  #     # set -g default-command "${pkgs.zsh}/bin/zsh"
-  #     # setw -g mode-keys vi
-  #     # set -g @plugin 'tmux-plugins/tpm'
-  #     # set -g @plugin 'tmux-plugins/tmux-sensible'
-  #     # set -g @plugin 'erikw/tmux-powerline'
-  #     # run '~/.tmux/plugins/tpm/tpm'
-  #   '';
-  # };
+  programs.tmux = {
+    enable = true;
+    sensibleOnTop = false;
+    shell = "${pkgs.zsh}/bin/zsh";
+    extraConfig = ''
+      set-option -g default-shell "${pkgs.zsh}/bin/zsh"
+      set -g default-command "${pkgs.zsh}/bin/zsh"
+      setw -g mode-keys vi
+      set -g @plugin 'tmux-plugins/tpm'
+      set -g @plugin 'tmux-plugins/tmux-sensible'
+      set -g @plugin 'erikw/tmux-powerline'
+      run '~/.tmux/plugins/tpm/tpm'
+    '';
+  };
 
   services.mpris-proxy.enable = true;
 
