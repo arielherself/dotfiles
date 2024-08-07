@@ -115,6 +115,8 @@ in {
     pkgs.lua-language-server
     pkgs.cmake-language-server
     pkgs.nil  # Nix language server
+    pkgs.nodePackages.typescript-language-server
+    pkgs.nodePackages.vls  # Vue language server
     pkgs.nodePackages.prettier
     unstable.markdown-oxide
     pkgs.helix
@@ -299,17 +301,42 @@ in {
   programs.tmux = {
     enable = true;
     sensibleOnTop = false;
+    terminal = "tmux-256color";
     shell = "${pkgs.zsh}/bin/zsh";
     extraConfig = ''
-      set -ga terminal-overrides ",xterm-256color:Tc"
-      set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+      # Fix font variants and undercurl but optional.
+      # set -ga terminal-overrides ",xterm-256color:Tc"
+      # set-option -sa terminal-features ',xterm-256color:RGB'
+      # set-option -g default-terminal "tmux-256color"
+      # set-option -ga terminal-features ",xterm-256color:usstyle"
+      # set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+      # set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
       set-option -g default-shell "${pkgs.zsh}/bin/zsh"
       set -g default-command "${pkgs.zsh}/bin/zsh"
       setw -g mode-keys vi
       set -g @plugin 'tmux-plugins/tpm'
-      set -g @plugin 'tmux-plugins/tmux-sensible'
+      # This plugin seems to break terminfo when default shell of a terminal emulator is set to zsh.
+      # set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'erikw/tmux-powerline'
       run '${config.xdg.configHome}/plugins/tpm/tpm'
+    '';
+  };
+
+  programs.wezterm = {
+    enable = true;
+    enableZshIntegration = true;
+    extraConfig = ''
+      local config = wezterm.config_builder()
+
+      config.default_prog = {"${pkgs.zsh}/bin/zsh"}
+      config.font = wezterm.font_with_fallback {
+        "BerkeleyMono Nerd Font",
+        "JetBrainsMono Nerd Font",
+      }
+      -- https://wezfurlong.org/wezterm/config/lua/config/term.html
+      config.term = "wezterm"
+
+      return config
     '';
   };
 
