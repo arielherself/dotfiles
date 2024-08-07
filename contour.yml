@@ -554,7 +554,7 @@ profiles:
 
         # When this profile is *activated*, this flag decides
         # whether or not to put the window into maximized mode.
-        maximized: true
+        maximized: false
 
         bell:
             sound: "default"

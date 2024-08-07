@@ -70,7 +70,7 @@ in {
     # Don't forget to change its permissions.
     cider = {
       name = "Cider";
-      genericName = "Apple Music Player";
+      comment = "Apple Music Player";
       type = "Application";
       exec = "${pkgs.appimage-run}/bin/appimage-run ${config.home.homeDirectory}/Dropbox/arch/cider/Cider-linux-appimage-x64.AppImage";
       terminal = false;
@@ -78,7 +78,7 @@ in {
     };
     thorium = {
       name = "Thorium";
-      genericName = "Web Browser";
+      comment = "Access the Internet";
       type = "Application";
       exec = "${pkgs.appimage-run}/bin/appimage-run ${config.home.homeDirectory}/Dropbox/arch/thorium/Thorium.AppImage";
       terminal = false;
@@ -314,11 +314,12 @@ in {
       set-option -g default-shell "${pkgs.zsh}/bin/zsh"
       set -g default-command "${pkgs.zsh}/bin/zsh"
       setw -g mode-keys vi
+      set-option -g status-position top
       set -g @plugin 'tmux-plugins/tpm'
       # This plugin seems to break terminfo when default shell of a terminal emulator is set to zsh.
       # set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'erikw/tmux-powerline'
-      run '${config.xdg.configHome}/plugins/tpm/tpm'
+      run '${config.xdg.configHome}/tmux/plugins/tpm/tpm'
     '';
   };
 
