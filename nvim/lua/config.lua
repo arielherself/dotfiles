@@ -1,5 +1,6 @@
 vim.cmd("set encoding=utf-8")
 vim.cmd("set exrc")
+vim.cmd("filetype off")
 vim.cmd("set pumblend=40")
 vim.cmd("set winblend=40")
 vim.cmd("set expandtab")
@@ -22,14 +23,16 @@ vim.cmd("set signcolumn=yes")
 vim.cmd("set noequalalways")
 vim.cmd("set cmdheight=0")
 vim.cmd("set scrolloff=10")
-vim.cmd("set foldmethod=expr")
-vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
-vim.cmd("set foldlevelstart=99")
+-- vim.cmd("set foldmethod=expr")
+-- vim.cmd("set foldexpr=nvim_treesitter#foldexpr()")
+-- vim.cmd("set foldlevelstart=99")
 vim.cmd("set list")
 vim.cmd("set listchars=trail:█")
 vim.cmd("set guicursor=n-v-c:block,i:ver25,a:blinkon0")
+vim.cmd("set guifont=BerkeleyMono\\ Nerd\\ Font")
 vim.cmd("set noshowmode")
 vim.diagnostic.config({
+    virtual_text = false,
     update_in_insert = true,
     float = {
         border = "none",
@@ -370,11 +373,11 @@ local plugins = {
     --         { "nvim-telescope/telescope-fzy-native.nvim" },
     --     },
     -- },
-    {
-        "chrisgrieser/nvim-origami",  -- Fold keymap
-        event = "BufReadPost", -- later or on keypress would prevent saving folds
-        opts = true, -- needed even when using default config
-    },
+    -- {
+    --     "chrisgrieser/nvim-origami",  -- Fold keymap
+    --     event = "BufReadPost", -- later or on keypress would prevent saving folds
+    --     opts = true, -- needed even when using default config
+    -- },
     {
         -- dir = '/home/user/Documents/ultimate-autopair.nvim',
         'altermo/ultimate-autopair.nvim',
@@ -468,6 +471,8 @@ local plugins = {
         dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' }, -- if you use the mini.nvim suite
     },
     { 'echasnovski/mini.trailspace', version = '*' },
+    { url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim' },
+    { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
 }
 require("lazy").setup(plugins, {})
 
@@ -1153,3 +1158,5 @@ require("telescope").setup {
 -- vim.diagnostic.config({ virtual_text = false })
 
 require('mini.trailspace').setup {}
+
+require('lsp_lines').setup {}

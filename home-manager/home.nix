@@ -171,20 +171,23 @@ in {
     pkgs.i3lock
     pkgs.flameshot
 
-    # Note
+    # Note & Documents
     pkgs.obsidian
     pkgs.xournalpp
+    pkgs.sioyek
 
     # Multimedia
     pkgs.kdePackages.gwenview
     pkgs.vlc
     pkgs.playerctl
     pkgs.ffmpeg
+    pkgs.spotify
+    unstable.spotify-player
 
     # Streaming
     pkgs.obs-studio
 
-    # IM
+    # Communication
     pkgs.telegram-desktop
     pkgs.discord
 
@@ -205,7 +208,7 @@ in {
     pkgs.adwaita-qt
     pkgs.adwaita-qt6
     pkgs.firefox-devedition
-    pkgs.sioyek
+    pkgs.wiki-tui
 
     # My version of BerkeleyMono NF is incomplete. Should add some fallback fonts.
     (pkgs.nerdfonts.override { fonts = [
@@ -315,6 +318,7 @@ in {
       set -g default-command "${pkgs.zsh}/bin/zsh"
       setw -g mode-keys vi
       set-option -g status-position top
+      set -sg escape-time 0
       set -g @plugin 'tmux-plugins/tpm'
       # This plugin seems to break terminfo when default shell of a terminal emulator is set to zsh.
       # set -g @plugin 'tmux-plugins/tmux-sensible'

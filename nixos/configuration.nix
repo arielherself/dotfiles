@@ -163,7 +163,11 @@ in {
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.user = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "wireshark" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "wireshark"
+      "vboxusers"
+    ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       home-manager
       contour
@@ -221,6 +225,25 @@ in {
 
   services.openvpn.servers = {
     htb  = { config = '' config /home/user/Downloads/starting_point_bzw.ovpn ''; };
+  };
+
+  virtualisation.virtualbox = {
+    host = {
+      enable = true;
+      enableExtensionPack = true;
+    };
+    guest = {
+      enable = true;
+      draganddrop = true;
+      clipboard = true;
+    };
+  };
+
+  services.flatpak.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "gtk";
   };
 
   # Open ports in the firewall.
