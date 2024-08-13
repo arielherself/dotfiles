@@ -1,0 +1,4 @@
+format = '''
+┌─[\[Ariel\]](bold purple)─[\[$directory\]](grey)─\[$cmd_duration\]─┤
+└─$symbol '''
+

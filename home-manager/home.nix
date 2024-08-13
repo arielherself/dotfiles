@@ -1,9 +1,10 @@
 # vim: set expandtab tabstop=2 softtabstop=2 shiftwidth=2:
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  mypkgs = import ../mypkgs/default.nix;
 in {
   nixpkgs.config.allowUnfree = true;
   # Home Manager needs a bit of information about you and the paths it should
@@ -19,7 +20,12 @@ in {
   # plain files is through 'home.file'.
   home.file = {
     ".profile" = {
-      source = ../.profile;
+      text = ''
+        export GTK_THEME=Adwaita:dark
+        export MOZ_USE_XINPUT2=1
+        export XDG_DATA_DIRS=$XDG_DATA_DIRS:/usr/share:/var/lib/flatpak/exports/share:$HOME/.local/share/flatpak/exports/share
+        export QT_QPA_PLATFORM_PLUGIN_PATH="${pkgs.libsForQt5.qt5.qtbase.bin}/lib/qt-${pkgs.libsForQt5.qt5.qtbase.version}/plugins";
+      '';
     };
     ".gitconfig" = {
       text = ''
@@ -33,6 +39,9 @@ in {
   };
 
   xdg.configFile = {
+    "starship.toml" = {
+      source = ../starship.toml;
+    };
     "tmux/plugins/tpm" = {
       source = builtins.fetchGit {
         url = "https://github.com/tmux-plugins/tpm.git";
@@ -146,6 +155,7 @@ in {
     unstable._1password
     unstable._1password-gui
     pkgs.nix-index
+    pkgs.dua
 
     # Pwn
     pkgs.nmap
@@ -195,7 +205,7 @@ in {
     pkgs.fastfetch
     pkgs.onefetch
     pkgs.lf                                    # Terminal file manager
-    # pkgs.smassh                                # Typing test
+    pkgs.smassh                                # Typing test
     pkgs.you-get                               # YouTube video downloader
     pkgs.asciinema                             # Record terminal sessions
     pkgs.ulauncher                             # application launcher
@@ -208,7 +218,11 @@ in {
     pkgs.adwaita-qt
     pkgs.adwaita-qt6
     pkgs.firefox-devedition
+    mypkgs.thorium
     pkgs.wiki-tui
+    pkgs.asciiquarium
+    pkgs.starship
+    pkgs.patchelf
 
     # My version of BerkeleyMono NF is incomplete. Should add some fallback fonts.
     (pkgs.nerdfonts.override { fonts = [
@@ -347,6 +361,17 @@ in {
 
   programs.nushell = {
     enable = true;
+    configFile.source = ../nushell/config.nu;
+    envFile.source = ../nushell/env.nu;
+    extraConfig = ''
+    '';
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    enableNushellIntegration = true;
+    nix-direnv.enable = true;
   };
 
   services.mpris-proxy.enable = true;

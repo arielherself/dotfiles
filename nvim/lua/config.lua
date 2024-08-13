@@ -473,6 +473,7 @@ local plugins = {
     { 'echasnovski/mini.trailspace', version = '*' },
     { url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim' },
     { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
+    { 'nushell/tree-sitter-nu' },
 }
 require("lazy").setup(plugins, {})
 
@@ -671,6 +672,7 @@ lspconfig.nil_ls.setup {
     capabilities = capabilities
 }
 lspconfig.mojo.setup {}
+lspconfig.nushell.setup {}
 
 capabilities.workspace = {
     didChangeWatchedFiles = {
@@ -737,7 +739,7 @@ vim.keymap.set('i', '<C-x>', '<ESC>ddi')
 vim.keymap.set('i', '<Home>', '<ESC>^i')
 vim.keymap.set('i', '<C-a>', '<ESC>ggVG')
 vim.keymap.set('n', '<C-a>', 'ggVG')
-vim.keymap.set('n', '<leader>`', '<Cmd>split<CR><Cmd>terminal<CR>i')
+vim.keymap.set('n', '<leader>`', '<Cmd>split<CR><Cmd>terminal bash<CR>i')
 vim.keymap.set('n', '<leader>n', '<Cmd>tabnew<CR>')
 vim.keymap.set('n', '<leader><tab>', '<Cmd>tabnext<CR>')
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {noremap=true})
@@ -924,7 +926,7 @@ vim.keymap.set({ "n", "x", "o" }, "T", ts_repeat_move.builtin_T_expr, { expr = t
 
 
 vim.api.nvim_create_user_command('Backup', '!git add . && git commit -S -m "backup" && git push', {})
-vim.api.nvim_create_user_command('Config', 'e ~/.config/nvim', {})
+vim.api.nvim_create_user_command('Config', 'e ~/dotfiles/nvim', {})
 
 require('Comment').setup()
 local str = require("cmp.utils.str")
