@@ -223,9 +223,10 @@ in {
     pkgs.firefox-devedition
     mypkgs.thorium
     pkgs.wiki-tui
-    pkgs.asciiquarium
-    pkgs.starship
+    pkgs.asciiquarium                          # Interesting
+    pkgs.starship                              # Prompt bar
     pkgs.patchelf
+    pkgs.screenkey
 
     # My version of BerkeleyMono NF is incomplete. Should add some fallback fonts.
     (pkgs.nerdfonts.override { fonts = [

@@ -474,6 +474,16 @@ local plugins = {
     { url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim' },
     { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
     { 'nushell/tree-sitter-nu' },
+    {
+        "ibhagwan/fzf-lua",
+        -- optional for icon support
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            -- calling `setup` is optional for customization
+            require("fzf-lua").setup({})
+        end
+    },
+    { 'NStefan002/screenkey.nvim' },
 }
 require("lazy").setup(plugins, {})
 
@@ -638,6 +648,9 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- }
 lspconfig.clangd.setup {
     capabilities = capabilities,
+    root_dir = function(fname)
+        return lspconfig.util.root_pattern('compile_commands.json')(fname) or lspconfig.util.find_git_ancestor(fname) or vim.fn.getcwd()
+    end,
     cmd = {
         "clangd",
         -- "--header-insertion=never"
