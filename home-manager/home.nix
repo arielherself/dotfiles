@@ -89,7 +89,7 @@ in {
       categories = [ "AudioVideo" "Audio" ];
     };
     thorium = {
-      name = "Thorium";
+      name = "Thorium (AppImage)";
       comment = "Access the Internet";
       type = "Application";
       exec = "${pkgs.appimage-run}/bin/appimage-run ${config.home.homeDirectory}/Dropbox/arch/thorium/Thorium.AppImage";
@@ -133,6 +133,7 @@ in {
     unstable.markdown-oxide
     pkgs.helix
     pkgs.zed-editor
+    pkgs.xfce.mousepad
 
     # Tools
     pkgs.zip
@@ -159,6 +160,7 @@ in {
     unstable._1password-gui
     pkgs.nix-index
     pkgs.dua
+    pkgs.rclone
 
     # Pwn
     pkgs.nmap
