@@ -4,7 +4,12 @@
 
 let
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
-  mypkgs = import ../mypkgs/default.nix;
+  mypkgs = import (pkgs.fetchFromGitHub {
+    owner = "arielherself";
+    repo = "mypkgs";
+    rev = "75f9b72";
+    hash = "sha256-vlfIPxOJ/wxlpLrOIUrxISzysFZ+kZ2nE/ELU2IaJqg=";
+  });
 in {
   nixpkgs.config.allowUnfree = true;
   # Home Manager needs a bit of information about you and the paths it should
@@ -118,6 +123,7 @@ in {
     # Networking
     pkgs.wireshark
     # pkgs.clash-verge-rev
+    mypkgs.aria2
 
     # Editor
     unstable.neovim
@@ -296,6 +302,7 @@ in {
     '';
     initExtra = ''
       me() { mkdir -p "$1" && cd "$1" }
+      unsetopt pathdirs
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
       source ${config.xdg.configHome}/p10k/p10k.zsh
