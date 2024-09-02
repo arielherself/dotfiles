@@ -484,6 +484,7 @@ local plugins = {
         end
     },
     { 'NStefan002/screenkey.nvim' },
+    { 'kosayoda/nvim-lightbulb' },
 }
 require("lazy").setup(plugins, {})
 
@@ -1175,3 +1176,7 @@ require("telescope").setup {
 require('mini.trailspace').setup {}
 
 require('lsp_lines').setup {}
+
+require("nvim-lightbulb").setup {
+    autocmd = { enabled = true }
+}

@@ -167,6 +167,7 @@ in {
       "wheel"
       "wireshark"
       "vboxusers"
+      "networkmanager"
     ]; # Enable ‘sudo’ for the user.
     packages = with pkgs; [
       home-manager
@@ -217,6 +218,8 @@ in {
   programs.wireshark.enable = true;
 
   programs.dconf.enable = true;
+
+  programs.nix-ld.enable = true;
 
   # List services that you want to enable:
 

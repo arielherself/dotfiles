@@ -7,8 +7,8 @@ let
   mypkgs = import (pkgs.fetchFromGitHub {
     owner = "arielherself";
     repo = "mypkgs";
-    rev = "75f9b72";
-    hash = "sha256-vlfIPxOJ/wxlpLrOIUrxISzysFZ+kZ2nE/ELU2IaJqg=";
+    rev = "dc9d9be";
+    hash = "sha256-+SdZ8H4qAcLG6baYb1WU/Sd1Dgh2eo/DHmi2Ig7NAnI=";
   });
 in {
   nixpkgs.config.allowUnfree = true;
@@ -132,9 +132,9 @@ in {
     pkgs.clang-tools
     pkgs.lua-language-server
     pkgs.cmake-language-server
-    pkgs.nil  # Nix language server
+    pkgs.nil                                   # Nix language server
     pkgs.nodePackages.typescript-language-server
-    pkgs.nodePackages.vls  # Vue language server
+    pkgs.nodePackages.vls                      # Vue language server
     pkgs.nodePackages.prettier
     unstable.markdown-oxide
     pkgs.helix
@@ -152,20 +152,19 @@ in {
     pkgs.autoconf
     pkgs.automake
     pkgs.btop
-    pkgs.fx
+    pkgs.fx                                    # JSON pager
     pkgs.mtr
     pkgs.htop
     pkgs.gdb
     pkgs.dropbox
     pkgs.brightnessctl
     pkgs.psmisc
-    pkgs.xclip  # Clipboard support
+    pkgs.xclip                                 # Clipboard support
     pkgs.vulkan-tools
-    pkgs.lshw
+    pkgs.lshw                                  # Hardware info
     unstable._1password
     unstable._1password-gui
     pkgs.nix-index
-    pkgs.dua
     pkgs.rclone
 
     # Pwn
@@ -189,6 +188,7 @@ in {
     # Desktop management
     pkgs.xfce.thunar
     pkgs.baobab
+    pkgs.dua                                   # CLI disk usage
     pkgs.i3lock
     pkgs.flameshot
 
@@ -198,7 +198,7 @@ in {
     pkgs.sioyek
 
     # Multimedia
-    pkgs.kdePackages.gwenview
+    pkgs.kdePackages.gwenview                  # Image viewer
     pkgs.vlc
     pkgs.playerctl
     pkgs.ffmpeg
@@ -211,6 +211,11 @@ in {
     # Communication
     pkgs.telegram-desktop
     pkgs.discord
+
+    # Browser
+    pkgs.firefox-devedition
+    pkgs.chromium
+    mypkgs.thorium
 
     # Misc
     pkgs.fastfetch
@@ -228,8 +233,6 @@ in {
     unstable.adwaita-icon-theme
     pkgs.adwaita-qt
     pkgs.adwaita-qt6
-    pkgs.firefox-devedition
-    mypkgs.thorium
     pkgs.wiki-tui
     pkgs.asciiquarium                          # Interesting
     pkgs.starship                              # Prompt bar

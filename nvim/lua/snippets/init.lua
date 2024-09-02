@@ -300,3 +300,29 @@ ls.add_snippets(nil, {
         })
     }
 })
+
+local fft = require('snippets.fft')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'fft',
+            namr = 'fft',
+            dscr = 'FFT',
+        },{
+            text(lines(fft))
+        })
+    }
+})
+
+local ntt = require('snippets.ntt')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'ntt',
+            namr = 'ntt',
+            dscr = 'NTT',
+        },{
+            text(lines(ntt))
+        })
+    }
+})
