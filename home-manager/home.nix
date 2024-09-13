@@ -39,7 +39,13 @@ in {
           name = arielherself
         [gpg "ssh"]
           program = ${pkgs._1password-gui}/bin/op-ssh-sign
+        [safe]
+          directory = /mnt/fdos_server/OS-24Fall-FDU
       '';
+    };
+    "Documents" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dropbox/arch/Documents";
+      recursive = false;
     };
   };
 
@@ -133,12 +139,13 @@ in {
     pkgs.lua-language-server
     pkgs.cmake-language-server
     pkgs.nil                                   # Nix language server
+    pkgs.asm-lsp                               # Assembly language server
     pkgs.nodePackages.typescript-language-server
     pkgs.nodePackages.vls                      # Vue language server
     pkgs.nodePackages.prettier
     unstable.markdown-oxide
     pkgs.helix
-    pkgs.zed-editor
+    unstable.zed-editor
     pkgs.xfce.mousepad
 
     # Tools
@@ -166,11 +173,15 @@ in {
     unstable._1password-gui
     pkgs.nix-index
     pkgs.rclone
+    pkgs.sshfs
 
     # Pwn
     pkgs.nmap
     pkgs.inetutils
     pkgs.samba
+
+    # Java
+    pkgs.jdk22
 
     # Python
     (pkgs.python312.withPackages (ps: with ps; [

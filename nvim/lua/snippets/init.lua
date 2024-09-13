@@ -50,19 +50,6 @@ ls.add_snippets(nil, {
     }
 })
 
-local fhq_treap = require('snippets.fhq-treap')
-ls.add_snippets(nil, {
-    cpp = {
-        snip({
-            trig = 'treap',
-            namr = 'fhq_treap',
-            dscr = 'FHQ Treap',
-        },{
-            text(lines(fhq_treap))
-        })
-    }
-})
-
 local bit = require('snippets.bit')
 ls.add_snippets(nil, {
     cpp = {
@@ -98,6 +85,19 @@ ls.add_snippets(nil, {
             dscr = 'Sparse Table',
         },{
             text(lines(sparse_table))
+        })
+    }
+})
+
+local sparse_table_2d = require('snippets.sparse-table-2d')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'sparse_table_2d',
+            namr = 'sparse_table_2d',
+            dscr = '2D Sparse Table',
+        },{
+            text(lines(sparse_table_2d))
         })
     }
 })
@@ -323,6 +323,19 @@ ls.add_snippets(nil, {
             dscr = 'NTT',
         },{
             text(lines(ntt))
+        })
+    }
+})
+
+local basis = require('snippets.basis')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'basis',
+            namr = 'basis',
+            dscr = 'Bit-mask space basis',
+        },{
+            text(lines(basis))
         })
     }
 })
