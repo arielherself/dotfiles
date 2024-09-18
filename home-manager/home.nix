@@ -7,8 +7,8 @@ let
   mypkgs = import (pkgs.fetchFromGitHub {
     owner = "arielherself";
     repo = "mypkgs";
-    rev = "dc9d9be";
-    hash = "sha256-+SdZ8H4qAcLG6baYb1WU/Sd1Dgh2eo/DHmi2Ig7NAnI=";
+    rev = "165a9d4";
+    hash = "sha256-F9DXUqsF8YwA49mc25MTE/3uiZJm82kImF3KrUyEUTs=";
   });
 in {
   nixpkgs.config.allowUnfree = true;
@@ -163,7 +163,7 @@ in {
     pkgs.mtr
     pkgs.htop
     pkgs.gdb
-    pkgs.dropbox
+    mypkgs.dropbox
     pkgs.brightnessctl
     pkgs.psmisc
     pkgs.xclip                                 # Clipboard support
@@ -212,7 +212,7 @@ in {
     pkgs.kdePackages.gwenview                  # Image viewer
     pkgs.vlc
     pkgs.playerctl
-    pkgs.ffmpeg
+    pkgs.jellyfin-ffmpeg
     pkgs.spotify
     unstable.spotify-player
 
