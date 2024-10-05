@@ -174,6 +174,9 @@ in {
     pkgs.nix-index
     pkgs.rclone
     pkgs.sshfs
+    pkgs.usbutils
+    pkgs.udiskie
+    pkgs.udisks
 
     # Pwn
     pkgs.nmap
@@ -364,6 +367,7 @@ in {
       # This plugin seems to break terminfo when default shell of a terminal emulator is set to zsh.
       # set -g @plugin 'tmux-plugins/tmux-sensible'
       set -g @plugin 'erikw/tmux-powerline'
+      set -g @plugin 'tmux-plugins/tmux-yank'
       run '${config.xdg.configHome}/tmux/plugins/tpm/tpm'
     '';
   };

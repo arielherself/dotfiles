@@ -76,6 +76,19 @@ ls.add_snippets(nil, {
     }
 })
 
+local quick_union_rollback = require('snippets.quick-union-rollback')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'quick_union_rollback',
+            namr = 'quick_union_rollback',
+            dscr = 'Union Find (with Rollback)',
+        },{
+            text(lines(quick_union_rollback))
+        })
+    }
+})
+
 local sparse_table = require('snippets.sparse-table')
 ls.add_snippets(nil, {
     cpp = {
@@ -339,3 +352,17 @@ ls.add_snippets(nil, {
         })
     }
 })
+
+local hierholzer = require('snippets.hierholzer')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'hierholzer',
+            namr = 'hierholzer',
+            dscr = 'Find Euler path',
+        },{
+            text(lines(hierholzer))
+        })
+    }
+})
+
