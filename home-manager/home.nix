@@ -14,8 +14,8 @@ in {
   nixpkgs.config.allowUnfree = true;
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "user";
-  home.homeDirectory = "/home/user";
+  home.username = "nixos";
+  home.homeDirectory = "/home/nixos";
   xdg.enable = true;
 
   targets.genericLinux.enable = true;
@@ -34,13 +34,17 @@ in {
     };
     ".gitconfig" = {
       text = ''
+        [core]
+          sshCommand = ssh.exe
         [user]
           email = arielherself@duck.com
           name = arielherself
         [gpg "ssh"]
-          program = ${pkgs._1password-gui}/bin/op-ssh-sign
+          program = "/mnt/c/Users/user/AppData/Local/1Password/app/8/op-ssh-sign.exe"
         [safe]
           directory = /mnt/fdos_server/OS-24Fall-FDU
+        [credential]
+          helper = store
       '';
     };
     "Documents" = {
@@ -50,6 +54,9 @@ in {
   };
 
   xdg.configFile = {
+    "ptool/ptool.toml" = {
+      source = "${config.home.homeDirectory}/Dropbox/arch/ptool.toml";
+    };
     "nixpkgs/config.nix" = {
       source = ../nixpkgs-config.nix;
     };
@@ -83,6 +90,15 @@ in {
       source = ../nvim;
       recursive = true;
     };
+    "nvim/ftplugin/java.lua" = {
+      text = ''
+        local config = {
+          cmd = {'${pkgs.jdt-language-server}/bin/jdtls'},
+          root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
+        }
+        require('jdtls').start_or_attach(config)
+      '';
+    };
     "p10k/p10k.zsh" = {
       source = ../p10k.zsh;
       recursive = true;
@@ -91,21 +107,21 @@ in {
 
   xdg.desktopEntries = {
     # Don't forget to change its permissions.
-    cider = {
-      name = "Cider";
-      comment = "Apple Music Player";
-      type = "Application";
-      exec = "${pkgs.appimage-run}/bin/appimage-run ${config.home.homeDirectory}/Dropbox/arch/cider/Cider-linux-appimage-x64.AppImage";
-      terminal = false;
-      categories = [ "AudioVideo" "Audio" ];
-    };
-    thorium = {
-      name = "Thorium (AppImage)";
-      comment = "Access the Internet";
-      type = "Application";
-      exec = "${pkgs.appimage-run}/bin/appimage-run ${config.home.homeDirectory}/Dropbox/arch/thorium/Thorium.AppImage";
-      terminal = false;
-    };
+    # cider = {
+    #   name = "Cider";
+    #   comment = "Apple Music Player";
+    #   type = "Application";
+    #   exec = "${pkgs.appimage-run}/bin/appimage-run ${config.home.homeDirectory}/Dropbox/arch/cider/Cider-linux-appimage-x64.AppImage";
+    #   terminal = false;
+    #   categories = [ "AudioVideo" "Audio" ];
+    # };
+    # thorium = {
+    #   name = "Thorium (AppImage)";
+    #   comment = "Access the Internet";
+    #   type = "Application";
+    #   exec = "${pkgs.appimage-run}/bin/appimage-run ${config.home.homeDirectory}/Dropbox/arch/thorium/Thorium.AppImage";
+    #   terminal = false;
+    # };
   };
 
   # This value determines the Home Manager release that your configuration is
@@ -123,13 +139,14 @@ in {
     # Terminal
     # pkgs.contour
     # pkgs.tmux
-    pkgs.kitty
-    pkgs.alacritty
+    # pkgs.kitty
+    # pkgs.alacritty
 
     # Networking
-    pkgs.wireshark
+    # pkgs.wireshark
     # pkgs.clash-verge-rev
     mypkgs.aria2
+    pkgs.qbittorrent-nox
 
     # Editor
     unstable.neovim
@@ -145,8 +162,8 @@ in {
     pkgs.nodePackages.prettier
     unstable.markdown-oxide
     pkgs.helix
-    unstable.zed-editor
-    pkgs.xfce.mousepad
+    # unstable.zed-editor
+    # pkgs.xfce.mousepad
 
     # Tools
     pkgs.zip
@@ -163,20 +180,20 @@ in {
     pkgs.mtr
     pkgs.htop
     pkgs.gdb
-    mypkgs.dropbox
+    # mypkgs.dropbox
     pkgs.brightnessctl
     pkgs.psmisc
     pkgs.xclip                                 # Clipboard support
-    pkgs.vulkan-tools
+    # pkgs.vulkan-tools
     pkgs.lshw                                  # Hardware info
-    unstable._1password
-    unstable._1password-gui
+    # unstable._1password
+    # unstable._1password-gui
     pkgs.nix-index
     pkgs.rclone
     pkgs.sshfs
-    pkgs.usbutils
-    pkgs.udiskie
-    pkgs.udisks
+    # pkgs.usbutils
+    # pkgs.udiskie
+    # pkgs.udisks
 
     # Pwn
     pkgs.nmap
@@ -185,6 +202,7 @@ in {
 
     # Java
     pkgs.jdk22
+    pkgs.jdt-language-server
 
     # Python
     (pkgs.python312.withPackages (ps: with ps; [
@@ -200,49 +218,50 @@ in {
     # pkgs.waybar-mpris
 
     # Desktop management
-    pkgs.xfce.thunar
-    pkgs.baobab
+    # pkgs.xfce.thunar
+    # pkgs.baobab
     pkgs.dua                                   # CLI disk usage
-    pkgs.i3lock
-    pkgs.flameshot
+    # pkgs.i3lock
+    # pkgs.flameshot
 
     # Note & Documents
-    pkgs.obsidian
-    pkgs.xournalpp
-    pkgs.sioyek
+    # pkgs.obsidian
+    # pkgs.xournalpp
+    # pkgs.sioyek
 
     # Multimedia
-    pkgs.kdePackages.gwenview                  # Image viewer
-    pkgs.vlc
+    # pkgs.kdePackages.gwenview                  # Image viewer
+    # pkgs.vlc
     pkgs.playerctl
     pkgs.jellyfin-ffmpeg
-    pkgs.spotify
-    unstable.spotify-player
+    # pkgs.spotify
+    # unstable.spotify-player
 
     # Streaming
-    pkgs.obs-studio
+    # pkgs.obs-studio
 
     # Communication
-    pkgs.telegram-desktop
-    pkgs.discord
+    # pkgs.telegram-desktop
+    # pkgs.discord
 
     # Browser
-    pkgs.firefox-devedition
-    pkgs.chromium
-    mypkgs.thorium
+    # pkgs.firefox-devedition
+    # pkgs.chromium
+    # mypkgs.thorium
 
     # Misc
     pkgs.fastfetch
     pkgs.onefetch
     pkgs.lf                                    # Terminal file manager
+    pkgs.lsof
     pkgs.smassh                                # Typing test
     pkgs.you-get                               # YouTube video downloader
     pkgs.asciinema                             # Record terminal sessions
-    pkgs.ulauncher                             # application launcher
-    pkgs.networkmanagerapplet                  # Network manager tray icon
-    pkgs.cbatticon                             # Battery tray icon
-    pkgs.pavucontrol                           # Volume control
-      pkgs.pasystray                           # Volume tray icon
+    # pkgs.ulauncher                             # application launcher
+    # pkgs.networkmanagerapplet                  # Network manager tray icon
+    # pkgs.cbatticon                             # Battery tray icon
+    # pkgs.pavucontrol                           # Volume control
+    #   pkgs.pasystray                           # Volume tray icon
     pkgs.yaru-theme
     unstable.adwaita-icon-theme
     pkgs.adwaita-qt
@@ -251,13 +270,13 @@ in {
     pkgs.asciiquarium                          # Interesting
     pkgs.starship                              # Prompt bar
     pkgs.patchelf
-    pkgs.screenkey
+    # pkgs.screenkey
 
     # My version of BerkeleyMono NF is incomplete. Should add some fallback fonts.
-    (pkgs.nerdfonts.override { fonts = [
-      "JetBrainsMono"
-      "FiraCode"
-    ]; })
+    # (pkgs.nerdfonts.override { fonts = [
+    #   "JetBrainsMono"
+    #   "FiraCode"
+    # ]; })
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your
@@ -334,7 +353,7 @@ in {
       commit.gpgsign = true;
       gpg.format = "ssh";
       # This may not apply. Also try `git config --global gpg.ssh.program "/home/user/.nix-profile/bin/op-ssh-sign"`
-      gpg."ssh".program = "${unstable._1password-gui}/bin/op-ssh-sign";
+      # gpg."ssh".program = "${unstable._1password-gui}/bin/op-ssh-sign";
       push.autoSetupRemote = true;
       core.editor = "nvim";
     };
@@ -352,9 +371,13 @@ in {
     shell = "${pkgs.zsh}/bin/zsh";
     extraConfig = ''
       # Fix font variants and undercurl but optional.
-      # set -ga terminal-overrides ",xterm-256color:Tc"
+      set -ga terminal-overrides ",xterm-256color:Tc"
       # set-option -sa terminal-features ',xterm-256color:RGB'
-      # set-option -g default-terminal "tmux-256color"
+      # Fix Windows Terminal
+      set-option -g default-terminal "tmux-256color"
+      set-option -sa terminal-overrides ",xterm-256color:RGB"
+      set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+      set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
       # set-option -ga terminal-features ",xterm-256color:usstyle"
       # set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
       # set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
@@ -373,7 +396,7 @@ in {
   };
 
   programs.wezterm = {
-    enable = true;
+    enable = false;
     enableZshIntegration = true;
     extraConfig = ''
       local config = wezterm.config_builder()
@@ -410,6 +433,24 @@ in {
   # Let Home Manager install and manage itself.
   programs.home-manager = {
     enable = true;
+  };
+
+  systemd.user.services.qbittorrent-nox = {
+    Unit = {
+      Description = "qBittorrent-nox service.";
+      # Wants = [ "network-online.target" ];
+      # After = [ "local-fs.target" "network-online.target" "nss-lookup.target" "multi-user.target" ];
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+    Service = {
+      Type = "simple";
+      PrivateTmp = "false";
+      ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
+      TimeoutStopSec = 1800;
+      Restart = "always";
+    };
   };
 }
 

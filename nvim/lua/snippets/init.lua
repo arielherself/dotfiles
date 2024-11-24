@@ -366,3 +366,42 @@ ls.add_snippets(nil, {
     }
 })
 
+local ebcc = require('snippets.ebcc')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'ebcc',
+            namr = 'ebcc',
+            dscr = 'eBCC on simple undirected graph',
+        },{
+            text(lines(ebcc))
+        })
+    }
+})
+
+local ebcc_with_mult = require('snippets.ebcc-with-mult')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'ebcc_with_mult',
+            namr = 'ebcc_with_mult',
+            dscr = 'eBCC on common undirected graph (with multiple edges)',
+        },{
+            text(lines(ebcc_with_mult))
+        })
+    }
+})
+
+local manacher = require('snippets.manacher')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'manacher',
+            namr = 'manacher',
+            dscr = 'Manacher algorithm for counting palindrome substrings',
+        },{
+            text(lines(manacher))
+        })
+    }
+})
+

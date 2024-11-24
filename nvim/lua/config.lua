@@ -1,5 +1,9 @@
 vim.cmd("set encoding=utf-8")
 vim.cmd("set exrc")
+vim.cmd("set undofile")
+vim.cmd("set undodir=~/.vim/undofiles")
+vim.cmd("set undolevels=10000")
+vim.cmd("set undoreload=50000")
 vim.cmd("filetype off")
 vim.cmd("set pumblend=40")
 vim.cmd("set winblend=40")
@@ -39,7 +43,7 @@ vim.diagnostic.config({
         focusable = false,
     },
 })
-vim.cmd([[au CursorHold * lua vim.diagnostic.open_float(0,{scope = "cursor"})]])
+-- vim.cmd([[au CursorHold * lua vim.diagnostic.open_float(0,{scope = "cursor"})]])
 vim.g.mapleader = " ";
 vim.filetype.add({
     extension = {
@@ -151,12 +155,12 @@ local plugins = {
     {
         'jdhao/better-escape.vim'  -- `jk` without causing `j` to have delay
     },
-    {
-        'Pocco81/auto-save.nvim',
-        opts = {
-            enabled = true,
-        }
-    },
+    -- {
+    --     'Pocco81/auto-save.nvim',
+    --     opts = {
+    --         enabled = true,
+    --     }
+    -- },
     {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
@@ -485,6 +489,7 @@ local plugins = {
     },
     { 'NStefan002/screenkey.nvim' },
     { 'kosayoda/nvim-lightbulb' },
+    { 'mfussenegger/nvim-jdtls' },  -- Java LS
 }
 require("lazy").setup(plugins, {})
 
@@ -545,7 +550,7 @@ require('search').setup {
         },
     }
 }
-vim.keymap.set('n', '<leader>o', '<Cmd>lua require("search").open({ tab_name = "Smart Open" })<CR>')
+vim.keymap.set('n', '<leader>o', '<Cmd>lua require("search").open({ tab_name = "Files" })<CR>')
 vim.keymap.set('n', '<leader>f', '<Cmd>lua require("search").open({ tab_name = "Symbols" })<CR>')
 vim.keymap.set('n', '<leader>g', '<Cmd>lua require("search").open({ tab_name = "Grep" })<CR>')
 
@@ -654,7 +659,9 @@ lspconfig.clangd.setup {
     end,
     cmd = {
         "clangd",
-        -- "--header-insertion=never"
+        -- "--header-insertion=never",
+        "--clang-tidy",
+        "--clang-tidy-checks=*",
     }
 }
 lspconfig.pyright.setup {
@@ -787,6 +794,8 @@ vim.keymap.set('n', '<leader>x', require("mini.trailspace").trim, {noremap=true}
 vim.keymap.set('n', '<Del>', vim.notify.dismiss, {noremap=true})
 vim.keymap.set({'n', 'v', 'x'}, 'Q', 'q', {noremap=true})
 vim.keymap.set({'n', 'v', 'x'}, 'q', '<Nop>', {noremap=true})
+vim.keymap.set('n', 'g ', [[/\v^\s+$<CR>$<Cmd>nohlsearch<CR>]], {noremap=true, silent=true})
+vim.keymap.set('n', 'gy', "`[v`]", {noremap=true})
 
 vim.api.nvim_create_user_command('SearchInCurrentFile', function()
     vim.ui.input({ prompt = 'Grep ...'}, function(input)
