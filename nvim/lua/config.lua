@@ -43,7 +43,7 @@ vim.diagnostic.config({
         focusable = false,
     },
 })
--- vim.cmd([[au CursorHold * lua vim.diagnostic.open_float(0,{scope = "cursor"})]])
+vim.cmd([[au CursorHold * lua vim.diagnostic.open_float(0,{scope = "cursor"})]])
 vim.g.mapleader = " ";
 vim.filetype.add({
     extension = {

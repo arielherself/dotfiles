@@ -435,21 +435,23 @@ in {
     enable = true;
   };
 
-  systemd.user.services.qbittorrent-nox = {
-    Unit = {
-      Description = "qBittorrent-nox service.";
-      # Wants = [ "network-online.target" ];
-      # After = [ "local-fs.target" "network-online.target" "nss-lookup.target" "multi-user.target" ];
-    };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
-    Service = {
-      Type = "simple";
-      PrivateTmp = "false";
-      ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
-      TimeoutStopSec = 1800;
-      Restart = "always";
+  systemd.user.services = {
+    qbittorrent-nox = {
+      Unit = {
+        Description = "qBittorrent-nox service.";
+        # Wants = [ "network-online.target" ];
+        # After = [ "local-fs.target" "network-online.target" "nss-lookup.target" "multi-user.target" ];
+      };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+      Service = {
+        Type = "simple";
+        PrivateTmp = "false";
+        ExecStart = "${pkgs.qbittorrent-nox}/bin/qbittorrent-nox";
+        TimeoutStopSec = 1800;
+        Restart = "always";
+      };
     };
   };
 }
