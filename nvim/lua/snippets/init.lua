@@ -405,3 +405,15 @@ ls.add_snippets(nil, {
     }
 })
 
+local odt = require('snippets.odt')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'odt',
+            namr = 'odt',
+            dscr = 'Old Driver Tre',
+        },{
+            text(lines(odt))
+        })
+    }
+})

@@ -201,7 +201,7 @@ in {
     pkgs.samba
 
     # Java
-    pkgs.jdk22
+    pkgs.jdk23
     pkgs.jdt-language-server
 
     # Python
@@ -236,6 +236,7 @@ in {
     pkgs.jellyfin-ffmpeg
     # pkgs.spotify
     # unstable.spotify-player
+    pkgs.spotdl
 
     # Streaming
     # pkgs.obs-studio
@@ -263,7 +264,7 @@ in {
     # pkgs.pavucontrol                           # Volume control
     #   pkgs.pasystray                           # Volume tray icon
     pkgs.yaru-theme
-    unstable.adwaita-icon-theme
+    # unstable.adwaita-icon-theme
     pkgs.adwaita-qt
     pkgs.adwaita-qt6
     pkgs.wiki-tui
@@ -271,6 +272,7 @@ in {
     pkgs.starship                              # Prompt bar
     pkgs.patchelf
     # pkgs.screenkey
+    pkgs.ipatool                               # Search and download IPAs
 
     # My version of BerkeleyMono NF is incomplete. Should add some fallback fonts.
     # (pkgs.nerdfonts.override { fonts = [

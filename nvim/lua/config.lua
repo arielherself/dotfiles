@@ -139,19 +139,19 @@ local plugins = {
         opts = {},
         config = function(_, opts) require'lsp_signature'.setup(opts) end
     },
-    -- {
-    --     "folke/which-key.nvim",
-    --     event = "VeryLazy",
-    --     init = function()
-    --         vim.o.timeout = true
-    --         vim.o.timeoutlen = 300
-    --     end,
-    --     opts = {
-    --         -- your configuration comes here
-    --         -- or leave it empty to use the default settings
-    --         -- refer to the configuration section below
-    --     }
-    -- },
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        init = function()
+            vim.o.timeout = true
+            vim.o.timeoutlen = 300
+        end,
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        }
+    },
     {
         'jdhao/better-escape.vim'  -- `jk` without causing `j` to have delay
     },
@@ -487,7 +487,10 @@ local plugins = {
             require("fzf-lua").setup({})
         end
     },
-    { 'NStefan002/screenkey.nvim' },
+    -- {
+    --     'NStefan002/screenkey.nvim',
+    --     branch = "dev",
+    -- },
     { 'kosayoda/nvim-lightbulb' },
     { 'mfussenegger/nvim-jdtls' },  -- Java LS
 }
@@ -1184,7 +1187,7 @@ require("telescope").setup {
 
 require('mini.trailspace').setup {}
 
-require('lsp_lines').setup {}
+require('lsp_lines').setup()
 
 require("nvim-lightbulb").setup {
     autocmd = { enabled = true }
