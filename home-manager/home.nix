@@ -70,6 +70,9 @@ in {
       };
       recursive = true;
     };
+    "tmux-powerline" = {
+      source = ../tmux-powerline;
+    };
     "contour/contour.yml" = {
       source = ../contour.yml;
       recursive = true;
@@ -205,7 +208,7 @@ in {
     pkgs.jdt-language-server
 
     # Python
-    (pkgs.python312.withPackages (ps: with ps; [
+    (pkgs.python313.withPackages (ps: with ps; [
     ]))
     pkgs.pyright
     # pkgs.pipx
@@ -337,6 +340,22 @@ in {
     initExtraFirst = ''
       ZSH_TMUX_AUTOSTART=true
       ZSH_TMUX_AUTOCONNECT=false
+
+      typeset -A ZSH_HIGHLIGHT_STYLES
+      ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=#c9a9a6
+      ZSH_HIGHLIGHT_STYLES[command]=fg=#f36c8d
+      ZSH_HIGHLIGHT_STYLES[precommand]=fg=#f36c8d
+      ZSH_HIGHLIGHT_STYLES[function]=fg=#f36c8d
+      ZSH_HIGHLIGHT_STYLES[suffix-alias]=fg=#f36c8d
+      ZSH_HIGHLIGHT_STYLES[global-alias]=fg=#f36c8d
+      ZSH_HIGHLIGHT_STYLES[alias]=fg=#f36c8d
+      ZSH_HIGHLIGHT_STYLES[builtin]=fg=#f36c8d
+      ZSH_HIGHLIGHT_STYLES[reserved-word]=fg=#f36c8d
+      ZSH_HIGHLIGHT_STYLES[hashed-command]=fg=#f36c8d
+      ZSH_HIGHLIGHT_STYLES[autodirectory]=fg=#f36c8d,underline
+      ZSH_HIGHLIGHT_STYLES[path]=fg=#f3cfc6
+      ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=#858585
+      ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=#858585
     '';
     initExtra = ''
       me() { mkdir -p "$1" && cd "$1" }
@@ -387,6 +406,7 @@ in {
       set -g default-command "${pkgs.zsh}/bin/zsh"
       setw -g mode-keys vi
       set-option -g status-position top
+      set -g status-bg default
       set -sg escape-time 0
       set -g @plugin 'tmux-plugins/tpm'
       # This plugin seems to break terminfo when default shell of a terminal emulator is set to zsh.

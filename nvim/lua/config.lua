@@ -43,7 +43,7 @@ vim.diagnostic.config({
         focusable = false,
     },
 })
-vim.cmd([[au CursorHold * lua vim.diagnostic.open_float(0,{scope = "cursor"})]])
+-- vim.cmd([[au CursorHold * lua vim.diagnostic.open_float(0,{scope = "cursor"})]])
 vim.g.mapleader = " ";
 vim.filetype.add({
     extension = {
@@ -236,7 +236,7 @@ local plugins = {
     { 'nvim-treesitter/nvim-treesitter-context' },
     { 'nvim-treesitter/nvim-treesitter-refactor' },
     { 'nvim-treesitter/nvim-treesitter-textobjects' },
-    { 'mg979/vim-visual-multi' },
+    -- { 'mg979/vim-visual-multi' },
     { 'sindrets/diffview.nvim' },
     {
         'sitiom/nvim-numbertoggle'  -- Automatically switch between relative and absolute line number
@@ -493,6 +493,23 @@ local plugins = {
     -- },
     { 'kosayoda/nvim-lightbulb' },
     { 'mfussenegger/nvim-jdtls' },  -- Java LS
+    {
+        "smoka7/multicursors.nvim",  -- multiple cursors
+        event = "VeryLazy",
+        dependencies = {
+            'nvimtools/hydra.nvim',
+        },
+        opts = {},
+        cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+        keys = {
+            {
+                mode = { 'v', 'n' },
+                '<Leader>v',
+                '<cmd>MCstart<cr>',
+                desc = 'Create a selection for selected text or word under the cursor',
+            },
+        },
+    }
 }
 require("lazy").setup(plugins, {})
 
@@ -763,7 +780,7 @@ vim.keymap.set('i', '<C-x>', '<ESC>ddi')
 vim.keymap.set('i', '<Home>', '<ESC>^i')
 vim.keymap.set('i', '<C-a>', '<ESC>ggVG')
 vim.keymap.set('n', '<C-a>', 'ggVG')
-vim.keymap.set('n', '<leader>`', '<Cmd>split<CR><Cmd>terminal bash<CR>i')
+vim.keymap.set('n', '<leader>`', '<Cmd>split<CR><Cmd>terminal zsh<CR>i')
 vim.keymap.set('n', '<leader>n', '<Cmd>tabnew<CR>')
 vim.keymap.set('n', '<leader><tab>', '<Cmd>tabnext<CR>')
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {noremap=true})
