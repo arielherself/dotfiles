@@ -176,6 +176,7 @@ in {
     pkgs.gnumake
     pkgs.go
     pkgs.gcc
+    pkgs.bear
     pkgs.autoconf
     pkgs.automake
     pkgs.btop
