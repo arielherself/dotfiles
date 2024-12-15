@@ -42,7 +42,7 @@
     "vim.normalModeKeyBindings": [
         {
             "before": [ "<leader>", "o" ],
-            "commands": [ "workbench.action.files.openFile" ]
+            "commands": [ "workbench.action.quickOpen" ]
         },
         {
             "before": [ "<leader>", "s" ],
@@ -73,6 +73,26 @@
                 }
             ],
         },
+        {
+            "before": [ "g", "y" ],
+            "after": [ "`", "[", "v", "`", "]" ],
+        },
+        {
+            "before": [ "K" ],
+            "commands": [ "editor.action.triggerParameterHints" ],
+        },
+        {
+            "before": [ "<leader>", "p" ],
+            "commands": [ "workbench.action.togglePanel" ],
+        },
+        {
+            "before": [ "<leader>", "h" ],
+            "after": [ "<leader>", "<leader>", "<leader>", "b", "d", "w" ],
+        },
+        {
+            "before": [ "<leader>", "z" ],
+            "commands": [ "workbench.action.toggleZenMode" ],
+        }
 
     ],
     "vim.insertModeKeyBindings": [
@@ -80,11 +100,57 @@
             "before": [ "j", "k" ],
             "after": [ "<Esc>" ]
         },
+        {
+            "before": [ "<C-E>" ],
+            "after": [ "{", "<ESC>", "o", "}", "<ESC>", "%", "l", "i", "<CR>", "<ESC>", "^", "i" ]
+        },
+    ],
+    "vim.visualModeKeyBindings": [
+        {
+            "before": [ "<Tab>" ],
+            "after": [ ">", "g", "v" ]
+        },
+        {
+            "before": [ "<S-Tab>" ],
+            "after": [ "<", "g", "v" ]
+        },
     ],
     "editor.minimap.enabled": false,
     "vim.useSystemClipboard": true,
     "vim.leader": "<space>",
     "terminal.integrated.defaultProfile.linux": "zsh",
     "vim.highlightedyank.enable": true,
-    "vim.smartRelativeLine": true
+    "vim.smartRelativeLine": true,
+    "window.customTitleBarVisibility": "windowed",
+    "window.density.editorTabHeight": "compact",
+    "workbench.editor.enablePreview": false,
+    "editor.trimAutoWhitespace": false,
+    "editor.renderWhitespace": "trailing",
+    "editor.inlayhints.enabled": "on",
+    "C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
+    "C_Cpp.inlayHints.parameterNames.enabled": true,
+    "C_Cpp.inlayHints.referenceOperator.enabled": true,
+    "python.analysis.inlayHints.callArgumentNames": "all",
+    "python.analysis.inlayHints.functionReturnTypes": true,
+    "python.analysis.inlayHints.pytestParameters": true,
+    "javascript.inlayHints.enumMemberValues.enabled": true,
+    "python.analysis.inlayHints.variableTypes": true,
+    "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "javascript.inlayHints.parameterNames.enabled": "all",
+    "javascript.inlayHints.parameterTypes.enabled": true,
+    "javascript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "javascript.inlayHints.variableTypes.enabled": true,
+    "typescript.inlayHints.enumMemberValues.enabled": true,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "typescript.inlayHints.variableTypes.enabled": true,
+    "vim.easymotion": true,
+    "files.eol": "\n",
+    "workbench.startupEditor": "none",
+    "workbench.colorCustomizations": {
+        "editorSuggestWidget.background": "#292522AA",
+        "editorHoverWidget.background": "#292522AA",
+    },
 }
