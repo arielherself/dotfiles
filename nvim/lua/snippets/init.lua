@@ -417,3 +417,16 @@ ls.add_snippets(nil, {
         })
     }
 })
+
+local segtree_persistent = require('snippets.segtree-persistent')
+ls.add_snippets(nil, {
+    cpp = {
+        snip({
+            trig = 'segtree_persistent',
+            namr = 'segtree_persistent',
+            dscr = 'Persistent Segment Tree',
+        },{
+            text(lines(segtree_persistent))
+        })
+    }
+})

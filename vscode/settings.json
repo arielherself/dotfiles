@@ -1,0 +1,90 @@
+{
+    "editor.cursorBlinking": "solid",
+    "remoteHub.commitDirectlyWarning": "off",
+    "workbench.colorTheme": "Melange Redux: Dark",
+    "files.autoSave": "afterDelay",
+    "terminal.integrated.profiles.windows": {
+        "PowerShell": {
+            "source": "PowerShell",
+            "icon": "terminal-powershell"
+        },
+        "Command Prompt": {
+            "path": [
+                "${env:windir}\\Sysnative\\cmd.exe",
+                "${env:windir}\\System32\\cmd.exe"
+            ],
+            "args": [],
+            "icon": "terminal-cmd"
+        },
+        "Git Bash": {
+            "source": "Git Bash"
+        },
+        "Ubuntu-22.04 (WSL)": {
+            "path": "C:\\WINDOWS\\System32\\wsl.exe",
+            "args": [
+                "-d",
+                "Ubuntu-22.04"
+            ]
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "Command Prompt",
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    // "http.proxy": "socks5://127.0.0.1:7890",
+    "editor.accessibilitySupport": "off",
+    "editor.autoClosingOvertype": "always",
+    "editor.fontFamily": "'BerkeleyMono Nerd Font', 'FiraCode Nerd Font', Consolas, 'Courier New', monospace",
+    "editor.wordWrap": "on",
+    "editor.lineNumbers": "relative",
+    "terminal.integrated.fontLigatures": true,
+    "editor.fontLigatures": true,
+    "vim.normalModeKeyBindings": [
+        {
+            "before": [ "<leader>", "o" ],
+            "commands": [ "workbench.action.files.openFile" ]
+        },
+        {
+            "before": [ "<leader>", "s" ],
+            "commands": [ "workbench.action.showAllSymbols" ]
+        },
+        {
+            "before": [ "<leader>", "g" ],
+            "commands": [ "livegrep.search" ]
+        },
+        {
+            "before": [ "<leader>", "c", "c" ],
+            "commands": [ "codesnap.start" ]
+        },
+        {
+            "before": [ "<leader>", "d" ],
+            "commands": [ "workbench.panel.markers.view.focus" ]
+        },
+        {
+            "before": [ "<C-a>" ],
+            "after": [ "g", "g", "V", "G" ]
+        },
+        {
+            "before": [ "<leader>", "b" ],
+            "commands": [
+                {
+                    "command": "workbench.action.tasks.runTask",
+                    "args": "test",
+                }
+            ],
+        },
+
+    ],
+    "vim.insertModeKeyBindings": [
+        {
+            "before": [ "j", "k" ],
+            "after": [ "<Esc>" ]
+        },
+    ],
+    "editor.minimap.enabled": false,
+    "vim.useSystemClipboard": true,
+    "vim.leader": "<space>",
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "vim.highlightedyank.enable": true,
+    "vim.smartRelativeLine": true
+}
