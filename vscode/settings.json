@@ -53,10 +53,6 @@
             "commands": [ "livegrep.search" ]
         },
         {
-            "before": [ "<leader>", "c", "c" ],
-            "commands": [ "codesnap.start" ]
-        },
-        {
             "before": [ "<leader>", "d" ],
             "commands": [ "workbench.panel.markers.view.focus" ]
         },
@@ -92,6 +88,14 @@
         {
             "before": [ "<leader>", "z" ],
             "commands": [ "workbench.action.toggleZenMode" ],
+        },
+        {
+            "before": [ "g", "d" ],
+            "commands": [ "editor.action.revealDefinition" ],
+        },
+        {
+            "before": [ "g", "p", "d" ],
+            "commands": [ "editor.action.peekDefinition" ],
         }
 
     ],
@@ -113,6 +117,26 @@
         {
             "before": [ "<S-Tab>" ],
             "after": [ "<", "g", "v" ]
+        },
+        {
+            "before": [ "<C-n>" ],
+            "commands": [ "editor.action.addSelectionToNextFindMatch" ],
+        },
+        {
+            "before": [ "<C-x>" ],
+            "commands": [ "editor.action.moveSelectionToNextFindMatch" ],
+        },
+        {
+            "before": [ "<C-p>" ],
+            "commands": [ "editor.action.moveSelectionToPreviousFindMatch" ],
+        },
+        {
+            "before": [ "<C-a>" ],
+            "commands": [ "editor.action.selectHighlights" ],
+        },
+        {
+            "before": [ "<leader>", "c", "c" ],
+            "commands": [ "codesnap.start" ]
         },
     ],
     "editor.minimap.enabled": false,
@@ -153,4 +177,7 @@
         "editorSuggestWidget.background": "#292522AA",
         "editorHoverWidget.background": "#292522AA",
     },
+    "vim.showMarksInGutter": true,
+    "zenMode.hideLineNumbers": false,
+    "zenMode.hideStatusBar": false,
 }
