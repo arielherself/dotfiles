@@ -1,7 +1,6 @@
 {
     "editor.cursorBlinking": "solid",
     "remoteHub.commitDirectlyWarning": "off",
-    "workbench.colorTheme": "Melange Redux: Dark",
     "files.autoSave": "afterDelay",
     "terminal.integrated.profiles.windows": {
         "PowerShell": {
@@ -19,13 +18,6 @@
         "Git Bash": {
             "source": "Git Bash"
         },
-        "Ubuntu-22.04 (WSL)": {
-            "path": "C:\\WINDOWS\\System32\\wsl.exe",
-            "args": [
-                "-d",
-                "Ubuntu-22.04"
-            ]
-        }
     },
     "terminal.integrated.defaultProfile.windows": "Command Prompt",
     "git.enableSmartCommit": true,
@@ -35,6 +27,9 @@
     "editor.accessibilitySupport": "off",
     "editor.autoClosingOvertype": "always",
     "editor.fontFamily": "'BerkeleyMono Nerd Font', 'FiraCode Nerd Font', Consolas, 'Courier New', monospace",
+    "editor.fontWeight": "normal",
+    "editor.lineHeight": 18,
+    "editor.letterSpacing": 0.2,
     "editor.wordWrap": "on",
     "editor.lineNumbers": "relative",
     "terminal.integrated.fontLigatures": true,
@@ -75,7 +70,7 @@
         },
         {
             "before": [ "K" ],
-            "commands": [ "editor.action.triggerParameterHints" ],
+            "commands": [ "editor.action.showDefinitionPreviewHover" ],
         },
         {
             "before": [ "<leader>", "p" ],
@@ -96,8 +91,34 @@
         {
             "before": [ "g", "p", "d" ],
             "commands": [ "editor.action.peekDefinition" ],
-        }
+        },
+        {
+            "before": [ "<C-j>" ],
+            "commands": [ "editor.action.moveLinesDownAction" ],
+        },
+        {
+            "before": [ "<C-k>" ],
+            "commands": [ "editor.action.moveLinesUpAction" ],
+        },
+        {
+            "before": [ "<leader>", "x" ],
+            "commands": [ "editor.action.trimTrailingWhitespace" ],
+        },
+        {
+            "before": [ "<leader>", "a" ],
+            "commands": [ "editor.action.quickFix" ],
+        },
 
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [ "Q" ],
+            "after": [ "q" ],
+        },
+        {
+            "before": [ "q" ],
+            "commands": [ "editor.action.marker.next" ]
+        }
     ],
     "vim.insertModeKeyBindings": [
         {
@@ -137,6 +158,18 @@
         {
             "before": [ "<leader>", "c", "c" ],
             "commands": [ "codesnap.start" ]
+        },
+        {
+            "before": [ "<C-j>" ],
+            "commands": [ "editor.action.moveLinesDownAction" ],
+        },
+        {
+            "before": [ "<C-k>" ],
+            "commands": [ "editor.action.moveLinesUpAction" ],
+        },
+        {
+            "before": [ "<leader>", "h" ],
+            "after": [ "<leader>", "<leader>", "<leader>", "b", "d", "w" ],
         },
     ],
     "editor.minimap.enabled": false,
@@ -180,4 +213,10 @@
     "vim.showMarksInGutter": true,
     "zenMode.hideLineNumbers": false,
     "zenMode.hideStatusBar": false,
+    // "editor.experimentalGpuAcceleration": "on",
+    "workbench.colorTheme": "Melange Redux: Dark",
+    "C_Cpp.clang_format_fallbackStyle": "{ BasedOnStyle: Google, IndentWidth: 4, TabWidth: 4}",
+    "C_Cpp.clang_format_style": "",
+    "C_Cpp.formatting": "vcFormat",
+    "C_Cpp.intelliSenseEngine": "disabled",
 }
