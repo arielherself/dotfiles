@@ -89,6 +89,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'rhysd/conflict-marker.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ryanoasis/vim-devicons'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 call plug#end()
 
