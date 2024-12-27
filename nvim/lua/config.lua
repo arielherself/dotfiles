@@ -76,7 +76,7 @@ local plugins = {
             }
         },
     },
-    {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
+    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
     -- {
     -- 	"nvim-neo-tree/neo-tree.nvim",
     -- 	branch = "v3.x",
@@ -172,32 +172,36 @@ local plugins = {
             "tpope/vim-obsession",
         },
     },
+    -- {
+    --     "arielherself/arshamiser.nvim",  -- status bar
+    --     branch = "dev",
+    --     dependencies = {
+    --         "arsham/arshlib.nvim",
+    --         "famiu/feline.nvim",
+    --         "rebelot/heirline.nvim",
+    --         "nvim-tree/nvim-web-devicons",
+    --         "lewis6991/gitsigns.nvim",
+    --         "nanotee/sqls.nvim",
+    --         "arsham/listish.nvim",
+    --     },
+    --     config = function()
+    --         require('gitsigns').setup()
+    --
+    --         -- ignore any parts you don't want to use
+    --         vim.cmd.colorscheme("arshamiser_dark")
+    --         -- require("arshamiser.feliniser")
+    --         -- or:
+    --         require("arshamiser.heirliniser")
+    --
+    --         _G.custom_foldtext = require("arshamiser.folding").foldtext
+    --         vim.opt.foldtext = "v:lua.custom_foldtext()"
+    --         -- if you want to draw a tabline:
+    --         -- vim.api.nvim_set_option("tabline", [[%{%v:lua.require("arshamiser.tabline").draw()%}]])
+    --     end,
+    -- },
     {
-        "arielherself/arshamiser.nvim",  -- status bar
-        branch = "dev",
-        dependencies = {
-            "arsham/arshlib.nvim",
-            "famiu/feline.nvim",
-            "rebelot/heirline.nvim",
-            "nvim-tree/nvim-web-devicons",
-            "lewis6991/gitsigns.nvim",
-            "nanotee/sqls.nvim",
-            "arsham/listish.nvim",
-        },
-        config = function()
-            require('gitsigns').setup()
-
-            -- ignore any parts you don't want to use
-            vim.cmd.colorscheme("arshamiser_dark")
-            -- require("arshamiser.feliniser")
-            -- or:
-            require("arshamiser.heirliniser")
-
-            _G.custom_foldtext = require("arshamiser.folding").foldtext
-            vim.opt.foldtext = "v:lua.custom_foldtext()"
-            -- if you want to draw a tabline:
-            -- vim.api.nvim_set_option("tabline", [[%{%v:lua.require("arshamiser.tabline").draw()%}]])
-        end,
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' }
     },
     {
         'numToStr/Comment.nvim',  -- `gc` for commenting
@@ -244,10 +248,10 @@ local plugins = {
     {
         'mawkler/modicator.nvim'  -- highlight current line number
     },
-    {
-        "ecthelionvi/NeoColumn.nvim",  -- highlight overflow columns?
-        opts = {}
-    },
+    -- {
+    --     "ecthelionvi/NeoColumn.nvim",  -- highlight overflow columns?
+    --     opts = {}
+    -- },
     {
         "utilyre/barbecue.nvim",  -- LSP winbar
         name = "barbecue",
@@ -278,14 +282,14 @@ local plugins = {
         'stevearc/dressing.nvim',  -- better UI
         opts = {},
     },
-    {
-        "folke/twilight.nvim",  -- Focus on parts that's being edited
-        opts = {
-            -- your configuration comes here
-            -- or leave it empty to use the default settings
-            -- refer to the configuration section below
-        }
-    },
+    -- {
+    --     "folke/twilight.nvim",  -- Focus on parts that's being edited
+    --     opts = {
+    --         -- your configuration comes here
+    --         -- or leave it empty to use the default settings
+    --         -- refer to the configuration section below
+    --     }
+    -- },
     { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
     { 'arielherself/vim-cursorword' },
     { 'm-demare/hlargs.nvim' },
@@ -476,7 +480,7 @@ local plugins = {
     },
     { 'echasnovski/mini.trailspace', version = '*' },
     { url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim' },
-    { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
+    -- { 'glacambre/firenvim', build = ":call firenvim#install(0)" },
     { 'nushell/tree-sitter-nu' },
     {
         "ibhagwan/fzf-lua",
@@ -509,13 +513,16 @@ local plugins = {
                 desc = 'Create a selection for selected text or word under the cursor',
             },
         },
-    }
+    },
+    -- { 'morhetz/gruvbox' },  -- gruvbox theme
+    { 'LunarVim/bigfile.nvim' },
 }
 require("lazy").setup(plugins, {})
 
 vim.notify = require("notify")
 
 vim.cmd([[colorscheme melange]])
+-- vim.cmd([[colorscheme gruvbox]])
 
 local builtin = require("telescope.builtin")
 local ext = require("telescope").extensions
@@ -575,12 +582,12 @@ vim.keymap.set('n', '<leader>f', '<Cmd>lua require("search").open({ tab_name = "
 vim.keymap.set('n', '<leader>g', '<Cmd>lua require("search").open({ tab_name = "Grep" })<CR>')
 
 local config = require("nvim-treesitter.configs")
-config.setup({
+config.setup {
     ensure_installed = {"lua", "cpp", "rust", "javascript", "python", "typescript", "html", "css", "scss"},
     auto_install = true,
     highlight = { enable = true},
     indent = { enable = true},
-})
+}
 
 -- import nvim-cmp plugin safely
 local cmp_status, cmp = pcall(require, "cmp")
@@ -813,9 +820,13 @@ vim.keymap.set('c', '<C-k>', '<Up>')
 vim.keymap.set('n', '<leader>x', require("mini.trailspace").trim, {noremap=true})
 vim.keymap.set('n', '<Del>', vim.notify.dismiss, {noremap=true})
 vim.keymap.set({'n', 'v', 'x'}, 'Q', 'q', {noremap=true})
-vim.keymap.set({'n', 'v', 'x'}, 'q', '<Nop>', {noremap=true})
+vim.keymap.set({'n', 'v', 'x'}, 'q', '<Cmd>lua vim.diagnostic.open_float(0,{scope = "cursor"})<CR>', {noremap=true})
 vim.keymap.set('n', 'g ', [[/\v^\s+$<CR>$<Cmd>nohlsearch<CR>]], {noremap=true, silent=true})
 vim.keymap.set('n', 'gy', "`[v`]", {noremap=true})
+vim.keymap.set('n', '<leader>cn', '<Cmd>GitConflictNextConflict<CR>')
+vim.keymap.set('n', '<leader>cp', '<Cmd>GitConflictPrevConflict<CR>')
+vim.keymap.set('n', '<leader>co', '<Cmd>GitConflictChooseOurs<CR>')
+vim.keymap.set('n', '<leader>ct', '<Cmd>GitConflictChooseTheirs<CR>')
 
 vim.api.nvim_create_user_command('SearchInCurrentFile', function()
     vim.ui.input({ prompt = 'Grep ...'}, function(input)
@@ -1070,8 +1081,8 @@ local opts = { noremap = true, silent = true }
 map('n', '<M-,>', '<Cmd>BufferPrevious<CR>', opts)
 map('n', '<M-.>', '<Cmd>BufferNext<CR>', opts)
 -- Re-order to previous/next
-map('n', '<M-S-,>', '<Cmd>BufferMovePrevious<CR>', opts)  -- Configuration for kitty
-map('n', '<M-S-.>', '<Cmd>BufferMoveNext<CR>', opts)
+map('n', '<M-lt>', '<Cmd>BufferMovePrevious<CR>', opts)  -- Configuration for wezterm
+map('n', '<M->>', '<Cmd>BufferMoveNext<CR>', opts)
 map('n', '<M-p>', '<Cmd>BufferPin<CR>', opts);
 map('n', '<M-c>', '<Cmd>BufferClose<CR>', opts)
 
@@ -1090,21 +1101,22 @@ local highlight = {
     "RainbowViolet",
     "RainbowCyan",
 }
-local hooks = require "ibl.hooks"
--- create the highlight groups in the highlight setup hook, so they are reset
--- every time the colorscheme changes
-hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
-    vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
-    vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
-    vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
-    vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
-    vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
-    vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
-    vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
-end)
+-- local hooks = require "ibl.hooks"
+-- -- create the highlight groups in the highlight setup hook, so they are reset
+-- -- every time the colorscheme changes
+-- hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
+--     vim.api.nvim_set_hl(0, "RainbowRed", { fg = "#E06C75" })
+--     vim.api.nvim_set_hl(0, "RainbowYellow", { fg = "#E5C07B" })
+--     vim.api.nvim_set_hl(0, "RainbowBlue", { fg = "#61AFEF" })
+--     vim.api.nvim_set_hl(0, "RainbowOrange", { fg = "#D19A66" })
+--     vim.api.nvim_set_hl(0, "RainbowGreen", { fg = "#98C379" })
+--     vim.api.nvim_set_hl(0, "RainbowViolet", { fg = "#C678DD" })
+--     vim.api.nvim_set_hl(0, "RainbowCyan", { fg = "#56B6C2" })
+-- end)
 
 require("ibl").setup {
-    indent = { highlight = highlight, char = "▏" },
+    -- indent = { highlight = highlight, char = "⋮" },
+    indent = { char = "󰇙" },
     scope = { enabled = true },
 }
 
@@ -1138,8 +1150,6 @@ require('goto-preview').setup {
 }
 
 require('colorizer').setup {}
-
-require('ibl').setup {}
 
 vim.api.nvim_create_autocmd("LspAttach",  {
     callback = function()
@@ -1209,3 +1219,14 @@ require('lsp_lines').setup()
 require("nvim-lightbulb").setup {
     autocmd = { enabled = true }
 }
+
+require('lualine').setup {
+    options = {
+        -- theme = 'gruvbox'
+        theme = 'auto'
+    }
+}
+
+vim.g.gruvbox_contrast_light = 'soft'
+
+require('bigfile').setup {}

@@ -47,6 +47,15 @@ in {
           helper = store
       '';
     };
+    ".vimrc" = {
+      source = config.lib.file.mkOutOfStoreSymlink ../.vimrc;
+    };
+    # ".vim/autoload/plug.vim" = {
+    #   source = builtins.fetchGit {
+    #     url = "https://github.com/junegunn/vim-plug";
+    #     ref = "master";
+    #   };
+    # };
     "Documents" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dropbox/arch/Documents";
       recursive = false;
@@ -153,6 +162,7 @@ in {
 
     # Editor
     unstable.neovim
+    pkgs.vim-full
     pkgs.fzf
     pkgs.ripgrep
     pkgs.clang-tools
@@ -203,6 +213,12 @@ in {
     pkgs.nmap
     pkgs.inetutils
     pkgs.samba
+
+    # RUST
+    pkgs.rustc
+    pkgs.cargo
+    pkgs.rust-analyzer
+    pkgs.clippy
 
     # Java
     pkgs.jdk23
