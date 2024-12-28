@@ -11,7 +11,7 @@ set undofile
 set undodir=~/.vim/undofiles-vanilla
 set undolevels=10000
 set undoreload=50000
-filetype off
+" filetype off
 set expandtab
 set tabstop=4
 set softtabstop=4
@@ -67,8 +67,8 @@ endif
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'savq/melange-nvim'
 Plug 'morhetz/gruvbox'
+Plug 'ayu-theme/ayu-vim'
 Plug 'embark-theme/vim'
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
@@ -80,6 +80,8 @@ Plug 'tpope/vim-commentary'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'Shougo/ddc.vim'
+" Plug 'shun/ddc-vim-lsp'
 Plug 'mattn/vim-lsp-settings'
 Plug 'jdhao/better-escape.vim'
 Plug 'jiangmiao/auto-pairs'
@@ -87,16 +89,17 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'rhysd/conflict-marker.vim'
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
+Plug 'Yggdroot/indentLine'
 
 call plug#end()
 
 " Color scheme
 set background=dark
 let g:embark_terminal_italics = 1
+let ayucolor = "mirage"
 silent! colorscheme embark
 
 " vim-airline
@@ -113,9 +116,43 @@ inoremap <expr> <cr> pumvisible() ? asyncomplete#close_popup() . "\<cr>" : "\<cr
 " LSP related
 let g:asyncomplete_auto_popup = 1
 let g:asyncomplete_popup_delay = 0
+let g:lsp_completion_documentation_delay = 0
+let g:lsp_diagnostics_echo_delay = 0
+let g:lsp_diagnostics_highlights_delay = 0
+let g:lsp_diagnostics_signs_delay = 0
+let g:lsp_diagnostics_virtual_text_delay = 0
+let g:lsp_document_code_action_signs_delay = 0
+let g:lsp_inlay_hints_delay = 0
+let g:lsp_document_highlight_delay = 0
+let g:lsp_preview_max_width = 50
+let g:lsp_float_max_width = 50
+let g:lsp_inlay_hints_enabled = 1
+let g:lsp_diagnostics_virtual_text_padding_left = 12
+let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_settings = {
             \   'clangd': { 'cmd': [ 'clangd' ] },
             \}
+function! s:truncate(str)
+  if len(a:str) > 50
+    return a:str[:50] . '...'
+  else
+    return a:str
+  endif
+endfunction
+function! s:truncate_labels(options, matches) abort
+    let l:items = []
+    for [l:source_name, l:matches] in items(a:matches)
+        for l:item in l:matches['items']
+            if has_key(l:item, 'abbr')
+                let l:item['abbr'] = s:truncate(l:item['abbr'])
+            endif
+            call add(l:items, l:item)
+        endfor
+    endfor
+
+    call asyncomplete#preprocess_complete(a:options, l:items)
+endfunction
+let g:asyncomplete_preprocessor = [function('s:truncate_labels')]
 
 " Personal keybindings
 nnoremap <leader>h <Plug>(easymotion-bd-w)
@@ -218,6 +255,11 @@ command! -bang -complete=buffer -nargs=? Bclose call <SID>Bclose(<q-bang>, <q-ar
 " indent guide
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
+
+" indent line
+let g:indentLine_char = ''
+let g:indentLine_first_char = ''
+let g:indentLine_showFirstIndentLevel = 1
 
 " Why?!
 set noshowmode
