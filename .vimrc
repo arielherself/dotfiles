@@ -142,11 +142,15 @@ endfunction
 function! s:truncate_labels(options, matches) abort
     let l:items = []
     for [l:source_name, l:matches] in items(a:matches)
+        let l:startcol = l:matches['startcol']
+        let l:base = a:options['typed'][l:startcol - 1:]
         for l:item in l:matches['items']
-            if has_key(l:item, 'abbr')
-                let l:item['abbr'] = s:truncate(l:item['abbr'])
+            if stridx(l:item['word'], l:base) == 0
+                if has_key(l:item, 'abbr')
+                    let l:item['abbr'] = s:truncate(l:item['abbr'])
+                endif
+                call add(l:items, l:item)
             endif
-            call add(l:items, l:item)
         endfor
     endfor
 
