@@ -4,11 +4,22 @@ let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 
+" Fix color in some environments
+if exists('+termguicolors')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+    " maybe need to remove this in gnu screen
+    set termguicolors
+endif
+
+" Add this if color doesn't work
+" set term=xterm-256color
+
 " Common stuff
 set encoding=utf-8
 set exrc
 set undofile
-set undodir=~/.vim/undofiles-vanilla
+set undodir=~/.vim/undofiles-vanilla  " you have to manually create this directory
 set undolevels=10000
 set undoreload=50000
 " filetype off
@@ -22,7 +33,6 @@ set selectmode=key
 set keymodel=startsel
 set number
 set cursorline
-set termguicolors
 set clipboard=unnamedplus  " not `+=` in vim
 set updatetime=700
 set whichwrap+=<,>,[,]
@@ -93,6 +103,7 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
+Plug '907th/vim-auto-save'
 
 call plug#end()
 
@@ -159,8 +170,8 @@ endfunction
 let g:asyncomplete_preprocessor = [function('s:truncate_labels')]
 
 " Personal keybindings
-nnoremap <leader>h <Plug>(easymotion-bd-w)
-vnoremap <leader>h <Plug>(easymotion-bd-w)
+nnoremap <leader>w <Plug>(easymotion-bd-w)
+vnoremap <leader>w <Plug>(easymotion-bd-w)
 nnoremap <leader>o <Cmd>Files<CR>
 nnoremap <leader>g <Cmd>Rg<CR>
 nnoremap gpd <Cmd>LspPeekDefinition<CR>
@@ -180,6 +191,7 @@ vnoremap <C-k> dkPV`]
 vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 nnoremap <C-a> ggVG
+nnoremap gy `[v`]
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Bclose
@@ -264,6 +276,11 @@ let g:indent_guides_guide_size = 1
 let g:indentLine_char = ''
 let g:indentLine_first_char = ''
 let g:indentLine_showFirstIndentLevel = 1
+
+" cursor word
+let g:cursorword_delay = 1
+
+let g:auto_save = 0
 
 " Why?!
 set noshowmode
