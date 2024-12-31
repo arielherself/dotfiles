@@ -119,6 +119,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug '907th/vim-auto-save'
 Plug 'markonm/traces.vim'
+Plug 'stevearc/oil.nvim'
 
 call plug#end()
 
@@ -328,7 +329,8 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
 " fix c++ comment style in Neovim
-autocmd FileType cpp setl commentstring=//\ %s
+" ref: https://github.com/tpope/vim-commentary/issues/15#issuecomment-23127749
+autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
 
 " Why?!
 set noshowmode

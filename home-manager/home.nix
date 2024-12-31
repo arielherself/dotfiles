@@ -103,11 +103,21 @@ in {
     #   recursive = true;
     # };
     "nvim/init.vim" = {
-      text= ''
+      text = ''
         set runtimepath+=${config.home.homeDirectory}/.vim,${config.home.homeDirectory}/.vim/after
         set packpath+=${config.home.homeDirectory}/.vim
         source ${config.home.homeDirectory}/.vimrc
         set undodir=${config.home.homeDirectory}/.vim/undofiles
+        lua require('config')
+      '';
+    };
+    "nvim/lua/config.lua" = {
+      text = ''
+        require('oil').setup {
+          view_options = {
+            show_hidden = true,
+          },
+        }
       '';
     };
     "nvim/ftplugin/java.lua" = {
