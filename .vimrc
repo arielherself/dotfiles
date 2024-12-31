@@ -46,6 +46,20 @@ set noshowmode
 set guicursor=n-v-c:block,i:ver25,a:blinkon0
 set incsearch
 set hlsearch
+set mouse=a
+set ttimeoutlen=0
+set wildmenu
+set wildoptions=fuzzy,pum
+if has('nvim')
+    set signcolumn=yes:2
+    set cmdheight=0
+    set pumblend=40
+    set winblend=40
+endif
+if !has('nvim')
+    set noesckeys
+endif
+set updatetime=0
 
 " legacy
 set nocompatible
@@ -104,6 +118,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug '907th/vim-auto-save'
+Plug 'markonm/traces.vim'
 
 call plug#end()
 
@@ -131,15 +146,19 @@ let g:lsp_completion_documentation_delay = 0
 let g:lsp_diagnostics_echo_delay = 0
 let g:lsp_diagnostics_highlights_delay = 0
 let g:lsp_diagnostics_signs_delay = 0
+let g:lsp_diagnostics_virtual_text_enabled = 0
 let g:lsp_diagnostics_virtual_text_delay = 0
 let g:lsp_document_code_action_signs_delay = 0
 let g:lsp_inlay_hints_delay = 0
 let g:lsp_document_highlight_delay = 0
 let g:lsp_preview_max_width = 50
+let g:lsp_diagnostics_float_cursor = 1
+let g:lsp_diagnostics_float_delay = 500
+let g:lsp_preview_autoclose = 0
 let g:lsp_float_max_width = 50
 let g:lsp_inlay_hints_enabled = 1
 let g:lsp_diagnostics_virtual_text_padding_left = 12
-let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_echo_cursor = 0
 let g:lsp_settings = {
             \   'clangd': { 'cmd': [ 'clangd' ] },
             \}
@@ -170,6 +189,7 @@ endfunction
 let g:asyncomplete_preprocessor = [function('s:truncate_labels')]
 
 " Personal keybindings
+tnoremap <Esc> <C-w>N
 nnoremap <leader>w <Plug>(easymotion-bd-w)
 vnoremap <leader>w <Plug>(easymotion-bd-w)
 nnoremap <leader>o <Cmd>Files<CR>
@@ -179,10 +199,9 @@ nnoremap gd <Cmd>LspDefinition<CR>
 nnoremap <leader>dd <Cmd>LspDocumentDiagnostics<CR>
 nnoremap <leader>dn <Cmd>LspNextDiagnostic<CR>
 nnoremap <leader>dp <Cmd>LspPreviousDiagnostic<CR>
-nnoremap <leader>r <Cmd>LspRename<CR>
+nnoremap grr <Cmd>LspRename<CR>
 nnoremap <leader>a <Cmd>LspCodeAction<CR>
 nnoremap K <Cmd>LspHover<CR>
-nnoremap <leader>` <Cmd>term zsh<CR>
 nnoremap Q q
 nnoremap q <Nop>
 inoremap <C-e> {<ESC>A}<ESC>%li<CR><ESC>$i<CR><ESC>k^i
@@ -192,6 +211,12 @@ vnoremap <Tab> >gv
 vnoremap <S-Tab> <gv
 nnoremap <C-a> ggVG
 nnoremap gy `[v`]
+nnoremap <C-l> <Cmd>noh<CR>
+if has('nvim')
+    nnoremap <leader>` <Cmd>split<CR><Cmd>term zsh<CR>i
+else
+    nnoremap <leader>` <Cmd>split<CR><Cmd>term ++curwin zsh<CR>
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Bclose
@@ -281,6 +306,9 @@ let g:indentLine_showFirstIndentLevel = 1
 let g:cursorword_delay = 1
 
 let g:auto_save = 0
+
+" recover cursor shape
+autocmd VimLeave * silent !echo -ne "\e[6 q"
 
 " Why?!
 set noshowmode

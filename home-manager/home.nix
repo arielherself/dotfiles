@@ -98,9 +98,17 @@ in {
       source = ../xournalpp;
       recursive = true;
     };
-    "nvim" = {
-      source = ../nvim;
-      recursive = true;
+    # "nvim" = {
+    #   source = ../nvim;
+    #   recursive = true;
+    # };
+    "nvim/init.vim" = {
+      text= ''
+        set runtimepath+=${config.home.homeDirectory}/.vim,${config.home.homeDirectory}/.vim/after
+        set packpath+=${config.home.homeDirectory}/.vim
+        source ${config.home.homeDirectory}/.vimrc
+        set undodir=${config.home.homeDirectory}/.vim/undofiles
+      '';
     };
     "nvim/ftplugin/java.lua" = {
       text = ''
@@ -337,7 +345,7 @@ in {
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     shellAliases = {
-      upgrade = "nix-channel --update && sudo nixos-rebuild switch && home-manager switch";
+      upgrade = "nix-channel --update && sudo nixos-rebuild switch --upgrade && home-manager switch";
       commit = "git commit -S -m";
     };
     oh-my-zsh = {
@@ -393,7 +401,7 @@ in {
       # This may not apply. Also try `git config --global gpg.ssh.program "/home/user/.nix-profile/bin/op-ssh-sign"`
       # gpg."ssh".program = "${unstable._1password-gui}/bin/op-ssh-sign";
       push.autoSetupRemote = true;
-      core.editor = "nvim";
+      core.editor = "vim";
     };
   };
 
