@@ -52,7 +52,7 @@ set wildmenu
 set wildoptions=fuzzy,pum
 if has('nvim')
     set signcolumn=yes:2
-    set cmdheight=0
+    " set cmdheight=0
     set pumblend=40
     set winblend=40
 endif
@@ -154,7 +154,7 @@ let g:lsp_document_highlight_delay = 0
 let g:lsp_preview_max_width = 50
 let g:lsp_diagnostics_float_cursor = 1
 let g:lsp_diagnostics_float_delay = 500
-let g:lsp_preview_autoclose = 0
+let g:lsp_preview_autoclose = 1
 let g:lsp_float_max_width = 50
 let g:lsp_inlay_hints_enabled = 1
 let g:lsp_diagnostics_virtual_text_padding_left = 12
@@ -189,7 +189,11 @@ endfunction
 let g:asyncomplete_preprocessor = [function('s:truncate_labels')]
 
 " Personal keybindings
-tnoremap <Esc> <C-w>N
+if !has('nvim')
+    tnoremap <Esc> <C-w>N
+else
+    tnoremap <ESC> <C-\><C-n>
+endif
 nnoremap <leader>w <Plug>(easymotion-bd-w)
 vnoremap <leader>w <Plug>(easymotion-bd-w)
 nnoremap <leader>o <Cmd>Files<CR>
@@ -217,6 +221,7 @@ if has('nvim')
 else
     nnoremap <leader>` <Cmd>split<CR><Cmd>term ++curwin zsh<CR>
 endif
+nnoremap <leader>x <Cmd>%s/\s\+$//e<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Bclose
@@ -309,6 +314,21 @@ let g:auto_save = 0
 
 " recover cursor shape
 autocmd VimLeave * silent !echo -ne "\e[6 q"
+
+" fix split line color
+set fillchars+=vert:\│
+highlight VertSplit cterm=NONE
+highlight VertSplit guifg=#585273
+
+" airline styling
+" ref: https://github.com/vim-airline/vim-airline/issues/323#issuecomment-27336312
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+
+" fix c++ comment style in Neovim
+autocmd FileType cpp setl commentstring=//\ %s
 
 " Why?!
 set noshowmode
