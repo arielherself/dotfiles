@@ -34,7 +34,7 @@ set keymodel=startsel
 set number
 set cursorline
 set clipboard=unnamedplus  " not `+=` in vim
-set updatetime=700
+set updatetime=500
 set whichwrap+=<,>,[,]
 set relativenumber
 set signcolumn=yes
@@ -59,7 +59,7 @@ endif
 if !has('nvim')
     set noesckeys
 endif
-set updatetime=0
+" set updatetime=0
 
 " legacy
 set nocompatible
@@ -101,7 +101,7 @@ Plug 'itchyny/vim-cursorword'
 Plug 'wakatime/vim-wakatime'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'prabirshrestha/vim-lsp'
+Plug 'arielherself/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'prabirshrestha/asyncomplete-lsp.vim'
 " Plug 'Shougo/ddc.vim'
@@ -152,14 +152,14 @@ let g:lsp_diagnostics_virtual_text_delay = 0
 let g:lsp_document_code_action_signs_delay = 0
 let g:lsp_inlay_hints_delay = 0
 let g:lsp_document_highlight_delay = 0
-let g:lsp_preview_max_width = 50
+let g:lsp_preview_max_width = 100
 let g:lsp_diagnostics_float_cursor = 1
-let g:lsp_diagnostics_float_delay = 500
+let g:lsp_diagnostics_float_delay = 600
 let g:lsp_preview_autoclose = 1
-let g:lsp_float_max_width = 50
+let g:lsp_float_max_width = 100
 let g:lsp_inlay_hints_enabled = 1
 let g:lsp_diagnostics_virtual_text_padding_left = 12
-let g:lsp_diagnostics_echo_cursor = 0
+let g:lsp_diagnostics_echo_cursor = 1
 let g:lsp_settings = {
             \   'clangd': { 'cmd': [ 'clangd' ] },
             \}
