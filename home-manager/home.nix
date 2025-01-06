@@ -411,7 +411,7 @@ in {
       # This may not apply. Also try `git config --global gpg.ssh.program "/home/user/.nix-profile/bin/op-ssh-sign"`
       # gpg."ssh".program = "${unstable._1password-gui}/bin/op-ssh-sign";
       push.autoSetupRemote = true;
-      core.editor = "vim";
+      core.editor = "nvim";
     };
   };
 

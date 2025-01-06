@@ -51,7 +51,7 @@ set ttimeoutlen=0
 set wildmenu
 set wildoptions=fuzzy,pum
 if has('nvim')
-    set signcolumn=yes:2
+    " set signcolumn=yes:2
     " set cmdheight=0
     set pumblend=40
     set winblend=40
@@ -114,12 +114,18 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'rhysd/conflict-marker.vim'
 Plug 'ryanoasis/vim-devicons'
-Plug 'airblade/vim-gitgutter'
+" this plugin slows vim down when dealing
+" with large files, so I switch to the Nvim version
+" Plug 'airblade/vim-gitgutter'
+if has('nvim')
+    Plug 'lewis6991/gitsigns.nvim'
+endif
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug '907th/vim-auto-save'
 Plug 'markonm/traces.vim'
 Plug 'stevearc/oil.nvim'
+Plug 'vim-scripts/LargeFile'
 
 call plug#end()
 
@@ -327,6 +333,10 @@ let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
+
+if has('nvim')
+    lua require('gitsigns').setup()
+endif
 
 " fix c++ comment style in Neovim
 " ref: https://github.com/tpope/vim-commentary/issues/15#issuecomment-23127749
