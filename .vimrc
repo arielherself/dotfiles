@@ -335,7 +335,7 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
 if has('nvim')
-    lua require('gitsigns').setup()
+    lua require('gitsigns').setup { attach_to_untracked = true, current_line_blame = true, current_line_blame_opts = { delay = 0 } }
 endif
 
 " fix c++ comment style in Neovim
