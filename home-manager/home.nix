@@ -45,6 +45,10 @@ in {
           directory = /mnt/fdos_server/OS-24Fall-FDU
         [credential]
           helper = store
+        [diff]
+          tool = vimdiff
+        [merge]
+          tool = vimdiff
       '';
     };
     ".vimrc" = {
@@ -311,6 +315,7 @@ in {
     pkgs.patchelf
     # pkgs.screenkey
     pkgs.ipatool                               # Search and download IPAs
+    unstable.open-webui
 
     # My version of BerkeleyMono NF is incomplete. Should add some fallback fonts.
     # (pkgs.nerdfonts.override { fonts = [
@@ -439,6 +444,7 @@ in {
       # set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
       set-option -g default-shell "${pkgs.zsh}/bin/zsh"
       set -g default-command "${pkgs.zsh}/bin/zsh"
+      set-option -g set-titles on
       setw -g mode-keys vi
       set-option -g status-position top
       set -g status-bg default

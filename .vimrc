@@ -97,7 +97,11 @@ Plug 'embark-theme/vim'
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 Plug 'vim-airline/vim-airline'
-Plug 'itchyny/vim-cursorword'
+if has('nvim')
+    Plug 'tzachar/local-highlight.nvim'
+else
+    Plug 'itchyny/vim-cursorword'
+endif
 Plug 'wakatime/vim-wakatime'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
@@ -335,6 +339,7 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
 if has('nvim')
+    lua require('local-highlight').setup { cw_hlgroup = 'LspReferenceText' }
     lua require('gitsigns').setup { attach_to_untracked = true, current_line_blame = true, current_line_blame_opts = { delay = 0 } }
 endif
 
