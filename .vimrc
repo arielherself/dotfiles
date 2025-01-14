@@ -85,8 +85,8 @@ let g:mapleader = " "
 " Install vim-plug
 let data_dir = '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
-  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 call plug#begin('~/.vim/plugged')
@@ -105,12 +105,12 @@ endif
 Plug 'wakatime/vim-wakatime'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'arielherself/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-lsp.vim'
+" Plug 'arielherself/vim-lsp'
+" Plug 'prabirshrestha/asyncomplete.vim'
+" Plug 'prabirshrestha/asyncomplete-lsp.vim'
 " Plug 'Shougo/ddc.vim'
 " Plug 'shun/ddc-vim-lsp'
-Plug 'mattn/vim-lsp-settings'
+" Plug 'mattn/vim-lsp-settings'
 Plug 'jdhao/better-escape.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'easymotion/vim-easymotion'
@@ -121,17 +121,44 @@ Plug 'ryanoasis/vim-devicons'
 " this plugin slows vim down when dealing
 " with large files, so I switch to the Nvim version
 " Plug 'airblade/vim-gitgutter'
-if has('nvim')
-    Plug 'lewis6991/gitsigns.nvim'
-endif
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
 Plug '907th/vim-auto-save'
 Plug 'markonm/traces.vim'
 Plug 'stevearc/oil.nvim'
 Plug 'vim-scripts/LargeFile'
+Plug 'lambdalisue/vim-fern'
+    Plug 'lambdalisue/vim-fern-git-status'
+    Plug 'lambdalisue/vim-fern-renderer-nerdfont'
+Plug 'lambdalisue/nerdfont.vim'
+
+" Use Neovim LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'saadparwaiz1/cmp_luasnip'
+        Plug 'L3MON4D3/LuaSnip'
+    Plug 'hrsh7th/cmp-emoji'
+    Plug 'chrisgrieser/cmp-nerdfont'
+    Plug 'hrsh7th/cmp-calc'
+Plug 'arielherself/lspkind.nvim'
+    Plug 'nvim-tree/nvim-web-devicons'
+Plug 'folke/trouble.nvim'
+Plug 'kevinhwang91/nvim-ufo'
+    Plug 'kevinhwang91/promise-async'
+Plug 'rmagatti/goto-preview'
 
 call plug#end()
+
+" Why?!
+set noshowmode
+set showcmd
+
 
 " Color scheme
 set background=dark
@@ -174,11 +201,11 @@ let g:lsp_settings = {
             \   'clangd': { 'cmd': [ 'clangd' ] },
             \}
 function! s:truncate(str)
-  if len(a:str) > 50
-    return a:str[:50] . '...'
-  else
-    return a:str
-  endif
+    if len(a:str) > 50
+        return a:str[:50] . '...'
+    else
+        return a:str
+    endif
 endfunction
 function! s:truncate_labels(options, matches) abort
     let l:items = []
@@ -209,14 +236,15 @@ nnoremap <leader>w <Plug>(easymotion-bd-w)
 vnoremap <leader>w <Plug>(easymotion-bd-w)
 nnoremap <leader>o <Cmd>Files<CR>
 nnoremap <leader>g <Cmd>Rg<CR>
-nnoremap gpd <Cmd>LspPeekDefinition<CR>
-nnoremap gd <Cmd>LspDefinition<CR>
-nnoremap <leader>dd <Cmd>LspDocumentDiagnostics<CR>
-nnoremap <leader>dn <Cmd>LspNextDiagnostic<CR>
-nnoremap <leader>dp <Cmd>LspPreviousDiagnostic<CR>
-nnoremap grr <Cmd>LspRename<CR>
-nnoremap <leader>a <Cmd>LspCodeAction<CR>
-nnoremap K <Cmd>LspHover<CR>
+nnoremap <leader>. <Cmd>Fern . -drawer<CR>
+" nnoremap gpd <Cmd>LspPeekDefinition<CR>
+" nnoremap gd <Cmd>LspDefinition<CR>
+" nnoremap <leader>dd <Cmd>LspDocumentDiagnostics<CR>
+" nnoremap <leader>dn <Cmd>LspNextDiagnostic<CR>
+" nnoremap <leader>dp <Cmd>LspPreviousDiagnostic<CR>
+" nnoremap grr <Cmd>LspRename<CR>
+" nnoremap <leader>a <Cmd>LspCodeAction<CR>
+" nnoremap K <Cmd>LspHover<CR>
 nnoremap Q q
 nnoremap q <Nop>
 inoremap <C-e> {<ESC>A}<ESC>%li<CR><ESC>$i<CR><ESC>k^i
@@ -239,18 +267,18 @@ nnoremap <leader>x <Cmd>%s/\s\+$//e<CR>
 " Delete buffer while keeping window layout (don't close buffer's windows).
 " Version 2008-11-18 from http://vim.wikia.com/wiki/VimTip165
 if v:version < 700 || exists('loaded_bclose') || &cp
-  finish
+    finish
 endif
 let loaded_bclose = 1
 if !exists('bclose_multiple')
-  let bclose_multiple = 1
+    let bclose_multiple = 1
 endif
 
 " Display an error message.
 function! s:Warn(msg)
-  echohl ErrorMsg
-  echomsg a:msg
-  echohl NONE
+    echohl ErrorMsg
+    echomsg a:msg
+    echohl NONE
 endfunction
 
 " Command ':Bclose' executes ':bd' to delete buffer in current window.
@@ -259,52 +287,52 @@ endfunction
 " Command ':Bclose!' is the same, but executes ':bd!' (discard changes).
 " An optional argument can specify which buffer to close (name or number).
 function! s:Bclose(bang, buffer)
-  if empty(a:buffer)
-    let btarget = bufnr('%')
-  elseif a:buffer =~ '^\d\+$'
-    let btarget = bufnr(str2nr(a:buffer))
-  else
-    let btarget = bufnr(a:buffer)
-  endif
-  if btarget < 0
-    call s:Warn('No matching buffer for '.a:buffer)
-    return
-  endif
-  if empty(a:bang) && getbufvar(btarget, '&modified')
-    call s:Warn('No write since last change for buffer '.btarget.' (use :Bclose!)')
-    return
-  endif
-  " Numbers of windows that view target buffer which we will delete.
-  let wnums = filter(range(1, winnr('$')), 'winbufnr(v:val) == btarget')
-  if !g:bclose_multiple && len(wnums) > 1
-    call s:Warn('Buffer is in multiple windows (use ":let bclose_multiple=1")')
-    return
-  endif
-  let wcurrent = winnr()
-  for w in wnums
-    execute w.'wincmd w'
-    let prevbuf = bufnr('#')
-    if prevbuf > 0 && buflisted(prevbuf) && prevbuf != btarget
-      buffer #
+    if empty(a:buffer)
+        let btarget = bufnr('%')
+    elseif a:buffer =~ '^\d\+$'
+        let btarget = bufnr(str2nr(a:buffer))
     else
-      bprevious
+        let btarget = bufnr(a:buffer)
     endif
-    if btarget == bufnr('%')
-      " Numbers of listed buffers which are not the target to be deleted.
-      let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != btarget')
-      " Listed, not target, and not displayed.
-      let bhidden = filter(copy(blisted), 'bufwinnr(v:val) < 0')
-      " Take the first buffer, if any (could be more intelligent).
-      let bjump = (bhidden + blisted + [-1])[0]
-      if bjump > 0
-        execute 'buffer '.bjump
-      else
-        execute 'enew'.a:bang
-      endif
+    if btarget < 0
+        call s:Warn('No matching buffer for '.a:buffer)
+        return
     endif
-  endfor
-  execute 'bdelete'.a:bang.' '.btarget
-  execute wcurrent.'wincmd w'
+    if empty(a:bang) && getbufvar(btarget, '&modified')
+        call s:Warn('No write since last change for buffer '.btarget.' (use :Bclose!)')
+        return
+    endif
+    " Numbers of windows that view target buffer which we will delete.
+    let wnums = filter(range(1, winnr('$')), 'winbufnr(v:val) == btarget')
+    if !g:bclose_multiple && len(wnums) > 1
+        call s:Warn('Buffer is in multiple windows (use ":let bclose_multiple=1")')
+        return
+    endif
+    let wcurrent = winnr()
+    for w in wnums
+        execute w.'wincmd w'
+        let prevbuf = bufnr('#')
+        if prevbuf > 0 && buflisted(prevbuf) && prevbuf != btarget
+            buffer #
+        else
+            bprevious
+        endif
+        if btarget == bufnr('%')
+            " Numbers of listed buffers which are not the target to be deleted.
+            let blisted = filter(range(1, bufnr('$')), 'buflisted(v:val) && v:val != btarget')
+            " Listed, not target, and not displayed.
+            let bhidden = filter(copy(blisted), 'bufwinnr(v:val) < 0')
+            " Take the first buffer, if any (could be more intelligent).
+            let bjump = (bhidden + blisted + [-1])[0]
+            if bjump > 0
+                execute 'buffer '.bjump
+            else
+                execute 'enew'.a:bang
+            endif
+        endif
+    endfor
+    execute 'bdelete'.a:bang.' '.btarget
+    execute wcurrent.'wincmd w'
 endfunction
 command! -bang -complete=buffer -nargs=? Bclose call <SID>Bclose(<q-bang>, <q-args>)
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -333,10 +361,17 @@ highlight VertSplit guifg=#585273
 
 " airline styling
 " ref: https://github.com/vim-airline/vim-airline/issues/323#issuecomment-27336312
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
 let g:airline_left_sep = ''
 let g:airline_left_alt_sep = ''
 let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
+let g:airline_symbols.notexists = ' '
+let g:airline_symbols.dirty = ' '
+
+let g:fern#renderer = "nerdfont"
 
 if has('nvim')
     lua require('local-highlight').setup { cw_hlgroup = 'LspReferenceText' }
@@ -347,5 +382,3 @@ endif
 " ref: https://github.com/tpope/vim-commentary/issues/15#issuecomment-23127749
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
 
-" Why?!
-set noshowmode
