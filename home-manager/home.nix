@@ -129,7 +129,9 @@ in {
     };
     "p10k/p10k.zsh" = {
       source = ../p10k.zsh;
-      recursive = true;
+    };
+    "clangd/config.yaml" = {
+      source = config.lib.file.mkOutOfStoreSymlink ../clangd.yaml;
     };
   };
 
@@ -177,11 +179,11 @@ in {
     pkgs.qbittorrent-nox
 
     # Editor
-    unstable.neovim
+    # unstable.neovim
     pkgs.vim-full
     pkgs.fzf
     pkgs.ripgrep
-    pkgs.clang-tools
+    unstable.clang-tools
     pkgs.lua-language-server
     pkgs.cmake-language-server
     pkgs.nil                                   # Nix language server
@@ -199,6 +201,7 @@ in {
     pkgs.unzip
     pkgs.pkg-config
     pkgs.appimage-run
+    pkgs.clang
     pkgs.gnumake
     pkgs.go
     pkgs.gcc
@@ -224,6 +227,7 @@ in {
     # pkgs.usbutils
     # pkgs.udiskie
     # pkgs.udisks
+    pkgs.devbox
 
     # Pwn
     pkgs.nmap
@@ -276,6 +280,7 @@ in {
 
     # Streaming
     # pkgs.obs-studio
+    unstable.uxplay
 
     # Communication
     # pkgs.telegram-desktop
@@ -309,7 +314,7 @@ in {
     pkgs.patchelf
     # pkgs.screenkey
     pkgs.ipatool                               # Search and download IPAs
-    unstable.open-webui
+    # unstable.open-webui
     pkgs.web-ext
 
     # My version of BerkeleyMono NF is incomplete. Should add some fallback fonts.
@@ -346,7 +351,16 @@ in {
   #  /etc/profiles/per-user/user/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
+    DISPLAY = ":0";  # Use with VcXsrv
     # EDITOR = "emacs";
+  };
+
+  programs.neovim = {
+    enable = true;
+    # package = unstable.neovim;
+    plugins = [
+      pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+    ];
   };
 
   programs.zsh = {

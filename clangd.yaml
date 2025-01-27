@@ -1,0 +1,10 @@
+# CompileFlags:
+#   Add: [-fexperimental-new-constant-interpreter]
+
+Diagnostics:
+  ClangTidy:
+    Add: [bugprone-*,performance-*]
+    Remove: [bugprone-reserved-identifier,bugprone-easily-swappable-parameters]
+
+Index:
+  Background: Skip

@@ -1,5 +1,7 @@
 # vim:foldmethod=marker:foldmarker={{{,}}}:
 
+require('todo-comments').setup {}
+
 require('oil').setup {
     columns = {
         "icon",
@@ -16,17 +18,38 @@ require('oil').setup {
     },
 }
 
+require('fzf-lua').setup({'fzf-vim'})
+require('fzf-lua').setup {
+	winopts = { preview = { default = 'builtin' } },
+}
+vim.keymap.set('n', '<leader>g', '<Cmd>FzfLua live_grep<CR>', {noremap=true})
+vim.keymap.set('n', '<leader>s', '<Cmd>FzfLua treesitter<CR>', {noremap=true})
+
 -- {{{ LSP Related
-vim.diagnostic.config({ virtual_text = false })
+vim.diagnostic.config {
+    underline = true,
+    virtual_text = false,
+    signs = true,
+    update_in_insert = true,
+}
+
+--- {{{ lsp_signature setup
+require('lsp_signature').setup {
+    handler_opts = { border = "none" },
+    hint_prefix = "󰁔 ",
+}
+--- }}}
 
 --- {{{ nvim-treesitter setup
-local config = require("nvim-treesitter.configs")
-config.setup {
-    ensure_installed = {"lua", "cpp", "rust", "javascript", "python", "typescript", "html", "css", "scss"},
-    auto_install = true,
-    highlight = { enable = true},
-    indent = { enable = true},
-}
+-- Managed by home-manager
+--
+-- local config = require("nvim-treesitter.configs")
+-- config.setup {
+--     ensure_installed = {"lua", "cpp", "rust", "javascript", "python", "typescript", "html", "css", "scss"},
+--     auto_install = true,
+--     highlight = { enable = true},
+--     indent = { enable = true},
+-- }
 --- }}}
 
 --- {{{ nvim-cmp setup
@@ -39,6 +62,8 @@ local luasnip_status, luasnip = pcall(require, "luasnip")
 if not luasnip_status then
     return
 end
+
+local compare = require('cmp.config.compare')
 
 vim.opt.completeopt = "menu,menuone,noselect"
 
@@ -111,6 +136,22 @@ cmp.setup {
         { name = "nerdfont" },
         { name = "calc" },
     }),
+
+    -- Temporary fix for slowdown on entering cmdline from a large file.
+    -- See https://github.com/hrsh7th/nvim-cmp/issues/1841
+    sorting = {
+        priority_weight = 2,
+        comparators = {
+            compare.offset,
+            compare.exact,
+            compare.score,
+            compare.recently_used,
+            compare.kind,
+            compare.length,
+            compare.order,
+        },
+    },
+
     formatting = {
         fields = { cmp.ItemField.Abbr, cmp.ItemField.Kind, cmp.ItemField.Menu },
         format = lspkind.cmp_format({
@@ -248,7 +289,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end, opts)
         vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+        vim.keymap.set({ 'n', 'v' }, '<space>a', vim.lsp.buf.code_action, opts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     end,
 })
@@ -277,7 +318,7 @@ capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
 }
-local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
+local language_servers = require("lspconfig").util._available_servers() -- or list servers manually like {'gopls', 'clangd'}
 for _, ls in ipairs(language_servers) do
     require('lspconfig')[ls].setup({
         capabilities = capabilities
@@ -286,4 +327,112 @@ for _, ls in ipairs(language_servers) do
 end
 require('ufo').setup()
 
+-- }}}
+
+-- {{{ Treesitter Text Objects
+--- {{{ select
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    select = {
+      enable = true,
+
+      -- Automatically jump forward to textobj, similar to targets.vim
+      lookahead = true,
+
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        -- You can optionally set descriptions to the mappings (used in the desc parameter of
+        -- nvim_buf_set_keymap) which plugins like which-key display
+        ["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+        -- You can also use captures from other query groups like `locals.scm`
+        ["as"] = { query = "@local.scope", query_group = "locals", desc = "Select language scope" },
+      },
+      -- You can choose the select mode (default is charwise 'v')
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * method: eg 'v' or 'o'
+      -- and should return the mode ('v', 'V', or '<c-v>') or a table
+      -- mapping query_strings to modes.
+      selection_modes = {
+        ['@parameter.outer'] = 'v', -- charwise
+        ['@function.outer'] = 'V', -- linewise
+        ['@class.outer'] = '<c-v>', -- blockwise
+      },
+      -- If you set this to `true` (default is `false`) then any textobject is
+      -- extended to include preceding or succeeding whitespace. Succeeding
+      -- whitespace has priority in order to act similarly to eg the built-in
+      -- `ap`.
+      --
+      -- Can also be a function which gets passed a table with the keys
+      -- * query_string: eg '@function.inner'
+      -- * selection_mode: eg 'v'
+      -- and should return true or false
+      include_surrounding_whitespace = true,
+    },
+  },
+}
+--- }}}
+--- {{{ swap
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    swap = {
+      enable = true,
+      swap_next = {
+        ["]]"] = "@parameter.inner",
+      },
+      swap_previous = {
+        ["[["] = "@parameter.inner",
+      },
+    },
+  },
+}
+--- }}}
+--- {{{ move
+require'nvim-treesitter.configs'.setup {
+  textobjects = {
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]f"] = "@function.outer",
+        ["]c"] = { query = "@class.outer", desc = "Next class start" },
+        --
+        -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queries.
+        ["]o"] = "@loop.*",
+        -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+        --
+        -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+        -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+        ["]s"] = { query = "@local.scope", query_group = "locals", desc = "Next scope" },
+        ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+      },
+      goto_next_end = {
+        ["]F"] = "@function.outer",
+        ["]C"] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[f"] = "@function.outer",
+        ["[c"] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[F"] = "@function.outer",
+        ["[C"] = "@class.outer",
+      },
+      -- Below will go to either the start or the end, whichever is closer.
+      -- Use if you want more granular movements
+      -- Make it even more gradual by adding multiple queries and regex.
+      goto_next = {
+        ["]d"] = "@conditional.outer",
+      },
+      goto_previous = {
+        ["[d"] = "@conditional.outer",
+      }
+    },
+  },
+}
+--- }}}
 -- }}}
