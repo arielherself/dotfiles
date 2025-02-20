@@ -1,5 +1,6 @@
-# CompileFlags:
-#   Add: [-fexperimental-new-constant-interpreter]
+CompileFlags:
+  # Add: [-fexperimental-new-constant-interpreter]
+  Compiler: g++
 
 Diagnostics:
   ClangTidy:
@@ -8,3 +9,9 @@ Diagnostics:
 
 Index:
   Background: Skip
+
+InlayHints:
+  BlockEnd: Yes
+
+Hover:
+  ShowAKA: Yes

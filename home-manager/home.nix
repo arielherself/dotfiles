@@ -177,6 +177,7 @@ in {
     # pkgs.clash-verge-rev
     mypkgs.aria2
     pkgs.qbittorrent-nox
+    pkgs.shadowsocks-rust
 
     # Editor
     # unstable.neovim
@@ -201,10 +202,10 @@ in {
     pkgs.unzip
     pkgs.pkg-config
     pkgs.appimage-run
-    pkgs.clang
     pkgs.gnumake
     pkgs.go
     pkgs.gcc
+    mypkgs.arm-gcc82
     pkgs.bear
     pkgs.autoconf
     pkgs.automake
@@ -515,7 +516,8 @@ in {
         # After = [ "local-fs.target" "network-online.target" "nss-lookup.target" "multi-user.target" ];
       };
       Install = {
-        WantedBy = [ "default.target" ];
+        # WantedBy = [ "default.target" ];
+        WantedBy = lib.mkForce [];
       };
       Service = {
         Type = "simple";

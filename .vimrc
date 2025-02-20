@@ -5,12 +5,12 @@ let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 
 " Fix color in some environments
-if exists('+termguicolors')
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	" maybe need to remove this in gnu screen
-	set termguicolors
-endif
+" if exists('+termguicolors')
+" 	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+" 	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" 	" maybe need to remove this in gnu screen
+" 	set termguicolors
+" endif
 
 " Add this if color doesn't work
 " set term=xterm-256color
@@ -34,7 +34,7 @@ set keymodel=startsel
 set number
 set cursorline
 set clipboard=unnamedplus  " not `+=` in vim
-set updatetime=500
+set updatetime=1000
 set whichwrap+=<,>,[,]
 set relativenumber
 set signcolumn=yes
@@ -60,6 +60,8 @@ if !has('nvim')
 	set noesckeys
 endif
 " set updatetime=0
+set ignorecase
+set smartcase
 
 " legacy
 set nocompatible
@@ -354,6 +356,8 @@ let g:indentLine_showFirstIndentLevel = 1
 let g:cursorword_delay = 1
 
 let g:auto_save = 0
+
+let g:AutoPairsMultilineClose = 0
 
 " recover cursor shape
 autocmd VimLeave * silent !echo -ne "\e[6 q"

@@ -18,6 +18,25 @@ require('oil').setup {
     },
 }
 
+require('gitsigns').setup {
+	signs = {
+		add          = { text = '┃' },
+		change       = { text = '┃' },
+		delete       = { text = '_' },
+		topdelete    = { text = '‾' },
+		changedelete = { text = '~' },
+		untracked    = { text = '┇' },
+    },
+    signs_staged = {
+        add          = { text = '┃' },
+        change       = { text = '┃' },
+        delete       = { text = '_' },
+        topdelete    = { text = '‾' },
+        changedelete = { text = '~' },
+        untracked    = { text = '┇' },
+    }
+}
+
 require('fzf-lua').setup({'fzf-vim'})
 require('fzf-lua').setup {
 	winopts = { preview = { default = 'builtin' } },
@@ -240,9 +259,21 @@ vim.api.nvim_create_autocmd("LspAttach",  {
     end,
 })
 
+vim.api.nvim_create_autocmd('CursorMoved', {
+  callback = function()
+    vim.lsp.inlay_hint.enable(false)
+  end
+})
+
 vim.api.nvim_create_autocmd('InsertEnter', {
   callback = function()
     vim.lsp.inlay_hint.enable(false)
+  end
+})
+
+vim.api.nvim_create_autocmd('CursorHold', {
+  callback = function()
+    vim.lsp.inlay_hint.enable(true)
   end
 })
 
@@ -318,7 +349,7 @@ capabilities.textDocument.foldingRange = {
     dynamicRegistration = false,
     lineFoldingOnly = true
 }
-local language_servers = require("lspconfig").util._available_servers() -- or list servers manually like {'gopls', 'clangd'}
+local language_servers = vim.lsp.get_clients() -- or list servers manually like {'gopls', 'clangd'}
 for _, ls in ipairs(language_servers) do
     require('lspconfig')[ls].setup({
         capabilities = capabilities
