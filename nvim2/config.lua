@@ -467,3 +467,37 @@ require'nvim-treesitter.configs'.setup {
 }
 --- }}}
 -- }}}
+
+require('avante_lib').load()
+require('avante').setup {
+	provider = "gpt-4o-mini",
+	auto_suggestions_provider = "gpt-4o-mini",
+	openai = {
+		endpoint = "https://api.nekoapi.com/v1",
+		api_key_name = "NEKOAPI_KEY",
+	},
+	vendors = {
+		["gpt-4o-mini"] = {
+			__inherited_from = "openai",
+			model = "gpt-4o-mini",
+			max_tokens = 8192,
+		},
+		["o3-mini"] = {
+			__inherited_from = "openai",
+			model = "o3-mini",
+			max_tokens = 16384,
+		},
+		["o3-mini-high"] = {
+			__inherited_from = "openai",
+			model = "o3-mini-high",
+			max_tokens = 16384,
+		},
+		["claude-nekoapi"] = {
+			__inherited_from = "openai",
+			model = "claude-3-5-sonnet-latest",
+			max_tokens = 8192,
+		},
+	},
+}
+
+

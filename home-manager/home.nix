@@ -205,7 +205,6 @@ in {
     pkgs.gnumake
     pkgs.go
     pkgs.gcc
-    mypkgs.arm-gcc82
     pkgs.bear
     pkgs.autoconf
     pkgs.automake
@@ -252,7 +251,7 @@ in {
     # pkgs.pipx
 
     # Node
-    pkgs.nodejs_22
+    pkgs.nodejs
 
     # Waybar
     # pkgs.waybar
@@ -332,9 +331,6 @@ in {
     # '')
   ];
 
-  home.file = {
-  };
-
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell
@@ -413,6 +409,8 @@ in {
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
       source ${config.xdg.configHome}/p10k/p10k.zsh
+
+      export NEKOAPI_KEY=$(cat $HOME/Dropbox/important/nekoapi_key)
     '';
   };
 

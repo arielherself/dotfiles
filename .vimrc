@@ -156,6 +156,18 @@ Plug 'kevinhwang91/nvim-ufo'
 	Plug 'kevinhwang91/promise-async'
 Plug 'rmagatti/goto-preview'
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
+	" Deps
+	Plug 'stevearc/dressing.nvim'
+	Plug 'nvim-lua/plenary.nvim'
+	Plug 'MunifTanjim/nui.nvim'
+	Plug 'MeanderingProgrammer/render-markdown.nvim'
+	
+	" Optional deps
+	Plug 'hrsh7th/nvim-cmp'
+	Plug 'nvim-tree/nvim-web-devicons' "or Plug 'echasnovski/mini.icons'
+	Plug 'HakonHarnes/img-clip.nvim'
+	Plug 'zbirenbaum/copilot.lua'
 
 call plug#end()
 
