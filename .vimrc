@@ -168,6 +168,7 @@ Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 	Plug 'nvim-tree/nvim-web-devicons' "or Plug 'echasnovski/mini.icons'
 	Plug 'HakonHarnes/img-clip.nvim'
 	Plug 'zbirenbaum/copilot.lua'
+Plug 'MunifTanjim/prettier.nvim'
 
 call plug#end()
 

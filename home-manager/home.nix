@@ -12,6 +12,9 @@ let
   });
 in {
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.overlays = [
+    (import "${fetchTarball "https://github.com/nix-community/fenix/archive/main.tar.gz"}/overlay.nix")
+  ];
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "nixos";
@@ -190,7 +193,11 @@ in {
     pkgs.nil                                   # Nix language server
     pkgs.asm-lsp                               # Assembly language server
     pkgs.nodePackages.typescript-language-server
-    pkgs.nodePackages.vls                      # Vue language server
+    # pkgs.nodePackages.vue-language-server                      # Vue language server
+    # pkgs.typescript-language-server
+    pkgs.vue-language-server
+    pkgs.typescript
+    pkgs.eslint
     pkgs.nodePackages.prettier
     unstable.markdown-oxide
     pkgs.helix
@@ -198,6 +205,7 @@ in {
     # pkgs.xfce.mousepad
 
     # Tools
+    pkgs.cachix
     pkgs.zip
     pkgs.unzip
     pkgs.pkg-config
@@ -235,10 +243,12 @@ in {
     pkgs.samba
 
     # RUST
-    pkgs.rustc
-    pkgs.cargo
-    pkgs.rust-analyzer
-    pkgs.clippy
+    pkgs.fenix.default.toolchain
+    pkgs.rust-analyzer-nightly
+    # pkgs.rustc
+    # pkgs.cargo
+    # pkgs.rust-analyzer
+    # pkgs.clippy
 
     # Java
     pkgs.jdk23

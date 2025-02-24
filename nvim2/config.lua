@@ -1,5 +1,7 @@
 # vim:foldmethod=marker:foldmarker={{{,}}}:
 
+vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format)
+
 require('todo-comments').setup {}
 
 require('oil').setup {
@@ -224,7 +226,22 @@ lspconfig.pyright.setup {
     capabilities = capabilities
 }
 lspconfig.ts_ls.setup {
-    capabilities = capabilities
+	filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+    capabilities = capabilities,
+	init_options = {
+		plugins = {
+			{
+				name = '@vue/typescript-plugin',
+				-- WARN: you only need to install `@vue/language-server` as dev dependency:
+				--       ```sh
+				--       npm install @vue/language-server --save-dev
+				--       ```
+				--       Global installation doesn't work (at least for NixOS).
+				location = '',
+				languages = { 'vue' },
+			},
+		},
+	},
 }
 lspconfig.rust_analyzer.setup {
     capabilities = capabilities,
@@ -250,6 +267,7 @@ lspconfig.nil_ls.setup {
 }
 lspconfig.mojo.setup {}
 lspconfig.nushell.setup {}
+lspconfig.volar.setup {}
 --- }}}
 
 --- {{{ Smart inlay hints
@@ -324,6 +342,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     end,
 })
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+    vim.lsp.handlers.hover,
+    {
+        max_width = 100,
+    }
+)
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+    vim.lsp.handlers.signature_help,
+    {
+        max_width = 100,
+    }
+)
 --- }}}
 
 require('goto-preview').setup {
@@ -470,7 +501,7 @@ require'nvim-treesitter.configs'.setup {
 
 require('avante_lib').load()
 require('avante').setup {
-	provider = "gpt-4o-mini",
+	provider = "claude-nekoapi",
 	auto_suggestions_provider = "gpt-4o-mini",
 	openai = {
 		endpoint = "https://api.nekoapi.com/v1",
@@ -499,5 +530,4 @@ require('avante').setup {
 		},
 	},
 }
-
 
