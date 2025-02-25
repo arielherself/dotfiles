@@ -127,7 +127,6 @@ in {
           cmd = {'${pkgs.jdt-language-server}/bin/jdtls'},
           root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
         }
-        require('jdtls').start_or_attach(config)
       '';
     };
     "p10k/p10k.zsh" = {
@@ -244,10 +243,10 @@ in {
 
     # RUST
     pkgs.fenix.default.toolchain
-    pkgs.rust-analyzer-nightly
+    # pkgs.rust-analyzer-nightly
     # pkgs.rustc
     # pkgs.cargo
-    # pkgs.rust-analyzer
+    pkgs.rust-analyzer
     # pkgs.clippy
 
     # Java

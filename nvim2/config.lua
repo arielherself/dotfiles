@@ -204,6 +204,13 @@ cmp.setup {
 --- }}}
 
 --- {{{ Configuration for specific LSPs
+require('mason').setup {
+	ui = {
+		check_outdated_packages_on_open = false,
+	},
+}
+require('java').setup {}
+
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- local extended_caps = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities)
@@ -268,6 +275,7 @@ lspconfig.nil_ls.setup {
 lspconfig.mojo.setup {}
 lspconfig.nushell.setup {}
 lspconfig.volar.setup {}
+lspconfig.jdtls.setup {}
 --- }}}
 
 --- {{{ Smart inlay hints
@@ -525,7 +533,7 @@ require('avante').setup {
 		},
 		["claude-nekoapi"] = {
 			__inherited_from = "openai",
-			model = "claude-3-5-sonnet-latest",
+			model = "claude-3-7-sonnet-20250219",
 			max_tokens = 8192,
 		},
 	},

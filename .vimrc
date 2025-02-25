@@ -169,6 +169,16 @@ Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 	Plug 'HakonHarnes/img-clip.nvim'
 	Plug 'zbirenbaum/copilot.lua'
 Plug 'MunifTanjim/prettier.nvim'
+Plug 'nvim-java/nvim-java'
+	Plug 'nvim-java/lua-async-await'
+    Plug 'nvim-java/nvim-java-refactor'
+    Plug 'nvim-java/nvim-java-core'
+    Plug 'nvim-java/nvim-java-test'
+    Plug 'nvim-java/nvim-java-dap'
+	Plug 'MunifTanjim/nui.nvim'
+	Plug 'mfussenegger/nvim-dap'
+	Plug 'JavaHello/spring-boot.nvim', { 'commit': '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0' }
+	Plug 'williamboman/mason.nvim'
 
 call plug#end()
 
