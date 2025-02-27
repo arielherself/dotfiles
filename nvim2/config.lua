@@ -257,7 +257,33 @@ lspconfig.rust_analyzer.setup {
         ['rust-analyzer'] = {
             checkOnSave = {
                 command = 'clippy',
-            }
+            },
+			bindingModeHints = {
+				enable = true,
+			},
+			closureCaptureHints = {
+				enable = true,
+			},
+			genericParameterHints = {
+				lifetime = {
+					enable = true,
+				},
+				type = {
+					enable = true,
+				},
+			},
+			implicitDrops = {
+				enable = true,
+			},
+			implicitSizedBoundHints = {
+				enable = true,
+			},
+			lifetimeElisionHints = {
+				enable = true,
+			},
+			rangeExclusiveHints = {
+				enable = true,
+			},
         },
     },
 }
@@ -278,36 +304,15 @@ lspconfig.volar.setup {}
 lspconfig.jdtls.setup {}
 --- }}}
 
---- {{{ Smart inlay hints
-vim.api.nvim_create_autocmd("LspAttach",  {
-    callback = function()
-        vim.lsp.inlay_hint.enable(true)
-    end,
+--- {{{ Manual inlay hints
+local a = vim.api.nvim_create_autocmd("LspAttach",  {
+	callback = function()
+		vim.lsp.inlay_hint.enable(true)
+	end,
 })
-
-vim.api.nvim_create_autocmd('CursorMoved', {
-  callback = function()
-    vim.lsp.inlay_hint.enable(false)
-  end
-})
-
-vim.api.nvim_create_autocmd('InsertEnter', {
-  callback = function()
-    vim.lsp.inlay_hint.enable(false)
-  end
-})
-
-vim.api.nvim_create_autocmd('CursorHold', {
-  callback = function()
-    vim.lsp.inlay_hint.enable(true)
-  end
-})
-
-vim.api.nvim_create_autocmd('InsertLeave', {
-  callback = function()
-    vim.lsp.inlay_hint.enable(true)
-  end
-})
+vim.keymap.set('n', '<leader>i', function()
+	vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+end)
 --- }}}
 
 --- {{{ trouble.nvim keybinds
