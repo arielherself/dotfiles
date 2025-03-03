@@ -220,6 +220,7 @@ in {
     pkgs.mtr
     pkgs.htop
     pkgs.gdb
+    pkgs.netcat-gnu
     # mypkgs.dropbox
     pkgs.brightnessctl
     pkgs.psmisc
@@ -254,13 +255,15 @@ in {
     pkgs.jdt-language-server
 
     # Python
-    (pkgs.python313.withPackages (ps: with ps; [
-    ]))
+    # (pkgs.python313.withPackages (ps: with ps; [
+    # ]))
+    pkgs.python312
     pkgs.pyright
+    pkgs.poetry
     # pkgs.pipx
 
     # Node
-    pkgs.nodejs
+    pkgs.nodejs_22
 
     # Waybar
     # pkgs.waybar

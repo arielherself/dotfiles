@@ -179,6 +179,7 @@ Plug 'nvim-java/nvim-java'
 	Plug 'mfussenegger/nvim-dap'
 	Plug 'JavaHello/spring-boot.nvim', { 'commit': '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0' }
 	Plug 'williamboman/mason.nvim'
+Plug 'sindrets/diffview.nvim'
 
 call plug#end()
 
@@ -195,6 +196,7 @@ silent! colorscheme embark
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 0
 let g:airline_powerline_fonts = 1
 nnoremap , <Cmd>bp<CR>
 nnoremap . <Cmd>bn<CR>
