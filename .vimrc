@@ -62,6 +62,7 @@ endif
 " set updatetime=0
 set ignorecase
 set smartcase
+set nofixeol
 
 " legacy
 set nocompatible
@@ -180,6 +181,7 @@ Plug 'nvim-java/nvim-java'
 	Plug 'JavaHello/spring-boot.nvim', { 'commit': '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0' }
 	Plug 'williamboman/mason.nvim'
 Plug 'sindrets/diffview.nvim'
+Plug 'junegunn/vim-peekaboo'
 
 call plug#end()
 

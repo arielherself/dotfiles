@@ -57,6 +57,9 @@ in {
     ".vimrc" = {
       source = config.lib.file.mkOutOfStoreSymlink ../.vimrc;
     };
+    ".wakatime.cfg" = {
+      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dropbox/important/.wakatime.cfg";
+    };
     # ".vim/autoload/plug.vim" = {
     #   source = builtins.fetchGit {
     #     url = "https://github.com/junegunn/vim-plug";
@@ -249,6 +252,7 @@ in {
     # pkgs.cargo
     pkgs.rust-analyzer
     # pkgs.clippy
+    # pkgs.rustfmt
 
     # Java
     pkgs.jdk23
