@@ -1,8 +1,34 @@
 # vim:foldmethod=marker:foldmarker={{{,}}}:
 
+vim.notify = require('notify')
+vim.keymap.set('n', '<Del>', vim.notify.dismiss, {noremap=true})
+
 vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format)
 
 require('todo-comments').setup {}
+
+require("dapui").setup()
+require('nvim-dap-virtual-text').setup {}
+
+local dap = require('dap')
+local ui = require('dapui')
+vim.keymap.set('n', '<leader>bb', dap.toggle_breakpoint)
+vim.keymap.set('n', '<leader>bc', dap.run_to_cursor)
+vim.keymap.set('n', '<leader>bt', ui.toggle)
+vim.keymap.set('n', '<F1>', dap.continue)
+vim.keymap.set('n', '<F2>', dap.step_into)
+vim.keymap.set('n', '<F3>', dap.step_over)
+vim.keymap.set('n', '<F4>', dap.step_out)
+vim.keymap.set('n', '<F5>', dap.step_back)
+vim.keymap.set('n', '<F6>', dap.restart)
+vim.keymap.set('n', '<F7>', dap.close)
+vim.keymap.set('n', '<leader>?', function()
+	require('dapui').eval(nil, { enter = true })
+end)
+dap.listeners.before.attach.dapui_config = ui.open
+dap.listeners.before.launch.dapui_config = ui.open
+dap.listeners.after.event_terminated.dapui_config = ui.close
+dap.listeners.after.event_exited.dapui_config = ui.close
 
 require('oil').setup {
     columns = {
@@ -351,7 +377,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         end, opts)
         vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
         vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-        vim.keymap.set({ 'n', 'v' }, '<space>a', vim.lsp.buf.code_action, opts)
+        vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     end,
 })

@@ -171,6 +171,11 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    # Manual
+    pkgs.man-pages
+    pkgs.man-pages-posix
+
+
     # Terminal
     # pkgs.contour
     # pkgs.tmux

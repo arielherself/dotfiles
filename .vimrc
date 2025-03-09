@@ -182,6 +182,12 @@ Plug 'nvim-java/nvim-java'
 	Plug 'williamboman/mason.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'junegunn/vim-peekaboo'
+Plug 'mfussenegger/nvim-dap'
+	Plug 'nvim-neotest/nvim-nio'
+	Plug 'rcarriga/nvim-dap-ui'
+	Plug 'theHamsta/nvim-dap-virtual-text'
+Plug 'rcarriga/nvim-notify'
+Plug 'folke/which-key.nvim'
 
 call plug#end()
 
@@ -200,9 +206,9 @@ silent! colorscheme embark
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 0
 let g:airline_powerline_fonts = 1
-nnoremap , <Cmd>bp<CR>
-nnoremap . <Cmd>bn<CR>
-nnoremap c <Cmd>Bclose<CR>
+nnoremap <M-,> <Cmd>bp<CR>
+nnoremap <M-.> <Cmd>bn<CR>
+nnoremap <M-c> <Cmd>Bclose<CR>
 nnoremap <M-k> <Cmd>tabnext<CR>
 nnoremap <M-j> <Cmd>tabprevious<CR>
 
