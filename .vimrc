@@ -135,7 +135,7 @@ Plug 'lambdalisue/nerdfont.vim'
 
 Plug 'folke/todo-comments.nvim'
 	Plug 'nvim-lua/plenary.nvim'
-Plug 'arielherself/nvim-treesitter-textobjects'
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
 
 " Use Neovim LSP
 Plug 'neovim/nvim-lspconfig'

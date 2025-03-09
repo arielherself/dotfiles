@@ -3,7 +3,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
+  unstable = import <nixpkgs> { config = { allowUnfree = true; }; };
   mypkgs = import (pkgs.fetchFromGitHub {
     owner = "arielherself";
     repo = "mypkgs";
@@ -42,16 +42,18 @@ in {
         [user]
           email = arielherself@duck.com
           name = arielherself
-        [gpg "ssh"]
-          program = "/mnt/c/Users/user/AppData/Local/1Password/app/8/op-ssh-sign.exe"
-        [safe]
-          directory = /mnt/fdos_server/OS-24Fall-FDU
         [credential]
           helper = store
         [diff]
           tool = vimdiff
         [merge]
           tool = vimdiff
+        [user]
+          signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3+9t7aTNMzzEBMW7O7WzXlUbIppCEs/TnGxuqrt9bj
+        [gpg]
+          format = ssh
+        [gpg "ssh"]
+          program = "/opt/1Password/op-ssh-sign"
       '';
     };
     ".vimrc" = {
@@ -181,6 +183,7 @@ in {
     # pkgs.tmux
     # pkgs.kitty
     # pkgs.alacritty
+    # unstable.ghostty
 
     # Networking
     # pkgs.wireshark
@@ -212,6 +215,7 @@ in {
     # pkgs.xfce.mousepad
 
     # Tools
+    pkgs.gh
     pkgs.cachix
     pkgs.zip
     pkgs.unzip
