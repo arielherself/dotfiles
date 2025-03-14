@@ -70,7 +70,7 @@ require('fzf-lua').setup {
 	winopts = { preview = { default = 'builtin' } },
 }
 vim.keymap.set('n', '<leader>g', '<Cmd>FzfLua live_grep<CR>', {noremap=true})
-vim.keymap.set('n', '<leader>s', '<Cmd>FzfLua treesitter<CR>', {noremap=true})
+vim.keymap.set('n', '<leader>s', '<Cmd>FzfLua lsp_live_workspace_symbols<CR>', {noremap=true})
 
 -- {{{ LSP Related
 vim.diagnostic.config {
@@ -546,6 +546,11 @@ require('avante').setup {
 		endpoint = "https://api.nekoapi.com/v1",
 		api_key_name = "NEKOAPI_KEY",
 	},
+	claude = {
+		endpoint = "https://api.nekoapi.com",
+		-- api_key_name = "NEKOAPI_CLAUDE_KEY",
+		api_key_name = "NEKOAPI_KEY",
+	},
 	vendors = {
 		["gpt-4o-mini"] = {
 			__inherited_from = "openai",
@@ -563,8 +568,8 @@ require('avante').setup {
 			max_tokens = 16384,
 		},
 		["claude-nekoapi"] = {
-			__inherited_from = "openai",
-			model = "claude-3-7-sonnet-20250219",
+			__inherited_from = "claude",
+			model = "claude-3-5-sonnet-latest",
 			max_tokens = 8192,
 		},
 	},

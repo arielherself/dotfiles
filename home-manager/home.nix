@@ -56,6 +56,22 @@ in {
           program = "/opt/1Password/op-ssh-sign"
       '';
     };
+    ".gtkrc-2.0" = {
+      text = ''
+        gtk-enable-animations=1
+        gtk-theme-name="Adwaita-dark"
+        gtk-primary-button-warps-slider=1
+        gtk-toolbar-style=3
+        gtk-menu-images=1
+        gtk-button-images=1
+        gtk-cursor-theme-size=24
+        gtk-cursor-theme-name="breeze_cursors"
+        gtk-sound-theme-name="ocean"
+        gtk-icon-theme-name="breeze"
+        gtk-font-name="Noto Sans,  10"
+        gtk-theme-name = "Adwaita-dark"
+      '';
+    };
     ".vimrc" = {
       source = config.lib.file.mkOutOfStoreSymlink ../.vimrc;
     };
@@ -97,6 +113,9 @@ in {
     "contour/contour.yml" = {
       source = ../contour.yml;
       recursive = true;
+    };
+    "ghostty/config" = {
+      source = config.lib.file.mkOutOfStoreSymlink ../ghostty;
     };
     "awesome/rc.lua" = {
       source = ../awesome.rc.lua;
@@ -220,6 +239,8 @@ in {
     pkgs.zip
     pkgs.unzip
     pkgs.pkg-config
+    pkgs.fontconfig
+    pkgs.freetype
     pkgs.appimage-run
     pkgs.gnumake
     pkgs.go
@@ -262,6 +283,7 @@ in {
     pkgs.rust-analyzer
     # pkgs.clippy
     # pkgs.rustfmt
+    pkgs.cargo-binstall
 
     # Java
     pkgs.jdk23
@@ -374,6 +396,11 @@ in {
   #
   home.sessionVariables = {
     DISPLAY = ":0";  # Use with VcXsrv
+    LD_LIBRARY_PATH = lib.makeLibraryPath [
+      pkgs.fontconfig
+      pkgs.freetype
+    ];
+    RUST_FONTCONFIG_DLOPEN = "on";
     # EDITOR = "emacs";
   };
 
@@ -436,6 +463,7 @@ in {
       source ${config.xdg.configHome}/p10k/p10k.zsh
 
       export NEKOAPI_KEY=$(cat $HOME/Dropbox/important/nekoapi_key)
+      export NEKOAPI_CLAUDE_KEY=$(cat $HOME/Dropbox/important/nekoapi_claude_key)
     '';
   };
 
@@ -453,10 +481,10 @@ in {
     };
   };
 
-  gtk = {
-    enable = true;
-    theme.name = "Adwaita-dark";
-  };
+  # gtk = {
+  #   enable = true;
+  #   theme.name = "Adwaita-dark";
+  # };
 
   programs.tmux = {
     enable = true;
@@ -465,13 +493,13 @@ in {
     shell = "${pkgs.zsh}/bin/zsh";
     extraConfig = ''
       # Fix font variants and undercurl but optional.
-      set -ga terminal-overrides ",xterm-256color:Tc"
+      # set -ga terminal-overrides ",xterm-256color:Tc"
       # set-option -sa terminal-features ',xterm-256color:RGB'
       # Fix Windows Terminal
-      set-option -g default-terminal "tmux-256color"
-      set-option -sa terminal-overrides ",xterm-256color:RGB"
-      set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
-      set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
+      # set-option -g default-terminal "tmux-256color"
+      # set-option -sa terminal-overrides ",xterm-256color:RGB"
+      # set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
+      # set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'
       # set-option -ga terminal-features ",xterm-256color:usstyle"
       # set -as terminal-overrides ',*:Smulx=\E[4::%p1%dm'
       # set -as terminal-overrides ',*:Setulc=\E[58::2::%p1%{65536}%/%d::%p1%{256}%/%{255}%&%d::%p1%{255}%&%d%;m'

@@ -4,7 +4,7 @@ let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 
-" Fix color in some environments
+" " Fix color in some environments
 " if exists('+termguicolors')
 " 	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 " 	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -100,6 +100,7 @@ Plug 'embark-theme/vim'
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'itchyny/vim-cursorword'
 Plug 'wakatime/vim-wakatime'
 Plug 'tpope/vim-surround'
@@ -188,6 +189,7 @@ Plug 'mfussenegger/nvim-dap'
 	Plug 'theHamsta/nvim-dap-virtual-text'
 Plug 'rcarriga/nvim-notify'
 Plug 'folke/which-key.nvim'
+Plug 'armannikoyan/rusty'
 
 call plug#end()
 
@@ -200,12 +202,14 @@ set showcmd
 set background=dark
 let g:embark_terminal_italics = 1
 let ayucolor = "mirage"
-silent! colorscheme embark
+" silent! colorscheme embark
+silent! colorscheme rusty
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 0
 let g:airline_powerline_fonts = 1
+let g:airline_theme = "base16_tomorrow_night"
 nnoremap <M-,> <Cmd>bp<CR>
 nnoremap <M-.> <Cmd>bn<CR>
 nnoremap <M-c> <Cmd>Bclose<CR>
@@ -384,6 +388,7 @@ let g:indent_guides_guide_size = 1
 let g:indentLine_char = '┆'
 let g:indentLine_first_char = '┆'
 let g:indentLine_showFirstIndentLevel = 1
+let g:indentLine_setConceal = 0
 
 " cursor word
 let g:cursorword_delay = 1
