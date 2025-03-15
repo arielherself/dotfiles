@@ -457,6 +457,14 @@ in {
     '';
     initExtra = ''
       me() { mkdir -p "$1" && cd "$1" }
+      use() {
+        if [[ -n "$1" ]]; then
+          nix-shell "$HOME/dotfiles/nix_environments/$1.nix"
+        else
+          echo "Error: Please provide an environment name"
+            return 1
+            fi
+      }
       unsetopt pathdirs
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
       source ${pkgs.nix-index}/etc/profile.d/command-not-found.sh
