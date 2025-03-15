@@ -578,23 +578,23 @@ in {
         Restart = "always";
       };
     };
-    rclone-dropbox = {
-      Unit = {
-        Description = "mount Dropbox.";
-        After = [ "network-online.target" ];
-      };
-      Install = {
-        WantedBy = [ "default.target" ];
-      };
-      Service = {
-        Type = "forking";
-        Environment = [ "PATH=/run/wrappers/bin/:$PATH" ];
-        ExecStart = "${pkgs.rclone}/bin/rclone mount dropbox: /mnt/dropbox --copy-links --allow-other --allow-non-empty --umask 000 --daemon --vfs-cache-mode writes --buffer-size 10M";
-        ExecStop = "fusermount -u /mnt/dropbox";
-        Restart = "always";
-        RestartSec = 10;
-      };
-    };
+    # rclone-dropbox = {
+    #   Unit = {
+    #     Description = "mount Dropbox.";
+    #     After = [ "network-online.target" ];
+    #   };
+    #   Install = {
+    #     WantedBy = [ "default.target" ];
+    #   };
+    #   Service = {
+    #     Type = "forking";
+    #     Environment = [ "PATH=/run/wrappers/bin/:$PATH" ];
+    #     ExecStart = "${pkgs.rclone}/bin/rclone mount dropbox: /mnt/dropbox --copy-links --allow-other --allow-non-empty --umask 000 --daemon --vfs-cache-mode writes --buffer-size 100M -vv --log-file=/home/nixos/rclone.log";
+    #     ExecStop = "fusermount -u /mnt/dropbox";
+    #     Restart = "always";
+    #     RestartSec = 10;
+    #   };
+    # };
   };
 }
 
