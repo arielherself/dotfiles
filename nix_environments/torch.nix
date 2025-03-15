@@ -9,7 +9,9 @@ with import <nixpkgs> {};
 		binutils
 		autoconf
 		(python3.withPackages(ps: with ps; [
-			torchWithCuda
+			torch-bin
+			# torchWithCuda
+			torchvision-bin
 		]))
 		lolcat
 		bash
