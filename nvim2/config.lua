@@ -67,9 +67,18 @@ require('gitsigns').setup {
 
 require('fzf-lua').setup({'fzf-vim'})
 require('fzf-lua').setup {
-	winopts = { preview = { default = 'builtin' } },
+	winopts = {
+		preview = { default = 'builtin' }
+	},
+	files = {
+		fzf_opts = {
+			["--header"] = ":: <alt-h> to Include hidden files\n:: <alt-i> to Disable .gitignore\n:: <ctrl-g> to Fuzzy Search",
+		},
+	},
 }
 vim.keymap.set('n', '<leader>g', '<Cmd>FzfLua live_grep<CR>', {noremap=true})
+vim.keymap.set('n', '<leader>tt', '<Cmd>FzfLua tabs<CR>', {noremap=true})
+vim.keymap.set('n', '<leader>tb', '<Cmd>FzfLua buffers<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>ss', '<Cmd>FzfLua lsp_document_symbols<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>sw', '<Cmd>FzfLua lsp_live_workspace_symbols<CR>', {noremap=true})
 
