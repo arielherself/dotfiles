@@ -7,6 +7,7 @@ vim.keymap.set('n', '<leader>ff', vim.lsp.buf.format)
 
 require('todo-comments').setup {}
 
+-- {{{ DAP configuration
 require("dapui").setup()
 require('nvim-dap-virtual-text').setup {}
 
@@ -29,6 +30,7 @@ dap.listeners.before.attach.dapui_config = ui.open
 dap.listeners.before.launch.dapui_config = ui.open
 dap.listeners.after.event_terminated.dapui_config = ui.close
 dap.listeners.after.event_exited.dapui_config = ui.close
+-- }}}
 
 require('oil').setup {
     columns = {
@@ -65,6 +67,7 @@ require('gitsigns').setup {
     }
 }
 
+-- {{{ FZF
 require('fzf-lua').setup({'fzf-vim'})
 require('fzf-lua').setup {
 	winopts = {
@@ -81,6 +84,7 @@ vim.keymap.set('n', '<leader>tt', '<Cmd>FzfLua tabs<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>tb', '<Cmd>FzfLua buffers<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>ss', '<Cmd>FzfLua lsp_document_symbols<CR>', {noremap=true})
 vim.keymap.set('n', '<leader>sw', '<Cmd>FzfLua lsp_live_workspace_symbols<CR>', {noremap=true})
+-- }}}
 
 -- {{{ LSP Related
 vim.diagnostic.config {
@@ -549,6 +553,7 @@ require'nvim-treesitter.configs'.setup {
 --- }}}
 -- }}}
 
+-- {{{ Avante
 require('avante_lib').load()
 require('avante').setup {
 	provider = "claude-nekoapi",
@@ -586,7 +591,7 @@ require('avante').setup {
 		},
 	},
 }
-
+-- }}}
 
 require('lualine').setup {
 	options = {
