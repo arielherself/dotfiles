@@ -70,7 +70,8 @@ require('fzf-lua').setup {
 	winopts = { preview = { default = 'builtin' } },
 }
 vim.keymap.set('n', '<leader>g', '<Cmd>FzfLua live_grep<CR>', {noremap=true})
-vim.keymap.set('n', '<leader>s', '<Cmd>FzfLua lsp_live_workspace_symbols<CR>', {noremap=true})
+vim.keymap.set('n', '<leader>ss', '<Cmd>FzfLua lsp_document_symbols<CR>', {noremap=true})
+vim.keymap.set('n', '<leader>sw', '<Cmd>FzfLua lsp_live_workspace_symbols<CR>', {noremap=true})
 
 -- {{{ LSP Related
 vim.diagnostic.config {
@@ -328,6 +329,7 @@ lspconfig.mojo.setup {}
 lspconfig.nushell.setup {}
 lspconfig.volar.setup {}
 lspconfig.jdtls.setup {}
+lspconfig.sqls.setup {}
 --- }}}
 
 --- {{{ Manual inlay hints
@@ -550,6 +552,7 @@ require('avante').setup {
 		endpoint = "https://api.nekoapi.com",
 		-- api_key_name = "NEKOAPI_CLAUDE_KEY",
 		api_key_name = "NEKOAPI_KEY",
+		disable_tools = true,
 	},
 	vendors = {
 		["gpt-4o-mini"] = {
@@ -575,3 +578,12 @@ require('avante').setup {
 	},
 }
 
+
+require('lualine').setup {
+	options = {
+		section_separators = '',
+		component_separators = '',
+	},
+	always_show_tabline = false,
+}
+require('bufferline').setup {}

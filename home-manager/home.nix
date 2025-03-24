@@ -221,6 +221,7 @@ in {
     pkgs.cmake-language-server
     pkgs.nil                                   # Nix language server
     pkgs.asm-lsp                               # Assembly language server
+    pkgs.sqls
     pkgs.nodePackages.typescript-language-server
     # pkgs.nodePackages.vue-language-server                      # Vue language server
     # pkgs.typescript-language-server
@@ -246,6 +247,7 @@ in {
     pkgs.go
     pkgs.gcc
     pkgs.bear
+    pkgs.trash-cli
     pkgs.autoconf
     pkgs.automake
     pkgs.btop
@@ -254,6 +256,8 @@ in {
     pkgs.htop
     pkgs.gdb
     pkgs.netcat-gnu
+    pkgs.nettools
+    pkgs.posting
     # mypkgs.dropbox
     pkgs.brightnessctl
     pkgs.psmisc
@@ -288,6 +292,7 @@ in {
     # Java
     pkgs.jdk23
     pkgs.jdt-language-server
+    pkgs.maven
 
     # Python
     # (pkgs.python313.withPackages (ps: with ps; [
