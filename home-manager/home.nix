@@ -239,18 +239,21 @@ in {
     pkgs.cachix
     pkgs.zip
     pkgs.unzip
-    pkgs.pkg-config
+    # pkgs.pkg-config  # This should not be used directly anyways.
     pkgs.fontconfig
     pkgs.freetype
     pkgs.appimage-run
     pkgs.gnumake
     pkgs.go
-    pkgs.gcc
+    # pkgs.gcc
+    pkgs.cmake
+    pkgs.ninja
     pkgs.bear
     pkgs.trash-cli
     pkgs.autoconf
     pkgs.automake
     pkgs.btop
+    pkgs.tree
     pkgs.fx                                    # JSON pager
     pkgs.mtr
     pkgs.htop
@@ -279,15 +282,15 @@ in {
     pkgs.inetutils
     pkgs.samba
 
-    # RUST
-    pkgs.fenix.default.toolchain
-    # pkgs.rust-analyzer-nightly
-    # pkgs.rustc
-    # pkgs.cargo
-    pkgs.rust-analyzer
-    # pkgs.clippy
-    # pkgs.rustfmt
-    pkgs.cargo-binstall
+    # # RUST
+    # pkgs.fenix.default.toolchain
+    # # pkgs.rust-analyzer-nightly
+    # # pkgs.rustc
+    # # pkgs.cargo
+    # pkgs.rust-analyzer
+    # # pkgs.clippy
+    # # pkgs.rustfmt
+    # pkgs.cargo-binstall
 
     # Java
     pkgs.jdk23
@@ -297,7 +300,7 @@ in {
     # Python
     # (pkgs.python313.withPackages (ps: with ps; [
     # ]))
-    pkgs.python312
+    # pkgs.python312
     pkgs.pyright
     pkgs.poetry
     # pkgs.pipx
@@ -477,6 +480,8 @@ in {
 
       export NEKOAPI_KEY=$(cat $HOME/Dropbox/important/nekoapi_key)
       export NEKOAPI_CLAUDE_KEY=$(cat $HOME/Dropbox/important/nekoapi_claude_key)
+
+      source "$HOME/.cargo/env"
     '';
   };
 

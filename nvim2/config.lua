@@ -30,6 +30,24 @@ dap.listeners.before.attach.dapui_config = ui.open
 dap.listeners.before.launch.dapui_config = ui.open
 dap.listeners.after.event_terminated.dapui_config = ui.close
 dap.listeners.after.event_exited.dapui_config = ui.close
+
+dap.adapters.codelldb = {
+	type = 'executable';
+	command = 'codelldb';
+}
+
+dap.configurations.rust = {
+	{
+		name = "Launch file",
+		type = "codelldb",
+		request = "launch",
+		program = function()
+			return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+		end,
+		cwd = '${workspaceFolder}',
+		stopOnEntry = false,
+	},
+}
 -- }}}
 
 require('oil').setup {
@@ -586,7 +604,7 @@ require('avante').setup {
 		},
 		["claude-nekoapi"] = {
 			__inherited_from = "claude",
-			model = "claude-3-5-sonnet-latest",
+			model = "claude-3-7-sonnet-20250219-thinking",
 			max_tokens = 8192,
 		},
 	},
