@@ -142,6 +142,9 @@ in {
         lua require('config')
       '';
     };
+    "nvim/filetype.vim" = {
+      source = config.lib.file.mkOutOfStoreSymlink ../nvim2/filetype.vim;
+    };
     "nvim/lua/config.lua" = {
       source = config.lib.file.mkOutOfStoreSymlink ../nvim2/config.lua;
     };
@@ -158,6 +161,10 @@ in {
     };
     "clangd/config.yaml" = {
       source = config.lib.file.mkOutOfStoreSymlink ../clangd.yaml;
+    };
+    "zellij" = {
+      source = ../zellij;
+      recursive = true;
     };
   };
 
@@ -207,14 +214,13 @@ in {
     # Networking
     # pkgs.wireshark
     # pkgs.clash-verge-rev
-    mypkgs.aria2
+    # mypkgs.aria2
     pkgs.qbittorrent-nox
     pkgs.shadowsocks-rust
 
     # Editor
     # unstable.neovim
     pkgs.vim-full
-    pkgs.fzf
     pkgs.ripgrep
     unstable.clang-tools
     pkgs.lua-language-server
@@ -409,7 +415,7 @@ in {
       pkgs.freetype
     ];
     RUST_FONTCONFIG_DLOPEN = "on";
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
   };
 
   programs.neovim = {
@@ -433,7 +439,7 @@ in {
       enable = true;
       plugins = [
         "git"
-        "tmux"
+        # "tmux"
       ];
     };
     # plugins = [
@@ -482,7 +488,14 @@ in {
       export NEKOAPI_CLAUDE_KEY=$(cat $HOME/Dropbox/important/nekoapi_claude_key)
 
       source "$HOME/.cargo/env"
+
+      source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
     '';
+  };
+
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
   };
 
   programs.git = {
@@ -504,8 +517,13 @@ in {
   #   theme.name = "Adwaita-dark";
   # };
 
-  programs.tmux = {
+  programs.zellij = {
     enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.tmux = {
+    enable = false;
     sensibleOnTop = false;
     terminal = "tmux-256color";
     shell = "${pkgs.zsh}/bin/zsh";

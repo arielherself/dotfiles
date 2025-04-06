@@ -389,6 +389,14 @@ vim.keymap.set('n', 'qp', vim.diagnostic.goto_prev);
 --- }}}
 
 --- {{{ LSP keybinds
+
+-- Disable default nvim keymaps (nvim 0.11)
+vim.keymap.set('n', 'grn', '<Nop>');
+vim.keymap.set('n', 'grr', '<Nop>');
+vim.keymap.set('n', 'gri', '<Nop>');
+vim.keymap.set('n', 'gO', '<Nop>');
+vim.keymap.set('n', 'gra', '<Nop>');
+
 vim.api.nvim_create_autocmd('LspAttach', {
     group = vim.api.nvim_create_augroup('UserLspConfig', {}),
     callback = function(ev)
@@ -604,7 +612,7 @@ require('avante').setup {
 		},
 		["claude-nekoapi"] = {
 			__inherited_from = "claude",
-			model = "claude-3-7-sonnet-20250219-thinking",
+			model = "claude-3-7-sonnet-all",
 			max_tokens = 8192,
 		},
 	},
@@ -618,4 +626,24 @@ require('lualine').setup {
 	},
 	always_show_tabline = false,
 }
-require('bufferline').setup {}
+
+require("nvim-navic").setup {
+    lsp = {
+        auto_attach = true,
+    },
+}
+
+require("breadcrumbs").setup()
+
+local harpoon = require('harpoon')
+
+harpoon.setup {}
+vim.keymap.set("n", "<leader>bm", function() harpoon:list():add() end)
+vim.keymap.set("n", "<leader>bh", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+vim.keymap.set("n", "<leader>ba", function() harpoon:list():select(1) end)
+vim.keymap.set("n", "<leader>bs", function() harpoon:list():select(2) end)
+vim.keymap.set("n", "<leader>bd", function() harpoon:list():select(3) end)
+vim.keymap.set("n", "<leader>bf", function() harpoon:list():select(4) end)
+vim.keymap.set("n", "<leader>bg", function() harpoon:list():select(5) end)
+vim.keymap.set("n", "<leader>bp", function() harpoon:list():prev() end)
+vim.keymap.set("n", "<leader>bn", function() harpoon:list():next() end)

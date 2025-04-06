@@ -39,7 +39,7 @@ set whichwrap+=<,>,[,]
 set relativenumber
 set signcolumn=yes
 set noequalalways
-set scrolloff=10
+set scrolloff=5
 set list
 set listchars=tab:┆\ ,trail:╌
 set noshowmode
@@ -82,6 +82,7 @@ syntax on
 " set shiftwidth=4
 set autoindent
 set smartindent
+set indentexpr=nvim_treesitter#indent()
 
 let g:mapleader = " "
 
@@ -100,7 +101,6 @@ Plug 'embark-theme/vim'
 Plug 'tpope/vim-obsession'
 Plug 'dhruvasagar/vim-prosession'
 Plug 'nvim-lualine/lualine.nvim'
-Plug 'akinsho/bufferline.nvim'
 " " vim-airline has render bugs
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
@@ -193,6 +193,12 @@ Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-notify'
 Plug 'folke/which-key.nvim'
 Plug 'armannikoyan/rusty'
+" Breadcrumbs
+Plug 'SmiteshP/nvim-navic'
+Plug 'LunarVim/breadcrumbs.nvim'
+Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
+
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 
 call plug#end()
 
@@ -421,6 +427,10 @@ let g:airline_symbols.notexists = ' '
 let g:airline_symbols.dirty = ' '
 
 let g:fern#renderer = "nerdfont"
+
+" Molten config
+let g:molten_image_provider = "image.nvim"
+let g:molten_output_win_max_height = 20
 
 if has('nvim')
 	" lua require('local-highlight').setup { cw_hlgroup = 'LspReferenceText' }

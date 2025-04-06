@@ -1,0 +1,5 @@
+scrollback_editor "/home/nixos/.nix-profile/bin/nvim"
+default_shell "zsh"
+show_startup_tips false
+pane_frames false
+simplified_ui true

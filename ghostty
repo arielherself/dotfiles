@@ -1,6 +1,9 @@
 font-family = "BerkeleyMono Nerd Font"
+# font-family = "Hasklug Nerd Font"
 font-family = "Symbols Nerd Font"
 font-size = "14"
 adjust-cell-width = "-3%"
 maximize = true
-command = "zsh"
+command = "zellij"
+
+cursor-color = "#FFE2E6"
