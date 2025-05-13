@@ -1,0 +1,14 @@
+[Unit]
+Description=Share your terminal over the web
+After=network.target
+
+[Service]
+User=nixos
+Group=nixos
+WorkingDirectory=/home/nixos
+ExecStart=/usr/bin/ttyd -p 7861 -W -t "fontFamily=\"'BerkeleyMono Nerd Font','Symbols Nerd Font'\"" /home/nixos/.nix-profile/bin/zellij
+Type=exec
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

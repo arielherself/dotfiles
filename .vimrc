@@ -5,12 +5,12 @@ let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 
 " " Fix color in some environments
-" if exists('+termguicolors')
-" 	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-" 	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-" 	" maybe need to remove this in gnu screen
-" 	set termguicolors
-" endif
+if exists('+termguicolors')
+	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	" maybe need to remove this in gnu screen
+	set termguicolors
+endif
 
 " Add this if color doesn't work
 " set term=xterm-256color
@@ -83,6 +83,7 @@ syntax on
 set autoindent
 set smartindent
 set indentexpr=nvim_treesitter#indent()
+set diffopt+=linematch:100
 
 let g:mapleader = " "
 
@@ -116,7 +117,8 @@ Plug 'tpope/vim-commentary'
 " Plug 'mattn/vim-lsp-settings'
 Plug 'jdhao/better-escape.vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
+Plug 'smoka7/hop.nvim'
 " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 " Plug 'junegunn/fzf.vim'
 Plug 'ibhagwan/fzf-lua'
@@ -174,16 +176,16 @@ Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
 	Plug 'HakonHarnes/img-clip.nvim'
 	Plug 'zbirenbaum/copilot.lua'
 Plug 'MunifTanjim/prettier.nvim'
-Plug 'nvim-java/nvim-java'
-	Plug 'nvim-java/lua-async-await'
-    Plug 'nvim-java/nvim-java-refactor'
-    Plug 'nvim-java/nvim-java-core'
-    Plug 'nvim-java/nvim-java-test'
-    Plug 'nvim-java/nvim-java-dap'
-	Plug 'MunifTanjim/nui.nvim'
-	Plug 'mfussenegger/nvim-dap'
-	Plug 'JavaHello/spring-boot.nvim', { 'commit': '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0' }
-	Plug 'williamboman/mason.nvim'
+" Plug 'nvim-java/nvim-java'
+" 	Plug 'nvim-java/lua-async-await'
+"     Plug 'nvim-java/nvim-java-refactor'
+"     Plug 'nvim-java/nvim-java-core'
+"     Plug 'nvim-java/nvim-java-test'
+"     Plug 'nvim-java/nvim-java-dap'
+" 	Plug 'MunifTanjim/nui.nvim'
+" 	Plug 'mfussenegger/nvim-dap'
+" 	Plug 'JavaHello/spring-boot.nvim', { 'commit': '218c0c26c14d99feca778e4d13f5ec3e8b1b60f0' }
+" 	Plug 'williamboman/mason.nvim'
 Plug 'sindrets/diffview.nvim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'mfussenegger/nvim-dap'
@@ -199,6 +201,7 @@ Plug 'LunarVim/breadcrumbs.nvim'
 Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
 
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 call plug#end()
 
@@ -284,8 +287,8 @@ if !has('nvim')
 else
 	tnoremap <ESC> <C-\><C-n>
 endif
-nnoremap <leader>h <Plug>(easymotion-bd-w)
-vnoremap <leader>h <Plug>(easymotion-bd-w)
+" nnoremap <leader>h <Plug>(easymotion-bd-w)
+" vnoremap <leader>h <Plug>(easymotion-bd-w)
 nnoremap <leader>o <Cmd>Files<CR>
 " nnoremap <leader>g <Cmd>Rg<CR>
 nnoremap <leader>. <Cmd>Fern . -drawer<CR>
@@ -426,6 +429,7 @@ let g:airline_right_alt_sep = ''
 let g:airline_symbols.notexists = ' '
 let g:airline_symbols.dirty = ' '
 
+let g:fern#default_hidden = 1
 let g:fern#renderer = "nerdfont"
 
 " Molten config

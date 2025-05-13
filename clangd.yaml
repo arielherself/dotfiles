@@ -1,11 +1,11 @@
 CompileFlags:
   # Add: [-fexperimental-new-constant-interpreter]
-  Compiler: g++
+  Compiler: gcc
 
 Diagnostics:
   ClangTidy:
-    Add: [bugprone-*,performance-*]
-    Remove: [bugprone-reserved-identifier,bugprone-easily-swappable-parameters]
+    Add: [cppcoreguidelines-*,misc-*,bugprone-*,performance-*,readability-*]
+    Remove: [bugprone-easily-swappable-parameters,readability-identifier-length]
 
 Index:
   Background: Skip

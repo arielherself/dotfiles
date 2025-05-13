@@ -37,8 +37,8 @@ in {
     };
     ".gitconfig" = {
       text = ''
-        [core]
-          sshCommand = ssh.exe
+        # [core]
+        #   sshCommand = ssh.exe
         [user]
           email = arielherself@duck.com
           name = arielherself
@@ -54,6 +54,14 @@ in {
           format = ssh
         [gpg "ssh"]
           program = "/opt/1Password/op-ssh-sign"
+        [log]
+          date = human
+        [format]
+          pretty = format:%C(yellow)%h %Cblue%>(12)%ah %Cgreen%<(7)%aN%Cred%d %Creset%s
+        [alias]
+          tree = log --graph --decorate --abbrev-commit
+        [http]
+          proxy = http://127.0.0.1:7897
       '';
     };
     ".gtkrc-2.0" = {
@@ -77,6 +85,12 @@ in {
     };
     ".wakatime.cfg" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dropbox/important/.wakatime.cfg";
+    };
+    ".gdbinit" = {
+      source = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/gdbinit/Gdbinit/refs/heads/master/gdbinit";
+        hash = "sha256-oEtuNdLI56JtD0qKLSkgTKTtpCo9czQMHFMKKzaBT2A=";
+      };
     };
     # ".vim/autoload/plug.vim" = {
     #   source = builtins.fetchGit {
@@ -161,6 +175,9 @@ in {
     };
     "clangd/config.yaml" = {
       source = config.lib.file.mkOutOfStoreSymlink ../clangd.yaml;
+    };
+    "zls.json" = {
+      source = config.lib.file.mkOutOfStoreSymlink ../zls.json;
     };
     "zellij" = {
       source = ../zellij;
@@ -252,7 +269,7 @@ in {
     pkgs.gnumake
     pkgs.go
     # pkgs.gcc
-    pkgs.cmake
+    # pkgs.cmake
     pkgs.ninja
     pkgs.bear
     pkgs.trash-cli
@@ -313,6 +330,7 @@ in {
 
     # Node
     pkgs.nodejs_22
+    # pkgs.bun
 
     # Waybar
     # pkgs.waybar
@@ -353,6 +371,7 @@ in {
     # mypkgs.thorium
 
     # Misc
+    pkgs.bat
     pkgs.fastfetch
     pkgs.onefetch
     pkgs.lf                                    # Terminal file manager
@@ -434,11 +453,14 @@ in {
     shellAliases = {
       upgrade = "nix-channel --update && sudo nixos-rebuild switch --upgrade && home-manager switch";
       commit = "git commit -S -m";
+      worddiff = "wdiff -n -w $'\\033[30;41m' -x $'\\033[0m' -y $'\\033[30;42m' -z $'\\033[0m'";
+      rgb = "rg --smart-case --hidden -C 10 --pretty --no-config";
     };
     oh-my-zsh = {
       enable = true;
       plugins = [
         "git"
+        "dotenv"
         # "tmux"
       ];
     };
@@ -449,7 +471,7 @@ in {
     #     file = "p10k.zsh";
     #   }
     # ];
-    initExtraFirst = ''
+    initContent = ''
       ZSH_TMUX_AUTOSTART=true
       ZSH_TMUX_AUTOCONNECT=false
 
@@ -468,8 +490,7 @@ in {
       ZSH_HIGHLIGHT_STYLES[path]=fg=#f3cfc6
       ZSH_HIGHLIGHT_STYLES[single-hyphen-option]=fg=#858585
       ZSH_HIGHLIGHT_STYLES[double-hyphen-option]=fg=#858585
-    '';
-    initExtra = ''
+
       me() { mkdir -p "$1" && cd "$1" }
       use() {
         if [[ -n "$1" ]]; then
@@ -490,6 +511,12 @@ in {
       source "$HOME/.cargo/env"
 
       source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
+
+      export MANPAGER='nvim +Man!'
+      alias cat='bat --paging=never'
+      alias ls='eza'
+      alias la='eza -lAh'
+      alias l='eza -lah'
     '';
   };
 

@@ -262,12 +262,12 @@ cmp.setup {
 --- }}}
 
 --- {{{ Configuration for specific LSPs
-require('mason').setup {
-	ui = {
-		check_outdated_packages_on_open = false,
-	},
-}
-require('java').setup {}
+-- require('mason').setup {
+-- 	ui = {
+-- 		check_outdated_packages_on_open = false,
+-- 	},
+-- }
+-- require('java').setup {}
 
 local lspconfig = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -286,6 +286,9 @@ lspconfig.clangd.setup {
         "--clang-tidy",
         "--clang-tidy-checks=*",
     }
+}
+lspconfig.ruff.setup {
+    capabilities = capabilities
 }
 lspconfig.pyright.setup {
     capabilities = capabilities
@@ -361,6 +364,8 @@ lspconfig.nushell.setup {}
 lspconfig.volar.setup {}
 lspconfig.jdtls.setup {}
 lspconfig.sqls.setup {}
+lspconfig.zls.setup {}
+lspconfig.gleam.setup {}
 --- }}}
 
 --- {{{ Manual inlay hints
@@ -405,11 +410,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         -- Buffer local mappings.
         -- See `:help vim.lsp.*` for documentation on any of the below functions
-        local opts = { buffer = ev.buf }
+        local opts = { buffer = ev.buf, noremap = true, }
         vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+        -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
         vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
         vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
         vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
@@ -612,7 +617,8 @@ require('avante').setup {
 		},
 		["claude-nekoapi"] = {
 			__inherited_from = "claude",
-			model = "claude-3-7-sonnet-all",
+			model = "claude-3-7-sonnet-20250219",
+			-- model = "claude-3-7-sonnet-all",
 			max_tokens = 8192,
 		},
 	},
@@ -625,6 +631,7 @@ require('lualine').setup {
 		component_separators = '',
 	},
 	always_show_tabline = false,
+	theme = require('rusty').lualine
 }
 
 require("nvim-navic").setup {
@@ -647,3 +654,22 @@ vim.keymap.set("n", "<leader>bf", function() harpoon:list():select(4) end)
 vim.keymap.set("n", "<leader>bg", function() harpoon:list():select(5) end)
 vim.keymap.set("n", "<leader>bp", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<leader>bn", function() harpoon:list():next() end)
+
+require('treesitter-context').setup {
+	enable = true,
+	max_lines = 5,
+}
+
+-- Fix Gleam highlighting
+vim.api.nvim_create_autocmd("BufEnter", {
+	pattern = "*.gleam",
+	callback = function()
+		vim.cmd("TSBufEnable highlight")
+	end,
+})
+
+require('hop').setup {
+	keys = 'etovxqpdygfblzhckisuran'
+}
+
+vim.keymap.set('n', '<leader>h', '<Cmd>HopWord<CR>')
