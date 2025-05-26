@@ -80,9 +80,9 @@ in {
         gtk-theme-name = "Adwaita-dark"
       '';
     };
-    ".vimrc" = {
-      source = config.lib.file.mkOutOfStoreSymlink ../.vimrc;
-    };
+    # ".vimrc" = {
+    #   source = config.lib.file.mkOutOfStoreSymlink ../.vimrc;
+    # };
     ".wakatime.cfg" = {
       source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dropbox/important/.wakatime.cfg";
     };
@@ -147,21 +147,21 @@ in {
     #   source = ../nvim;
     #   recursive = true;
     # };
-    "nvim/init.vim" = {
-      text = ''
-        set runtimepath+=${config.home.homeDirectory}/.vim,${config.home.homeDirectory}/.vim/after
-        set packpath+=${config.home.homeDirectory}/.vim
-        source ${config.home.homeDirectory}/.vimrc
-        set undodir=${config.home.homeDirectory}/.vim/undofiles
-        lua require('config')
-      '';
-    };
-    "nvim/filetype.vim" = {
-      source = config.lib.file.mkOutOfStoreSymlink ../nvim2/filetype.vim;
-    };
-    "nvim/lua/config.lua" = {
-      source = config.lib.file.mkOutOfStoreSymlink ../nvim2/config.lua;
-    };
+    # "nvim/init.vim" = {
+    #   text = ''
+    #     set runtimepath+=${config.home.homeDirectory}/.vim,${config.home.homeDirectory}/.vim/after
+    #     set packpath+=${config.home.homeDirectory}/.vim
+    #     source ${config.home.homeDirectory}/.vimrc
+    #     set undodir=${config.home.homeDirectory}/.vim/undofiles
+    #     lua require('config')
+    #   '';
+    # };
+    # "nvim/filetype.vim" = {
+    #   source = config.lib.file.mkOutOfStoreSymlink ../nvim2/filetype.vim;
+    # };
+    # "nvim/lua/config.lua" = {
+    #   source = config.lib.file.mkOutOfStoreSymlink ../nvim2/config.lua;
+    # };
     "nvim/ftplugin/java.lua" = {
       text = ''
         local config = {
@@ -441,7 +441,7 @@ in {
     enable = true;
     # package = unstable.neovim;
     plugins = [
-      pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+      # pkgs.vimPlugins.nvim-treesitter.withAllGrammars
     ];
   };
 
@@ -512,11 +512,19 @@ in {
 
       source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
 
+      source /etc/profile
+
       export MANPAGER='nvim +Man!'
       alias cat='bat --paging=never'
       alias ls='eza'
       alias la='eza -lAh'
       alias l='eza -lah'
+
+      export XAUTHORITY=$(find /tmp -maxdepth 1 -name 'xauth*')
+
+      export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
     '';
   };
 

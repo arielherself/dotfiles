@@ -6,7 +6,13 @@ After=network.target
 User=nixos
 Group=nixos
 WorkingDirectory=/home/nixos
-ExecStart=/usr/bin/ttyd -i lo -p 7861 -W -t "fontFamily=\"'BerkeleyMono Nerd Font','Symbols Nerd Font'\"" /home/nixos/.nix-profile/bin/zellij
+EnvironmentFile=/etc/bashrc
+EnvironmentFile=/etc/zshrc
+EnvironmentFile=/home/nixos/.profile
+EnvironmentFile=/home/nixos/.bash_profile
+EnvironmentFile=/home/nixos/.bashrc
+EnvironmentFile=/home/nixos/.zshrc
+ExecStart=/usr/bin/ttyd -i lo -p 7861 -W -t "disableReconnect=true" -t "fontFamily=\"'BerkeleyMono Nerd Font','Symbols Nerd Font'\"" /home/nixos/.nix-profile/bin/zellij
 Type=exec
 Restart=always
 

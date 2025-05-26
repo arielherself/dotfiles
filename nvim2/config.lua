@@ -121,14 +121,14 @@ require('lsp_signature').setup {
 
 --- {{{ nvim-treesitter setup
 -- Managed by home-manager
---
--- local config = require("nvim-treesitter.configs")
--- config.setup {
---     ensure_installed = {"lua", "cpp", "rust", "javascript", "python", "typescript", "html", "css", "scss"},
---     auto_install = true,
---     highlight = { enable = true},
---     indent = { enable = true},
--- }
+
+local config = require("nvim-treesitter.configs")
+config.setup {
+    ensure_installed = {"lua", "cpp", "rust", "javascript", "python", "typescript", "html", "css", "scss"},
+    auto_install = true,
+    highlight = { enable = true},
+    indent = { enable = true},
+}
 --- }}}
 
 --- {{{ nvim-cmp setup
@@ -366,6 +366,7 @@ lspconfig.jdtls.setup {}
 lspconfig.sqls.setup {}
 lspconfig.zls.setup {}
 lspconfig.gleam.setup {}
+lspconfig.bashls.setup {}
 --- }}}
 
 --- {{{ Manual inlay hints
