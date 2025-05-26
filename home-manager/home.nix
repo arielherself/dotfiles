@@ -35,35 +35,35 @@ in {
         export QT_QPA_PLATFORM_PLUGIN_PATH="${pkgs.libsForQt5.qt5.qtbase.bin}/lib/qt-${pkgs.libsForQt5.qt5.qtbase.version}/plugins";
       '';
     };
-    ".gitconfig" = {
-      text = ''
-        # [core]
-        #   sshCommand = ssh.exe
-        [user]
-          email = arielherself@duck.com
-          name = arielherself
-        [credential]
-          helper = store
-        [diff]
-          tool = vimdiff
-        [merge]
-          tool = vimdiff
-        [user]
-          signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3+9t7aTNMzzEBMW7O7WzXlUbIppCEs/TnGxuqrt9bj
-        [gpg]
-          format = ssh
-        [gpg "ssh"]
-          program = "/opt/1Password/op-ssh-sign"
-        [log]
-          date = human
-        [format]
-          pretty = format:%C(yellow)%h %Cblue%>(12)%ah %Cgreen%<(7)%aN%Cred%d %Creset%s
-        [alias]
-          tree = log --graph --decorate --abbrev-commit
-        [http]
-          proxy = http://127.0.0.1:7897
-      '';
-    };
+    # ".gitconfig" = {
+    #   text = ''
+    #     # [core]
+    #     #   sshCommand = ssh.exe
+    #     [user]
+    #       email = arielherself@duck.com
+    #       name = arielherself
+    #     [credential]
+    #       helper = store
+    #     [diff]
+    #       tool = vimdiff
+    #     [merge]
+    #       tool = vimdiff
+    #     [user]
+    #       signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO3+9t7aTNMzzEBMW7O7WzXlUbIppCEs/TnGxuqrt9bj
+    #     [gpg]
+    #       format = ssh
+    #     [gpg "ssh"]
+    #       program = "/opt/1Password/op-ssh-sign"
+    #     [log]
+    #       date = human
+    #     [format]
+    #       pretty = format:%C(yellow)%h %Cblue%>(12)%ah %Cgreen%<(7)%aN%Cred%d %Creset%s
+    #     [alias]
+    #       tree = log --graph --decorate --abbrev-commit
+    #     [http]
+    #       proxy = http://127.0.0.1:7897
+    #   '';
+    # };
     ".gtkrc-2.0" = {
       text = ''
         gtk-enable-animations=1
@@ -83,9 +83,9 @@ in {
     # ".vimrc" = {
     #   source = config.lib.file.mkOutOfStoreSymlink ../.vimrc;
     # };
-    ".wakatime.cfg" = {
-      source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dropbox/important/.wakatime.cfg";
-    };
+    # ".wakatime.cfg" = {
+    #   source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Dropbox/important/.wakatime.cfg";
+    # };
     ".gdbinit" = {
       source = pkgs.fetchurl {
         url = "https://raw.githubusercontent.com/gdbinit/Gdbinit/refs/heads/master/gdbinit";
