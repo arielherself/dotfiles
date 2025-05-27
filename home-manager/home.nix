@@ -173,9 +173,9 @@ in {
     "p10k/p10k.zsh" = {
       source = ../p10k.zsh;
     };
-    "clangd/config.yaml" = {
-      source = config.lib.file.mkOutOfStoreSymlink ../clangd.yaml;
-    };
+    # "clangd/config.yaml" = {
+    #   source = config.lib.file.mkOutOfStoreSymlink ../clangd.yaml;
+    # };
     "zls.json" = {
       source = config.lib.file.mkOutOfStoreSymlink ../zls.json;
     };
@@ -554,6 +554,7 @@ eval "$(pyenv init - zsh)"
 
   programs.zellij = {
     enable = true;
+    enableBashIntegration = true;
     enableZshIntegration = true;
   };
 

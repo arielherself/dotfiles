@@ -6,6 +6,7 @@ mkdir -p $XDG_CONFIG_HOME/nvim/lua
 ln -si $HOME/dotfiles/nvim2/config.lua $XDG_CONFIG_HOME/nvim/lua/config.lua
 ln -si $HOME/dotfiles/nvim2/filetype.vim $XDG_CONFIG_HOME/nvim/filetype.vim
 ln -si $HOME/Dropbox/important/.wakatime.cfg $HOME/.wakatime.cfg
+ln -si $HOME/dotfiles/clangd.yaml $XDG_CONFIG_HOME/clangd/config.yaml
 
 rm -f $XDG_CONFIG_HOME/nvim/init.vim
 echo "

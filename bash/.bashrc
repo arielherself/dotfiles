@@ -163,12 +163,39 @@ if [ $(which batcat 2> /dev/null) ]; then
 else if [ $(which bat 2> /dev/null) ]; then
 	alias cat=bat
 fi fi
-
-eval "$(direnv hook bash)"
+alias worddiff='wdiff -n -w $'\''\033[30;41m'\'' -x $'\''\033[0m'\'' -y $'\''\033[30;42m'\'' -z $'\''\033[0m'\'''
+alias gc="git commit"
+alias gl="git log"
+alias gt="git tree"
+alias gd="git diff"
+alias gs="git status"
+alias gp="git push"
+alias gpl="git pull"
+alias rgb="rg --smart-case --hidden -C 10 --pretty --no-config"
 
 if [ -e /run/.containerenv ] || [ -e /.dockerenv ]; then
-	source $HOME/.distrobox-ubuntu-bashrc
+	# use separate history file for each container
+	export HISTFILE=$HOME/.bash_history_container_$CONTAINER_ID
+	source $HOME/.distrobox-${CONTAINER_ID}-bashrc
 fi
 
 source ~/.git-prompt
-PROMPT_COMMAND='PS1_CMD1=$(__git_ps1 " (%s)")'; PS1='\[\e[38;5;244m\][\[\e[0m\]\t\[\e[38;5;244m\]]\[\e[38;5;220m\]${CONTAINER_ID}\[\e[0m\] \[\e[38;5;157;1m\]\w\[\e[0;38;5;225;2m\]${PS1_CMD1}\n\[\e[0;38;5;208m\]$?\[\e[0;1m\]\$\[\e[0m\] '
+shopt -s histappend
+shopt -s nocaseglob
+PROMPT_COMMAND='history -a;PS1_CMD1=$(__git_ps1 " (%s)")'
+PS1='\[\e[38;5;244m\][\[\e[0m\]\t\[\e[38;5;244m\]]\[\e[38;5;220m\]${CONTAINER_ID:+ @}${CONTAINER_ID}\[\e[0m\] \[\e[38;5;157;1m\]\w\[\e[0;38;5;225;2m\]${PS1_CMD1}\n\[\e[0;38;5;208m\]$?\[\e[0;1m\]\$\[\e[0m\] '
+
+bind 'set show-all-if-ambiguous on'
+
+export PAGER=less
+export MANPAGER='nvim +Man!'
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+
+export NEKOAPI_KEY=$(cat $HOME/Dropbox/important/nekoapi_key)
+export NEKOAPI_CLAUDE_KEY=$(cat $HOME/Dropbox/important/nekoapi_claude_key)
+
+# put it at the end of rc (don't know why)
+eval "$(direnv hook bash)"
+

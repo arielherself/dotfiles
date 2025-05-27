@@ -311,9 +311,9 @@ nnoremap <C-a> ggVG
 nnoremap gy `[v`]
 nnoremap <C-l> <Cmd>noh<CR>
 if has('nvim')
-	nnoremap <leader>` <Cmd>split<CR><Cmd>term zsh<CR>i
+	nnoremap <leader>` <Cmd>split<CR><Cmd>term bash<CR><Cmd>set number<CR><Cmd>set relativenumber<CR>i
 else
-	nnoremap <leader>` <Cmd>split<CR><Cmd>term ++curwin zsh<CR>
+	nnoremap <leader>` <Cmd>split<CR><Cmd>term ++curwin bash<CR>
 endif
 nnoremap <leader>x <Cmd>%s/\s\+$//e<CR>
 
