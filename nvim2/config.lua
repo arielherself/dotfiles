@@ -290,9 +290,11 @@ lspconfig.clangd.setup {
 lspconfig.ruff.setup {
     capabilities = capabilities
 }
-lspconfig.pyright.setup {
-    capabilities = capabilities
-}
+vim.lsp.enable('ty')
+vim.lsp.enable('pylsp')
+-- lspconfig.pyright.setup {
+--     capabilities = capabilities
+-- }
 lspconfig.ts_ls.setup {
 	filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
     capabilities = capabilities,
@@ -367,6 +369,7 @@ lspconfig.sqls.setup {}
 lspconfig.zls.setup {}
 lspconfig.gleam.setup {}
 lspconfig.bashls.setup {}
+vim.lsp.enable('prolog_ls')
 --- }}}
 
 --- {{{ Manual inlay hints
@@ -590,17 +593,17 @@ require('avante_lib').load()
 require('avante').setup {
 	provider = "claude-nekoapi",
 	auto_suggestions_provider = "gpt-4o-mini",
-	openai = {
-		endpoint = "https://api.nekoapi.com/v1",
-		api_key_name = "NEKOAPI_KEY",
-	},
-	claude = {
-		endpoint = "https://api.nekoapi.com",
-		-- api_key_name = "NEKOAPI_CLAUDE_KEY",
-		api_key_name = "NEKOAPI_KEY",
-		disable_tools = true,
-	},
-	vendors = {
+	providers = {
+		["openai"] = {
+			endpoint = "https://api.nekoapi.com/v1",
+			api_key_name = "NEKOAPI_KEY",
+		},
+		["claude"] = {
+			endpoint = "https://api.nekoapi.com",
+			-- api_key_name = "NEKOAPI_CLAUDE_KEY",
+			api_key_name = "NEKOAPI_KEY",
+			disable_tools = true,
+		},
 		["gpt-4o-mini"] = {
 			__inherited_from = "openai",
 			model = "gpt-4o-mini",
@@ -620,7 +623,9 @@ require('avante').setup {
 			__inherited_from = "claude",
 			model = "claude-3-7-sonnet-20250219",
 			-- model = "claude-3-7-sonnet-all",
-			max_tokens = 8192,
+			extra_request_body = {
+				max_tokens = 8192,
+			},
 		},
 	},
 }

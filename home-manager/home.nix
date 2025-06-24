@@ -232,78 +232,78 @@ in {
     # pkgs.wireshark
     # pkgs.clash-verge-rev
     # mypkgs.aria2
-    pkgs.qbittorrent-nox
-    pkgs.shadowsocks-rust
+    # pkgs.qbittorrent-nox
+    # pkgs.shadowsocks-rust
 
     # Editor
     # unstable.neovim
-    pkgs.vim-full
-    pkgs.ripgrep
-    unstable.clang-tools
-    pkgs.lua-language-server
-    pkgs.cmake-language-server
+    # pkgs.vim-full
+    # pkgs.ripgrep
+    # unstable.clang-tools
+    # pkgs.lua-language-server
+    # pkgs.cmake-language-server
     pkgs.nil                                   # Nix language server
-    pkgs.asm-lsp                               # Assembly language server
-    pkgs.sqls
-    pkgs.nodePackages.typescript-language-server
+    # pkgs.asm-lsp                               # Assembly language server
+    # pkgs.sqls
+    # pkgs.nodePackages.typescript-language-server
     # pkgs.nodePackages.vue-language-server                      # Vue language server
     # pkgs.typescript-language-server
-    pkgs.vue-language-server
-    pkgs.typescript
-    pkgs.eslint
-    pkgs.nodePackages.prettier
-    unstable.markdown-oxide
-    pkgs.helix
+    # pkgs.vue-language-server
+    # pkgs.typescript
+    # pkgs.eslint
+    # pkgs.nodePackages.prettier
+    # unstable.markdown-oxide
+    # pkgs.helix
     # unstable.zed-editor
     # pkgs.xfce.mousepad
 
     # Tools
-    pkgs.gh
+    # pkgs.gh
     pkgs.cachix
-    pkgs.zip
-    pkgs.unzip
+    # pkgs.zip
+    # pkgs.unzip
     # pkgs.pkg-config  # This should not be used directly anyways.
-    pkgs.fontconfig
-    pkgs.freetype
+    # pkgs.fontconfig
+    # pkgs.freetype
     pkgs.appimage-run
-    pkgs.gnumake
-    pkgs.go
+    # pkgs.gnumake
+    # pkgs.go
     # pkgs.gcc
     # pkgs.cmake
-    pkgs.ninja
-    pkgs.bear
-    pkgs.trash-cli
-    pkgs.autoconf
-    pkgs.automake
-    pkgs.btop
-    pkgs.tree
-    pkgs.fx                                    # JSON pager
-    pkgs.mtr
-    pkgs.htop
-    pkgs.gdb
-    pkgs.netcat-gnu
-    pkgs.nettools
-    pkgs.posting
+    # pkgs.ninja
+    # pkgs.bear
+    # pkgs.trash-cli
+    # pkgs.autoconf
+    # pkgs.automake
+    # pkgs.btop
+    # pkgs.tree
+    # pkgs.fx                                    # JSON pager
+    # pkgs.mtr
+    # pkgs.htop
+    # pkgs.gdb
+    # pkgs.netcat-gnu
+    # pkgs.nettools
+    # pkgs.posting
     # mypkgs.dropbox
-    pkgs.brightnessctl
-    pkgs.psmisc
-    pkgs.xclip                                 # Clipboard support
+    # pkgs.brightnessctl
+    # pkgs.psmisc
+    # pkgs.xclip                                 # Clipboard support
     # pkgs.vulkan-tools
-    pkgs.lshw                                  # Hardware info
+    # pkgs.lshw                                  # Hardware info
     # unstable._1password
     # unstable._1password-gui
     pkgs.nix-index
-    pkgs.rclone
-    pkgs.sshfs
+    # pkgs.rclone
+    # pkgs.sshfs
     # pkgs.usbutils
     # pkgs.udiskie
     # pkgs.udisks
-    pkgs.devbox
+    # pkgs.devbox
 
     # Pwn
-    pkgs.nmap
-    pkgs.inetutils
-    pkgs.samba
+    # pkgs.nmap
+    # pkgs.inetutils
+    # pkgs.samba
 
     # # RUST
     # pkgs.fenix.default.toolchain
@@ -316,20 +316,20 @@ in {
     # pkgs.cargo-binstall
 
     # Java
-    pkgs.jdk23
-    pkgs.jdt-language-server
-    pkgs.maven
+    # pkgs.jdk23
+    # pkgs.jdt-language-server
+    # pkgs.maven
 
     # Python
     # (pkgs.python313.withPackages (ps: with ps; [
     # ]))
     # pkgs.python312
-    pkgs.pyright
-    pkgs.poetry
+    # pkgs.pyright
+    # pkgs.poetry
     # pkgs.pipx
 
     # Node
-    pkgs.nodejs_22
+    # pkgs.nodejs_22
     # pkgs.bun
 
     # Waybar
@@ -352,10 +352,10 @@ in {
     # pkgs.kdePackages.gwenview                  # Image viewer
     # pkgs.vlc
     pkgs.playerctl
-    pkgs.jellyfin-ffmpeg
+    # pkgs.jellyfin-ffmpeg
     # pkgs.spotify
     # unstable.spotify-player
-    pkgs.spotdl
+    # pkgs.spotdl
 
     # Streaming
     # pkgs.obs-studio
@@ -371,14 +371,14 @@ in {
     # mypkgs.thorium
 
     # Misc
-    pkgs.bat
-    pkgs.fastfetch
-    pkgs.onefetch
+    # pkgs.bat
+    # pkgs.fastfetch
+    # pkgs.onefetch
     pkgs.lf                                    # Terminal file manager
-    pkgs.lsof
+    # pkgs.lsof
     pkgs.smassh                                # Typing test
     pkgs.you-get                               # YouTube video downloader
-    pkgs.asciinema                             # Record terminal sessions
+    # pkgs.asciinema                             # Record terminal sessions
     # pkgs.ulauncher                             # application launcher
     # pkgs.networkmanagerapplet                  # Network manager tray icon
     # pkgs.cbatticon                             # Battery tray icon
@@ -437,13 +437,13 @@ in {
     EDITOR = "nvim";
   };
 
-  programs.neovim = {
-    enable = true;
-    # package = unstable.neovim;
-    plugins = [
-      # pkgs.vimPlugins.nvim-treesitter.withAllGrammars
-    ];
-  };
+  # programs.neovim = {
+  #   enable = true;
+  #   # package = unstable.neovim;
+  #   plugins = [
+  #     # pkgs.vimPlugins.nvim-treesitter.withAllGrammars
+  #   ];
+  # };
 
   programs.zsh = {
     enable = true;
@@ -533,30 +533,30 @@ eval "$(pyenv init - zsh)"
     enableZshIntegration = true;
   };
 
-  programs.git = {
-    enable = true;
-    userName = "arielherself";
-    userEmail = "arielherself@duck.com";
-    extraConfig = {
-      commit.gpgsign = true;
-      gpg.format = "ssh";
-      # This may not apply. Also try `git config --global gpg.ssh.program "/home/user/.nix-profile/bin/op-ssh-sign"`
-      # gpg."ssh".program = "${unstable._1password-gui}/bin/op-ssh-sign";
-      push.autoSetupRemote = true;
-      core.editor = "nvim";
-    };
-  };
+  # programs.git = {
+  #   enable = true;
+  #   userName = "arielherself";
+  #   userEmail = "arielherself@duck.com";
+  #   extraConfig = {
+  #     commit.gpgsign = true;
+  #     gpg.format = "ssh";
+  #     # This may not apply. Also try `git config --global gpg.ssh.program "/home/user/.nix-profile/bin/op-ssh-sign"`
+  #     # gpg."ssh".program = "${unstable._1password-gui}/bin/op-ssh-sign";
+  #     push.autoSetupRemote = true;
+  #     core.editor = "nvim";
+  #   };
+  # };
 
   # gtk = {
   #   enable = true;
   #   theme.name = "Adwaita-dark";
   # };
 
-  programs.zellij = {
-    enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
-  };
+  # programs.zellij = {
+  #   enable = true;
+  #   enableBashIntegration = true;
+  #   enableZshIntegration = true;
+  # };
 
   programs.tmux = {
     enable = false;
@@ -591,23 +591,23 @@ eval "$(pyenv init - zsh)"
     '';
   };
 
-  programs.wezterm = {
-    enable = false;
-    enableZshIntegration = true;
-    extraConfig = ''
-      local config = wezterm.config_builder()
+  # programs.wezterm = {
+  #   enable = false;
+  #   enableZshIntegration = true;
+  #   extraConfig = ''
+  #     local config = wezterm.config_builder()
 
-      config.default_prog = {"${pkgs.zsh}/bin/zsh"}
-      config.font = wezterm.font_with_fallback {
-        "BerkeleyMono Nerd Font",
-        "JetBrainsMono Nerd Font",
-      }
-      -- https://wezfurlong.org/wezterm/config/lua/config/term.html
-      config.term = "wezterm"
+  #     config.default_prog = {"${pkgs.zsh}/bin/zsh"}
+  #     config.font = wezterm.font_with_fallback {
+  #       "BerkeleyMono Nerd Font",
+  #       "JetBrainsMono Nerd Font",
+  #     }
+  #     -- https://wezfurlong.org/wezterm/config/lua/config/term.html
+  #     config.term = "wezterm"
 
-      return config
-    '';
-  };
+  #     return config
+  #   '';
+  # };
 
   programs.nushell = {
     enable = true;
@@ -617,12 +617,12 @@ eval "$(pyenv init - zsh)"
     '';
   };
 
-  programs.direnv = {
-    enable = true;
-    enableZshIntegration = true;
-    enableNushellIntegration = true;
-    nix-direnv.enable = true;
-  };
+  # programs.direnv = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  #   enableNushellIntegration = true;
+  #   nix-direnv.enable = true;
+  # };
 
   services.mpris-proxy.enable = true;
 

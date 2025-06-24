@@ -3,6 +3,7 @@ set -x
 
 ln -si $HOME/dotfiles/.vimrc $HOME/.vimrc
 mkdir -p $XDG_CONFIG_HOME/nvim/lua
+mkdir -p $XDG_CONFIG_HOME/clangd
 ln -si $HOME/dotfiles/nvim2/config.lua $XDG_CONFIG_HOME/nvim/lua/config.lua
 ln -si $HOME/dotfiles/nvim2/filetype.vim $XDG_CONFIG_HOME/nvim/filetype.vim
 ln -si $HOME/Dropbox/important/.wakatime.cfg $HOME/.wakatime.cfg

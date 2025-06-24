@@ -163,6 +163,7 @@ if [ $(which batcat 2> /dev/null) ]; then
 else if [ $(which bat 2> /dev/null) ]; then
 	alias cat=bat
 fi fi
+alias diff='diff --color -u'
 alias worddiff='wdiff -n -w $'\''\033[30;41m'\'' -x $'\''\033[0m'\'' -y $'\''\033[30;42m'\'' -z $'\''\033[0m'\'''
 alias gc="git commit"
 alias gl="git log"
@@ -172,9 +173,28 @@ alias gs="git status"
 alias gp="git push"
 alias gpl="git pull"
 alias rgb="rg --smart-case --hidden -C 10 --pretty --no-config"
+alias run-ip="ip -br -o -p -c -h a"
+alias run-ftp="run-ip && unftp -v --root-dir=. --bind-address=0.0.0.0:2121 --bind-address-http=none --auth-type=anonymous"
+alias run-install="yay -S --noconfirm"
+alias run-uninstall="yay -R --noconfirm"
+alias run-update="yay --noconfirm"
+alias run-sshd="sudo /usr/sbin/sshd -Def /etc/ssh/sshd_config"
+alias dx="distrobox"
+run() {
+	if [ $# -ge 1 ]; then
+		rest="${@:2}"
+		cmd="run-$1 $rest"
+		bash -ic "set -x; $cmd"
+	else
+		echo "run: expected a word"
+		return 1
+	fi
+}
+me () { mkdir -p "$1" && cd "$1"; }
 
 if [ -e /run/.containerenv ] || [ -e /.dockerenv ]; then
 	# use separate history file for each container
+	export PATH=$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin:$PATH
 	export HISTFILE=$HOME/.bash_history_container_$CONTAINER_ID
 	source $HOME/.distrobox-${CONTAINER_ID}-bashrc
 fi
@@ -183,15 +203,25 @@ source ~/.git-prompt
 shopt -s histappend
 shopt -s nocaseglob
 PROMPT_COMMAND='history -a;PS1_CMD1=$(__git_ps1 " (%s)")'
-PS1='\[\e[38;5;244m\][\[\e[0m\]\t\[\e[38;5;244m\]]\[\e[38;5;220m\]${CONTAINER_ID:+ @}${CONTAINER_ID}\[\e[0m\] \[\e[38;5;157;1m\]\w\[\e[0;38;5;225;2m\]${PS1_CMD1}\n\[\e[0;38;5;208m\]$?\[\e[0;1m\]\$\[\e[0m\] '
+PS1='\n\[\e[38;5;244m\][\[\e[0m\]\t\[\e[38;5;244m\]]\[\e[38;5;220m\]${CONTAINER_ID:+ @}${CONTAINER_ID}\[\e[0m\] \[\e[38;5;157;1m\]\w\[\e[0m\]${PS1_CMD1}\n\[\e[0;38;5;208m\]$?\[\e[0;1m\]\$\[\e[0m\] '
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM=verbose
+export GIT_PS1_SHOWCONFLICTSTATE=yes
+export GIT_PS1_SHOWCOLORHINTS=1
 
 bind 'set show-all-if-ambiguous on'
 
+export PATH=$HOME/.cargo/bin:$PATH
+
 export PAGER=less
 export MANPAGER='nvim +Man!'
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - bash)"
+if [ -x /usr/bin/pyenv ]; then
+	export PYENV_ROOT="$HOME/.pyenv"
+	[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+	eval "$(pyenv init - bash)"
+fi
 
 export NEKOAPI_KEY=$(cat $HOME/Dropbox/important/nekoapi_key)
 export NEKOAPI_CLAUDE_KEY=$(cat $HOME/Dropbox/important/nekoapi_claude_key)

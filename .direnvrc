@@ -1,0 +1,6 @@
+layout_poetry() {
+    if ! direnv_load poetry run direnv dump; then
+      log_error "failed to enter Poetry env, do you need 'poetry install'?"
+      return 2
+    fi
+}

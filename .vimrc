@@ -203,6 +203,8 @@ Plug 'ThePrimeagen/harpoon', { 'branch': 'harpoon2' }
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 Plug 'nvim-treesitter/nvim-treesitter-context'
 
+Plug 'direnv/direnv.vim'
+
 call plug#end()
 
 " Why?!
