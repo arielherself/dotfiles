@@ -105,6 +105,16 @@ vim.keymap.set('n', '<leader>sw', '<Cmd>FzfLua lsp_live_workspace_symbols<CR>', 
 -- }}}
 
 -- {{{ LSP Related
+vim.keymap.set('n', '<leader>u', function()
+	vim.diagnostic.config {
+		underline = false
+	}
+end)
+vim.keymap.set('n', '<leader>U', function()
+	vim.diagnostic.config {
+		underline = true
+	}
+end)
 vim.diagnostic.config {
     underline = true,
     virtual_text = false,
@@ -282,9 +292,12 @@ lspconfig.clangd.setup {
     end,
     cmd = {
         "clangd",
+		"--enable-config",
         -- "--header-insertion=never",
         "--clang-tidy",
-        "--clang-tidy-checks=*",
+		"--completion-style=detailed",
+		"-j=8",
+        -- "--clang-tidy-checks=*",
     }
 }
 lspconfig.ruff.setup {
@@ -361,6 +374,7 @@ lspconfig.asm_lsp.setup {
 lspconfig.nil_ls.setup {
     capabilities = capabilities
 }
+vim.lsp.enable('nixd')
 lspconfig.mojo.setup {}
 lspconfig.nushell.setup {}
 lspconfig.volar.setup {}

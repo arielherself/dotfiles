@@ -84,6 +84,7 @@ set autoindent
 set smartindent
 set indentexpr=nvim_treesitter#indent()
 set diffopt+=linematch:100
+" set foldmethod=marker
 
 let g:mapleader = " "
 

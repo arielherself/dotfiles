@@ -5,7 +5,7 @@ CompileFlags:
 Diagnostics:
   ClangTidy:
     Add: [cppcoreguidelines-*,misc-*,bugprone-*,performance-*,readability-*]
-    Remove: [bugprone-easily-swappable-parameters,readability-identifier-length]
+    Remove: [bugprone-easily-swappable-parameters,readability-identifier-length,readability-math-missing-parentheses]
 
 Index:
   Background: Skip
