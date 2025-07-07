@@ -203,7 +203,7 @@ source ~/.git-prompt
 shopt -s histappend
 shopt -s nocaseglob
 PROMPT_COMMAND='history -a;PS1_CMD1=$(__git_ps1 " (%s)")'
-PS1='\n\[\e[38;5;244m\][\[\e[0m\]\t\[\e[38;5;244m\]]\[\e[38;5;220m\]${CONTAINER_ID:+ @}${CONTAINER_ID}\[\e[0m\] \[\e[38;5;157;1m\]\w\[\e[0m\]${PS1_CMD1}\n\[\e[0;38;5;208m\]$?\[\e[0;1m\]\$\[\e[0m\] '
+PS1='\n\[\e[38;5;244m\][\[\e[0m\]\t\[\e[38;5;244m\]] \[\e[38;5;157;1m\]\w\[\e[0m\]${PS1_CMD1}\[\e[38;5;39m\]${IN_NIX_SHELL:+ 󱄅 ${name}}\[\e[0m\]\[\e[38;5;220m\]${CONTAINER_ID:+ 󰆧 ${CONTAINER_ID}}\[\e[0m\]\n\[\e[0;38;5;208m\]$?\[\e[0;1m\]\$\[\e[0m\] '
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -225,6 +225,8 @@ fi
 
 export NEKOAPI_KEY=$(cat $HOME/Dropbox/important/nekoapi_key)
 export NEKOAPI_CLAUDE_KEY=$(cat $HOME/Dropbox/important/nekoapi_claude_key)
+export ANTHROPIC_AUTH_TOKEN=$(cat $HOME/Dropbox/important/anyrouter_key)
+export ANTHROPIC_BASE_URL=https://anyrouter.top
 
 # put it at the end of rc (don't know why)
 eval "$(direnv hook bash)"

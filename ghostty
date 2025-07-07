@@ -9,3 +9,4 @@ mouse-hide-while-typing = true
 command = "zellij"
 
 cursor-color = "#FFE2E6"
+keybind = shift+enter=text:\n

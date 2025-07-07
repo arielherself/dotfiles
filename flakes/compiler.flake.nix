@@ -13,8 +13,8 @@
 
 		buildDependencies = with pkgs; [
 			pkg-config
-			llvmPackages_18.clang-tools
-			llvmPackages_18.clang
+			llvmPackages_20.clang-tools
+			llvmPackages_20.clang
 			cmake
 			ninja
 			flex
@@ -54,6 +54,35 @@
 
 		devShells.x86_64-linux.default = pkgs.mkShell {
 			packages = buildDependencies ++ testDependencies;
+		};
+
+		devShells.x86_64-linux.llvm-bench = (pkgs.mkShell.override {
+			stdenv = pkgs.overrideCC pkgs.stdenv
+				(pkgs.llvmPackages_20.stdenv.cc.override {
+					cc = pkgs.llvmPackages_20.clang-unwrapped;
+					gccForLibs = crossPkgs.stdenv.cc.cc;
+					libc = crossPkgs.buildPackages.bintools.libc;
+					bintools = pkgs.wrapBintoolsWith {
+						bintools = pkgs.binutils-unwrapped-all-targets;
+						libc = crossPkgs.buildPackages.bintools.libc;
+					};
+				});
+		}) {
+				packages = with pkgs; [
+					crossPkgs.libgcc
+					crossPkgs.glibc.static  # disable this package if building a dynamic executable
+					pkg-config
+					(wrapBintoolsWith {
+						bintools = llvmPackages_20.bintools-unwrapped;
+						libc = crossPkgs.buildPackages.bintools.libc;
+					})
+					qemu
+				];
+
+				shellHook = ''
+					export NIX_ENFORCE_PURITY=1
+					export NIX_CC_WRAPPER_SUPPRESS_TARGET_WARNING=1
+				'';
 		};
 	};
 }
