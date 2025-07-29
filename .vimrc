@@ -4,15 +4,15 @@ let &t_SI = "\<Esc>[6 q"
 let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
 
-" " Fix color in some environments
-if exists('+termguicolors')
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	" maybe need to remove this in gnu screen
-	set termguicolors
-endif
+" " " Fix color in some environments
+" if exists('+termguicolors')
+" 	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+" 	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+" 	" maybe need to remove this in gnu screen
+" 	set termguicolors
+" endif
 
-" Add this if color doesn't work
+" " Add this if color doesn't work
 " set term=xterm-256color
 
 " Common stuff
@@ -206,6 +206,8 @@ Plug 'nvim-treesitter/nvim-treesitter-context'
 
 Plug 'direnv/direnv.vim'
 
+Plug 'akinsho/git-conflict.nvim'
+
 call plug#end()
 
 " Why?!
@@ -217,8 +219,8 @@ set showcmd
 set background=dark
 let g:embark_terminal_italics = 1
 let ayucolor = "mirage"
-" silent! colorscheme embark
-silent! colorscheme rusty
+silent! colorscheme embark
+" silent! colorscheme rusty
 
 " vim-airline
 let g:airline#extensions#tabline#enabled = 1
@@ -228,8 +230,8 @@ let g:airline_theme = "base16_tomorrow_night"
 nnoremap <M-,> <Cmd>bp<CR>
 nnoremap <M-.> <Cmd>bn<CR>
 nnoremap <M-c> <Cmd>Bclose<CR>
-nnoremap <M-k> <Cmd>tabnext<CR>
-nnoremap <M-j> <Cmd>tabprevious<CR>
+nnoremap <M-j> <Cmd>tabnext<CR>
+nnoremap <M-k> <Cmd>tabprevious<CR>
 
 inoremap <expr> <Tab>	pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"

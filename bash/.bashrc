@@ -157,6 +157,9 @@ source "$OSH"/oh-my-bash.sh
 # alias ohmybash="mate ~/.oh-my-bash"
 if [ $(which eza 2> /dev/null) ]; then
 	alias ls=eza
+	alias la='ls -lAhs modified --total-size'
+else
+	alias la='ls -lAhtr'
 fi
 if [ $(which batcat 2> /dev/null) ]; then
 	alias cat=batcat
@@ -227,6 +230,9 @@ export NEKOAPI_KEY=$(cat $HOME/Dropbox/important/nekoapi_key)
 export NEKOAPI_CLAUDE_KEY=$(cat $HOME/Dropbox/important/nekoapi_claude_key)
 export ANTHROPIC_AUTH_TOKEN=$(cat $HOME/Dropbox/important/anyrouter_key)
 export ANTHROPIC_BASE_URL=https://anyrouter.top
+
+# Set up fzf key bindings and fuzzy completion
+eval "$(fzf --bash)"
 
 # put it at the end of rc (don't know why)
 eval "$(direnv hook bash)"

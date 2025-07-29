@@ -693,3 +693,5 @@ require('hop').setup {
 }
 
 vim.keymap.set('n', '<leader>h', '<Cmd>HopWord<CR>')
+
+require('git-conflict').setup {}

@@ -3,8 +3,11 @@ set -x
 
 rm -f $HOME/.gitconfig
 echo "
-# [core]
+[http]
+	proxy = http://localhost:7897
+[core]
 #   sshCommand = ssh.exe
+  pager = less
 [user]
   email = arielherself@duck.com
   name = arielherself
