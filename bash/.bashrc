@@ -234,6 +234,12 @@ export ANTHROPIC_BASE_URL=https://anyrouter.top
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --bash)"
 
+function cgtproxy-exec() {
+  local slice="cgtproxy-$1.slice"
+  shift 1
+  systemd-run --user --slice "$slice" -P "$@"
+}
+
 # put it at the end of rc (don't know why)
 eval "$(direnv hook bash)"
 
