@@ -450,3 +450,4 @@ endif
 " ref: https://github.com/tpope/vim-commentary/issues/15#issuecomment-23127749
 autocmd FileType c,cpp,cs,java setlocal commentstring=//\ %s
 
+" inoremap \| <BS>

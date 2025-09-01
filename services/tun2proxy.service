@@ -1,0 +1,18 @@
+[Unit]
+Description=tun2proxy
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/usr/local/bin/tun2proxy --setup --proxy "socks5://127.0.0.1:7893" --dns over-tcp --dns-addr "8.8.8.8" --bypass "***.***.***.***"
+ExecStopPost=ip link del tun0
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+

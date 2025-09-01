@@ -4,7 +4,7 @@ set -x
 rm -f $HOME/.gitconfig
 echo "
 [http]
-	proxy = http://localhost:7897
+	proxy = socks5://localhost:7893
 [core]
 #   sshCommand = ssh.exe
   pager = less

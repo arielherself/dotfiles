@@ -285,32 +285,28 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- lspconfig.svls.setup {
 --     capabilities = capabilities
 -- }
-lspconfig.clangd.setup {
-    capabilities = capabilities,
-    root_dir = function(fname)
-        return lspconfig.util.root_pattern('compile_commands.json')(fname) or lspconfig.util.find_git_ancestor(fname) or vim.fn.getcwd()
-    end,
-    cmd = {
-        "clangd",
+vim.lsp.config('clangd', {
+	capabilities = capabilities,
+	cmd = {
+		"clangd",
 		"--enable-config",
-        -- "--header-insertion=never",
-        "--clang-tidy",
+		-- "--header-insertion=never",
+		"--clang-tidy",
 		"--completion-style=detailed",
 		"-j=8",
-        -- "--clang-tidy-checks=*",
-    }
-}
-lspconfig.ruff.setup {
-    capabilities = capabilities
-}
+		-- "--clang-tidy-checks=*",
+	}
+})
+vim.lsp.enable('clangd')
+vim.lsp.enable('ruff')
 vim.lsp.enable('ty')
 vim.lsp.enable('pylsp')
 -- lspconfig.pyright.setup {
 --     capabilities = capabilities
 -- }
-lspconfig.ts_ls.setup {
+vim.lsp.config('ts_ls', {
 	filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-    capabilities = capabilities,
+	capabilities = capabilities,
 	init_options = {
 		plugins = {
 			{
@@ -325,15 +321,16 @@ lspconfig.ts_ls.setup {
 			},
 		},
 	},
-}
-lspconfig.rust_analyzer.setup {
-    capabilities = capabilities,
-    -- Server-specific settings. See `:help lspconfig-setup`
-    settings = {
-        ['rust-analyzer'] = {
-            checkOnSave = {
-                command = 'clippy',
-            },
+})
+vim.lsp.enable('ts_ls')
+vim.lsp.config('rust-analyzer', {
+	capabilities = capabilities,
+	-- Server-specific settings. See `:help lspconfig-setup`
+	settings = {
+		['rust-analyzer'] = {
+			checkOnSave = {
+				command = 'clippy',
+			},
 			bindingModeHints = {
 				enable = true,
 			},
@@ -362,27 +359,22 @@ lspconfig.rust_analyzer.setup {
 			},
         },
     },
-}
-lspconfig.hls.setup {}
-lspconfig.lua_ls.setup {
-    capabilities = capabilities
-}
-lspconfig.cmake.setup {}
-lspconfig.asm_lsp.setup {
-    capabilities = capabilities
-}
-lspconfig.nil_ls.setup {
-    capabilities = capabilities
-}
+})
+vim.lsp.enable('rust_analyzer')
+vim.lsp.enable('hls')
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('cmake')
+vim.lsp.enable('asm_lsp')
+vim.lsp.enable('nil_ls')
 vim.lsp.enable('nixd')
-lspconfig.mojo.setup {}
-lspconfig.nushell.setup {}
-lspconfig.volar.setup {}
-lspconfig.jdtls.setup {}
-lspconfig.sqls.setup {}
-lspconfig.zls.setup {}
-lspconfig.gleam.setup {}
-lspconfig.bashls.setup {}
+vim.lsp.enable('mojo')
+vim.lsp.enable('nushell')
+vim.lsp.enable('vue_ls')
+vim.lsp.enable('jdtls')
+vim.lsp.enable('sqls')
+vim.lsp.enable('zls')
+vim.lsp.enable('gleam')
+vim.lsp.enable('bashls')
 vim.lsp.enable('prolog_ls')
 --- }}}
 
