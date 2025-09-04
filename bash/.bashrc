@@ -180,7 +180,7 @@ alias run-ip="ip -br -o -p -c -h a"
 alias run-ftp="run-ip && unftp -v --root-dir=. --bind-address=0.0.0.0:2121 --bind-address-http=none --auth-type=anonymous"
 alias run-install="yay -S --noconfirm"
 alias run-uninstall="yay -R --noconfirm"
-alias run-update="yay --noconfirm"
+alias run-update="yay --noconfirm && bash /home/nixos/dotfiles/scripts/patch-rtw89.sh"
 alias run-sshd="sudo /usr/sbin/sshd -Def /etc/ssh/sshd_config"
 alias dx="distrobox"
 run() {
