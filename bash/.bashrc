@@ -182,6 +182,7 @@ alias run-install="yay -S --noconfirm"
 alias run-uninstall="yay -R --noconfirm"
 alias run-update="yay --noconfirm && bash /home/nixos/dotfiles/scripts/patch-rtw89.sh"
 alias run-sshd="sudo /usr/sbin/sshd -Def /etc/ssh/sshd_config"
+alias run-restart-plasma="killall -s KILL plasmashell && kstart plasmashell"
 alias dx="distrobox"
 run() {
 	if [ $# -ge 1 ]; then
