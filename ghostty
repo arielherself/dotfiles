@@ -6,7 +6,9 @@ adjust-cell-width = "-3%"
 adjust-cell-height = "-3%"
 maximize = true
 mouse-hide-while-typing = true
-command = "zellij"
+command = "bash"
 
+shell-integration-features = no-cursor
+cursor-style = block
 cursor-color = "#FFE2E6"
 keybind = shift+enter=text:\n

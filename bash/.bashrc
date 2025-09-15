@@ -183,6 +183,12 @@ alias run-uninstall="yay -R --noconfirm"
 alias run-update="yay --noconfirm && bash /home/nixos/dotfiles/scripts/patch-rtw89.sh"
 alias run-sshd="sudo /usr/sbin/sshd -Def /etc/ssh/sshd_config"
 alias run-restart-plasma="killall -s KILL plasmashell && kstart plasmashell"
+alias run-mount-dropbox="rclone mount dropbox: /mnt/dropbox --copy-links --allow-other --allow-non-empty --umask 000 --daemon --vfs-cache-mode full --vfs-cache-max-age 2d --vfs-cache-max-size 10G --buffer-size 1G --vfs-read-ahead 500M --vfs-read-chunk-streams 4 --no-modtime -vv"
+run-set-mac() {
+	sudo ip link set dev wlan0 down
+	sudo ip link set dev wlan0 address $@
+	sudo ip link set dev wlan0 up
+}
 alias dx="distrobox"
 run() {
 	if [ $# -ge 1 ]; then
